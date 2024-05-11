@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
+import QuestionarioPre from "../pages/Professor/QuestionarioPre";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -17,6 +18,10 @@ const RouteApp = () => {
       <Fragment>
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
+          <Route
+            path="/preQuest"
+            element={<Private Item={QuestionarioPre} />}
+          />
           <Route path="/" element={<Signin />} />
           <Route exact path="/cadastro" element={<Signup />} />
           <Route path="*" element={<Signin />} />
