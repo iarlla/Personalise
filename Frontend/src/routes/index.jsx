@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
+import TelaMateria from "../pages/Professor/TelaMateria"
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -20,6 +21,7 @@ const RouteApp = () => {
           <Route path="/" element={<Signin />} />
           <Route exact path="/cadastro" element={<Signup />} />
           <Route path="*" element={<Signin />} />
+          <Route path="/materiasP" element={<TelaMateria />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

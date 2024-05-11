@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
         width: 100vw;
         height: 100vh;
         background-color: #FFFFFF;
-        font-family: poppins;
+        font-family: "Poppins";
 
     }
 
