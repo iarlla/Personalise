@@ -5,6 +5,7 @@ import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
 import TelaMateria from "../pages/Professor/TelaMateria"
+import QuestionarioPre from "../pages/Professor/QuestionarioPre"
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -20,7 +21,7 @@ const RouteApp = () => {
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route
             path="/preQuest"
-            element={<Private Item={QuestionarioPre} />}
+            element={<QuestionarioPre />}
           />
           <Route path="/" element={<Signin />} />
           <Route exact path="/cadastro" element={<Signup />} />
