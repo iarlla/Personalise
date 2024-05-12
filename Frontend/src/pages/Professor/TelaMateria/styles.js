@@ -9,6 +9,6 @@ import styled from "styled-components";
 //   padding-left: 50px;
 // `;
 
-export const BackgroundContent = styled.body`
-  backgroud-color: red;
+export const BackgroundPattern = styled.body`
+  background-color: #e9e9e9;
 `;

@@ -19,7 +19,7 @@ const Navbar = ({ Text }) => {
           <span>
             <b>{currentUser.nome}</b>
           </span>
-          <p>{Text}</p>
+          <p style={{ fontSize: "12px" }}>{Text}</p>
         </div>
       </C.ContainerPerfil>
     </C.Container>
