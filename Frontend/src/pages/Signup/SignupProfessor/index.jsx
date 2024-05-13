@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Input from "../../components/input";
-import Button from "../../components/button";
+import Input from "../../../components/input";
+import Button from "../../../components/button";
 import { Link, useNavigate } from "react-router-dom";
 import * as C from "./styles";
 import Axios from "axios";
 
-const Signup = () => {
+const SignupProfessor = () => {
   const [error, setError] = useState(null);
 
   const [inputs, setInputs] = useState({
@@ -13,7 +13,6 @@ const Signup = () => {
     emailConf: "",
     senha: "",
     nome: "",
-    curso: "",
     matricula: "",
   });
 
@@ -27,12 +26,11 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("http://localhost:3001/api/auth/cadastro", {
+      await Axios.post("http://localhost:3001/api/auth/cadastroProfessor", {
         email: inputs.email,
         nome: inputs.nome,
         senha: inputs.senha,
         matricula: inputs.matricula,
-        curso: inputs.curso,
       }).then((response) => {
         console.log(response);
       });
@@ -60,13 +58,6 @@ const Signup = () => {
           type="matricula"
           placeholder="Digite a sua matricula"
           name="matricula"
-          onChange={handleChange}
-        />
-        <C.LabelTitle>Curso</C.LabelTitle>
-        <Input
-          type="curso"
-          placeholder="Digite o seu curso"
-          name="curso"
           onChange={handleChange}
         />
         <C.LabelTitle>Email</C.LabelTitle>
@@ -113,4 +104,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupProfessor;

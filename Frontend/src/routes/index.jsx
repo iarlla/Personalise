@@ -6,8 +6,8 @@ import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
 import TelaMateria from "../pages/Professor/TelaMateria";
 import QuestionarioPre from "../pages/Professor/QuestionarioPre";
-import TelaMateria from "../pages/Professor/TelaMateria";
-import QuestionarioPre from "../pages/Professor/QuestionarioPre";
+import SignupProfessor from "../pages/Signup/SignupProfessor";
+import TelaInicio from "../pages/TelaInicio";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -24,9 +24,12 @@ const RouteApp = () => {
           <Route path="/preQuest" element={<QuestionarioPre />} />
           <Route path="/preQuest" element={<QuestionarioPre />} />
           <Route path="/" element={<Signin />} />
-          <Route exact path="/cadastro" element={<Signup />} />
+          <Route path="/cadastro" element={<Signup />} />
           <Route path="*" element={<Signin />} />
           <Route path="/materiasP" element={<TelaMateria />} />
+          <Route path="/cadastroProfessor" element={<SignupProfessor />} />
+          <Route exact path="/TelaInicio" element={<TelaInicio />} />
+          <Route path="*" element={<TelaInicio />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
