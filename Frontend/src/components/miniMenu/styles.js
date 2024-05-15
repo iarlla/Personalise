@@ -19,7 +19,7 @@ export const Ul = styled.ul`
   li a {
     display: block;
     color: #b5b5b5;
-    font-size: 12px;
+    font-size: 14px;
     text-align: center;
     padding: 14px 3px;
     text-decoration: none;

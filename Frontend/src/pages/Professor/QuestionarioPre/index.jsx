@@ -3,9 +3,15 @@ import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 
 const QuestionarioPre = () => {
+  // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Processar as perguntas aqui (enviar para o banco de dados, etc.)
+    console.log("Perguntas:", questions);
+  };
   return (
     <>
-      <C.BackgroundPattern>
+      <C.Container>
         <Navbar Text="Professor" />
         <MiniMenu
           TitleOne="Minhas materias"
@@ -15,8 +21,15 @@ const QuestionarioPre = () => {
           symbolTwo=">"
           TitleThree="Questionário Pré-Aula"
         />
-        <C.titlePage>Progamação Orientada a objetos</C.titlePage>
-      </C.BackgroundPattern>
+        <C.Content>
+          <C.titlePage>Progamação Orientada a objetos</C.titlePage>
+        </C.Content>
+        <C.ContentQuest>
+          <C.titleQuest>Questionário Pré-Aula</C.titleQuest>
+          <C.line />
+          <C.PerguntasQuest></C.PerguntasQuest>
+        </C.ContentQuest>
+      </C.Container>
     </>
   );
 };

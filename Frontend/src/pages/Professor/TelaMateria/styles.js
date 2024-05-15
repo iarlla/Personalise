@@ -1,7 +1,14 @@
 import styled from "styled-components";
 
-export const BackgroundPattern = styled.body`
+export const Content = styled.div`
+  flex: 1; /* Faz com que o conteúdo ocupe todo o espaço disponível */
+`;
+
+export const Container = styled.div`
   background-color: #e9e9e9;
+  min-height: 100vh; /* Garante que o container ocupe toda a altura da tela */
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ContainerSejaBemvindo = styled.div`
@@ -38,11 +45,13 @@ export const MainLeftTextoDiv = styled.div`
   border-radius: 30px 30px 60% 0%;
 `;
 
+export const ContainerButtons = styled.div`
+  text-align: center;
+`;
+
 export const MainLeftImg = styled.img`
-  width: 30%;
-  position: absolute;
-  left: 7%;
-  top: 51%;
+  width: 100%;
+  margin-top: 30px;
 `;
 
 export const MainRightContainer = styled.div`
