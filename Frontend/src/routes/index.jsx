@@ -8,6 +8,7 @@ import TelaMateria from "../pages/Professor/TelaMateria";
 import QuestionarioPre from "../pages/Professor/QuestionarioPre";
 import SignupProfessor from "../pages/Signup/SignupProfessor";
 import TelaInicio from "../pages/TelaInicio";
+import MinhaConta from "../pages/MinhaConta";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -30,6 +31,7 @@ const RouteApp = () => {
           <Route path="/cadastroProfessor" element={<SignupProfessor />} />
           <Route exact path="/TelaInicio" element={<TelaInicio />} />
           <Route path="*" element={<TelaInicio />} />
+          <Route path="/minha-conta" element={<MinhaConta/>}  />
         </Routes>
       </Fragment>
     </BrowserRouter>
