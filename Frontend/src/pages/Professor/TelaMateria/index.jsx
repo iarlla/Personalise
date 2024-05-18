@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import Navbar from "../../../components/navBar";
 import ButtonPrincipal from "../../../components/ButtonPrincipal";
+import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 
 const telaMateria = () => {
@@ -9,6 +10,7 @@ const telaMateria = () => {
       <C.Container>
         <Navbar Text="Professor" />
         <C.Content>
+          <MiniMenu TitleOne="Minhas materias" urlOne="/materiasP" />
           <C.ContainerSejaBemvindo>
             <C.TextSejaBemvindo>
               Seja bem-vindo, professor(a)!

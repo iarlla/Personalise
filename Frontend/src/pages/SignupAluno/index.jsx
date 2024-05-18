@@ -27,7 +27,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("http://localhost:3001/api/auth/cadastro", {
+      await Axios.post("http://localhost:3001/api/auth/cadastro-aluno", {
         email: inputs.email,
         nome: inputs.nome,
         senha: inputs.senha,

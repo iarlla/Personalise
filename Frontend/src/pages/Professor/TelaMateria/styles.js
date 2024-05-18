@@ -12,19 +12,20 @@ export const Container = styled.div`
 `;
 
 export const ContainerSejaBemvindo = styled.div`
-  margin: 2%;
-  margin-top: 90px;
+  margin-left: 20px;
+  margin-bottom: 20px;
   color: #00396d;
 `;
 
-export const TextSejaBemvindo = styled.h1``;
+export const TextSejaBemvindo = styled.h1`
+  font-size: 40px;
+`;
 
 export const MainContainer = styled.div`
-  margin-left: 5%;
+  margin-left: 85px;
   margin-right: 5%;
   margin-top: -20px;
   padding: 30px;
-  height: 78%;
   display: flex;
   justify-content: space-between;
 `;
@@ -34,7 +35,9 @@ export const MainLeftContainer = styled.div`
   border-radius: 30px;
   color: white;
   font-size: 25px;
-  width: 545px;
+  margin-right: 35px;
+  height: 725px;
+  width: 645px;
 `;
 
 export const MainLeftTextoDiv = styled.div`
@@ -50,8 +53,9 @@ export const ContainerButtons = styled.div`
 `;
 
 export const MainLeftImg = styled.img`
-  width: 100%;
-  margin-top: 30px;
+  width: 105%;
+  margin-top: 20px;
+  margin-right: 50px;
 `;
 
 export const MainRightContainer = styled.div`

@@ -8,11 +8,12 @@ import useAuth from "../hooks/useAuth";
 import TelaMateria from "../pages/Professor/TelaMateria";
 import QuestionarioPre from "../pages/Professor/QuestionarioPre";
 import TelaInicio from "../pages/TelaInicio";
+import MinhaConta from "../pages/MinhaConta";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
 
-  return !currentUser ? <Signin /> : <Item />;
+  return !currentUser ? <TelaInicio /> : <Item />;
 };
 
 const RouteApp = () => {
@@ -22,15 +23,15 @@ const RouteApp = () => {
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route path="/preQuest" element={<QuestionarioPre />} />
-          <Route path="/" element={<Signin />} />
-          <Route exact path="/cadastro" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route exact path="/cadastroAluno" element={<Signup />} />
           <Route
             exact
             path="/cadastroProfessor"
             element={<SignupProfessor />}
           />
-          <Route path="/telaInicio" element={<TelaInicio />} />
-          <Route path="*" element={<Signin />} />
+          <Route path="/minha-conta" element={<MinhaConta />} />
+          <Route path="*" element={<TelaInicio />} />
           <Route path="/materiasP" element={<TelaMateria />} />
         </Routes>
       </Fragment>

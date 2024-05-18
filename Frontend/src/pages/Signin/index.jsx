@@ -2,12 +2,14 @@ import { useState, useContext } from "react";
 import Input from "../../components/input";
 import Button from "../../components/button";
 import * as C from "./styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ButtonReverse from "../../components/ButtonReverse";
 
 const Signin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { verify } = location.state || {};
 
   const [error, setError] = useState(null);
 
@@ -27,7 +29,13 @@ const Signin = () => {
 
     try {
       await login(inputs);
-      navigate("/home");
+      if (verify == "professor") {
+        navigate("/materiasP");
+      } else if (verify === "aluno") {
+        navigate("/home");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       setError(error.response.data);
     }
@@ -70,7 +78,15 @@ const Signin = () => {
           <C.LabelSignup>
             Não tem uma conta?
             <C.Strong>
-              <Link to="/cadastro">&nbsp;Registre-se</Link>
+              <Link
+                to={
+                  verify === "professor"
+                    ? "/cadastroProfessor"
+                    : "/cadastroAluno"
+                }
+              >
+                &nbsp;Registre-se
+              </Link>
             </C.Strong>
           </C.LabelSignup>
         </C.Content>
