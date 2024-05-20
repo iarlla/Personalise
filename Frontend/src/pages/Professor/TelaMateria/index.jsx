@@ -3,6 +3,7 @@ import Navbar from "../../../components/navBar";
 import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
+import { Link } from "react-router-dom";
 
 const telaMateria = () => {
   return (
@@ -34,13 +35,23 @@ const telaMateria = () => {
               >
                 <h1 style={{ marginBottom: "30px" }}>Minhas matérias</h1>
               </div>
-              <hr></hr>
+              <C.line />
               <C.ContainerButtons>
-                <ButtonPrincipal Text="Engenharia de Software"></ButtonPrincipal>
-                <ButtonPrincipal Text="Design de Software"></ButtonPrincipal>
-                <ButtonPrincipal Text="Sistemas Operacionais"></ButtonPrincipal>
-                <ButtonPrincipal Text="Redes de Computadores"></ButtonPrincipal>
-                <ButtonPrincipal Text="Novas tecnologias"></ButtonPrincipal>
+                <Link to="/turmas/3">
+                  <ButtonPrincipal Text="Engenharia de Software"></ButtonPrincipal>
+                </Link>
+                <Link to="/turmas/4">
+                  <ButtonPrincipal Text="Design de Software"></ButtonPrincipal>
+                </Link>
+                <Link to="/turmas/5">
+                  <ButtonPrincipal Text="Sistemas Operacionais"></ButtonPrincipal>
+                </Link>
+                <Link to="/turmas/6">
+                  <ButtonPrincipal Text="Redes de Computadores"></ButtonPrincipal>
+                </Link>
+                <Link to="/turmas/2">
+                  <ButtonPrincipal Text="Novas tecnologias"></ButtonPrincipal>
+                </Link>
               </C.ContainerButtons>
             </C.MainRightContainer>
           </C.MainContainer>

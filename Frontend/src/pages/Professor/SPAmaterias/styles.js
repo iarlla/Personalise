@@ -17,6 +17,12 @@ export const ContainerSejaBemvindo = styled.div`
   color: #00396d;
 `;
 
+export const line = styled.hr`
+  color: #00396d;
+  margin-left: 40px;
+  width: 96%;
+  border: 2px solid;
+`;
 export const TextSejaBemvindo = styled.h1`
   font-size: 40px;
 `;
@@ -38,13 +44,6 @@ export const MainLeftContainer = styled.div`
   margin-right: 35px;
   height: 725px;
   width: 645px;
-`;
-
-export const line = styled.hr`
-  color: #00396d;
-  margin-left: 40px;
-  width: 96%;
-  border: 2px solid;
 `;
 
 export const MainLeftTextoDiv = styled.div`
