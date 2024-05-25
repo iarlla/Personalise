@@ -11,6 +11,11 @@ import TelaInicio from "../pages/TelaInicio";
 import MinhaConta from "../pages/MinhaConta";
 import Turmas from "../pages/Professor/SPAmaterias";
 import Sessao from "../pages/Professor/Sessão";
+import EnviadoSucesso from "../pages/Professor/EnviadoSucesso";
+import DeletadoSucesso from "../pages/Professor/DeletadoSucesso";
+import OpcoesQuest from "../pages/Professor/OpcoesQuest";
+import EditarQuest from "../pages/Professor/EditarQuest";
+
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -41,6 +46,10 @@ const RouteApp = () => {
             path="/sessao/:idTurma/preQuest"
             element={<QuestionarioPre />}
           />
+          <Route path="/enviado" element={<EnviadoSucesso />} />
+          <Route path="/deletado" element={<DeletadoSucesso />} />
+          <Route path="/opcoesQuest" element={<OpcoesQuest />} />
+          <Route path="/preQuest/editar" element={<EditarQuest />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

@@ -5,7 +5,7 @@ import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
 
 
-const QuestionarioPre = () => {
+const EditarQuest = () => {
   // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,4 +50,4 @@ const QuestionarioPre = () => {
   );
 };
 
-export default QuestionarioPre;
+export default EditarQuest;
