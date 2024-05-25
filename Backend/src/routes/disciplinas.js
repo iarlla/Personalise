@@ -4,6 +4,6 @@ import { getDisciplinas, getDisciplina } from "../controllers/disciplinas.js";
 const router = express.Router();
 
 router.get("/", getDisciplinas);
-router.get("/:id", getDisciplina);
+router.get("/:idDisc", getDisciplina);
 
 export default router;

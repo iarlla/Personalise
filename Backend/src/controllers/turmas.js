@@ -10,5 +10,11 @@ export const getTurmas = (_, res) => {
 };
 
 export const getTurma = (req, res) => {
-  res.json("From controller");
+  const q = "SELECT `nome` FROM turma WHERE idturma = ?";
+
+  db.query(q, [req.params.idturma], (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    return res.status(200).json(data[0]);
+  });
 };

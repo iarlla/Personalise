@@ -10,6 +10,7 @@ import QuestionarioPre from "../pages/Professor/QuestionarioPre";
 import TelaInicio from "../pages/TelaInicio";
 import MinhaConta from "../pages/MinhaConta";
 import Turmas from "../pages/Professor/SPAmaterias";
+import Sessao from "../pages/Professor/Sessão";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -34,7 +35,12 @@ const RouteApp = () => {
           <Route path="/minha-conta" element={<MinhaConta />} />
           <Route path="*" element={<TelaInicio />} />
           <Route path="/materiasP" element={<TelaMateria />} />
-          <Route path="/turmas/:id" element={<Turmas />} />
+          <Route path="/turmas/:idDisc" element={<Turmas />} />
+          <Route path="/turmas/:idDisc/:idturma" element={<Sessao />} />
+          <Route
+            path="/sessao/:idTurma/preQuest"
+            element={<QuestionarioPre />}
+          />
         </Routes>
       </Fragment>
     </BrowserRouter>

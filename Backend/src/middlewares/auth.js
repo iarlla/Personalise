@@ -73,6 +73,22 @@ export const registerProfessor = (req, res) => {
         if (err) {
           return res.status(500).json(err);
         }
+        const professorID = data.insertId;
+
+        // IDs das turmas estáticos
+        const turmas = [1, 2, 3, 4];
+
+        // Inserindo na tabela professor_turma para cada turma
+        turmas.forEach((idTurma) => {
+          const q4 =
+            "INSERT INTO professor_turma (idprofessor, idturma) VALUES (?, ?)";
+          db.query(q4, [professorID, idTurma], (err) => {
+            if (err) {
+              return res.status(500).json(err);
+            }
+          });
+        });
+
         return res.status(200).json("Professor foi cadastrado com sucesso!");
       });
     });
