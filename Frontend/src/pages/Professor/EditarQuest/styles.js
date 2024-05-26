@@ -22,7 +22,7 @@ export const line = styled.hr`
 `;
 
 export const PerguntasQuest = styled.div`
-  padding: 5px 0px 0px 40px;
+  padding: 0px 0px 0px 40px;
   margin-left: 10px;
   p {
     color: #797979;

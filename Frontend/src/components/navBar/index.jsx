@@ -5,9 +5,19 @@ const Navbar = ({ Text }) => {
   const { currentUser } = useAuth();
   return (
     <C.Container>
-      <img src="Logo.png" alt="logo" width="150px" />
+      <img
+        src={`${window.location.origin}/Logo.png`}
+        alt="logo"
+        width="150px"
+        style={{ maxHeight: "100%" }} // Ajustar a altura máxima da imagem
+      />
       <C.ContainerPerfil>
-        <img src="User.png" alt="logo" width="35px" />
+        <img
+          src={`${window.location.origin}/User.png`}
+          alt="user"
+          width="35px"
+          style={{ maxHeight: "100%" }} // Ajustar a altura máxima da imagem
+        />
         <div
           style={{
             display: "flex",

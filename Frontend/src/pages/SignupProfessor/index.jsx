@@ -26,7 +26,7 @@ const SignupProfessor = () => {
     e.preventDefault();
 
     try {
-      await Axios.post("http://localhost:3001/api/auth/cadastroProfessor", {
+      await Axios.post("http://localhost:3001/api/auth/cadastro-professor", {
         email: inputs.email,
         nome: inputs.nome,
         senha: inputs.senha,
