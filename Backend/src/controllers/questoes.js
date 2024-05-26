@@ -3,8 +3,6 @@ import { db } from "../database/db.js";
 export const getQuestoes = (req, res) => {
   const { questions } = req.body;
 
-  console.log("Dados recebidos:", questions); // Logar os dados recebidos
-
   const q =
     "INSERT INTO questionario (id_professor_turma, perguntas) VALUES (?, ?)";
 
