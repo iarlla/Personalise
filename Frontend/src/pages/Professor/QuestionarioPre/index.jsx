@@ -1,16 +1,57 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import Navbar from "../../../components/navBar";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
 
-
 const QuestionarioPre = () => {
+  const [disciplinas, setDisciplinas] = useState({});
+  const [turma, setTurma] = useState([]);
+  const { idDisc, idturma } = useParams();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/api/disciplinas/${idDisc}`
+        );
+        setDisciplinas(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, [idDisc]);
+
+  useEffect(() => {
+    const fetchDataTurma = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/api/turmas/${idturma}`
+        );
+        setTurma(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataTurma();
+  }, [idturma]);
+
   // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
   const handleSubmit = (e) => {
     e.preventDefault();
     // Processar as perguntas aqui (enviar para o banco de dados, etc.)
     console.log("Perguntas:", questions);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);
   };
   return (
     <>
@@ -18,20 +59,24 @@ const QuestionarioPre = () => {
         <Navbar Text="Professor" />
         <MiniMenu
           TitleOne="Minhas materias"
+          urlOne="/materiasP"
           symbolOne=">"
-          urlOne="/MateriasP"
-          TitleTwo="Sessões"
+          TitleTwo="Minhas turmas"
+          urlTwo={`/turmas/${idDisc}`}
           symbolTwo=">"
-          TitleThree="Questionário Pré-Aula"
+          TitleThree="Sessões"
+          urlThree={`/turmas/${idDisc}/${idturma}`}
+          symbolThree=">"
+          TitleFour="Questionário pré-aula"
         />
         <C.Content>
-          <C.titlePage>Progamação Orientada a objetos</C.titlePage>
+          <C.titlePage>{disciplinas.nome}</C.titlePage>
           <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
         </C.Content>
         <C.ContentQuest>
           <C.titleQuest>Questionário Pré-Aula</C.titleQuest>
           <C.line />
-          <C.PerguntasQuest style={{ maxHeight: '570px', overflowY: 'auto' }}>
+          <C.PerguntasQuest>
             <Pergunta num="1" pergunta="Pergunta 1" nomeLabel="pergunta-1" />
             <Pergunta num="2" pergunta="Pergunta 2" nomeLabel="pergunta-2" />
             <Pergunta num="3" pergunta="Pergunta 3" nomeLabel="pergunta-3" />
@@ -42,7 +87,7 @@ const QuestionarioPre = () => {
           </C.PerguntasQuest>
 
           <div style={{ margin: "30px" }}>
-            <Button Text="Preparar" />
+            <Button Text="Preparar" onClick={handleClick} />
           </div>
         </C.ContentQuest>
       </C.Container>

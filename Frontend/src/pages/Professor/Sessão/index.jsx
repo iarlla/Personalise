@@ -54,9 +54,7 @@ const Sessao = () => {
             TitleThree="Sessões"
           />
           <C.ContainerSejaBemvindo>
-            <C.TextSejaBemvindo>
-              Sessões (TURMA {turma.nome})
-            </C.TextSejaBemvindo>
+            <C.TextSejaBemvindo>Sessão (TURMA {turma.nome})</C.TextSejaBemvindo>
           </C.ContainerSejaBemvindo>
 
           <C.MainContainer>
@@ -80,13 +78,13 @@ const Sessao = () => {
               </div>
               <C.line />
               <C.ContainerButtons>
-                <Link to={`/sessao/${idturma}/preQuest`}>
+                <Link to={`/sessao/${idDisc}/${idturma}/preQuest`}>
                   <ButtonPrincipal Text="Questionario pré-aula"></ButtonPrincipal>
                 </Link>
-                <Link to={`/sessao/${idturma}/posQuest`}>
+                <Link to={`/sessao/${idDisc}/${idturma}/posQuest`}>
                   <ButtonPrincipal Text="Questionario pós-aula"></ButtonPrincipal>
                 </Link>
-                <Link to={`/sessao/${idturma}/relatorio`}>
+                <Link to={`/sessao/${idDisc}/${idturma}/relatorio`}>
                   <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
                 </Link>
               </C.ContainerButtons>

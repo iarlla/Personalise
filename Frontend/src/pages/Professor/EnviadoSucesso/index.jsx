@@ -1,7 +1,5 @@
 import Navbar from "../../../components/navBar";
-import MiniMenu from "../../../components/miniMenu";
-import sucessoImage from "../../../../public/sucesso.png"
-import Button from "../../../components/button"
+import Button from "../../../components/button";
 import { Link } from "react-router-dom";
 import * as C from "./styles";
 
@@ -13,33 +11,29 @@ const EnviadoSucesso = () => {
     console.log("Perguntas:", questions);
   };
 
-  
+  const handleClick = (e) => {
+    e.preventDefault();
+    // navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);
+  };
+
   return (
     <>
       <C.Container>
         <Navbar Text="Professor" />
-        <MiniMenu
-          TitleOne="Minhas materias"
-          symbolOne=">"
-          urlOne="/MateriasP"
-          TitleTwo="Sessões"
-          symbolTwo=">"
-          TitleThree="Questionário Pré-Aula"
-        />
         <C.Content>
-          <C.titlePage>Questionário Deletado</C.titlePage>
-          <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
+          <C.titlePage>Questionário Enviado</C.titlePage>
         </C.Content>
         <C.ContentQuest>
           <C.containerSucesso>
-            <C.imagemSucesso src={sucessoImage} />
+            <C.imagemSucesso src={`${window.location.origin}/sucesso.png`} />
             <C.containerTextoSucesso>
-                <C.parabens> Parabens! </C.parabens>
-                <C.textoSucesso> Questionário enviado com sucesso! </C.textoSucesso>
+              <C.parabens> Parabens! </C.parabens>
+              <C.textoSucesso>
+                {" "}
+                Questionário enviado com sucesso!{" "}
+              </C.textoSucesso>
             </C.containerTextoSucesso>
-            <Link to="/home">
-                <Button Text="Voltar"></Button>
-            </Link>
+            <Button Text="Voltar" onClick={handleClick}></Button>
           </C.containerSucesso>
         </C.ContentQuest>
       </C.Container>

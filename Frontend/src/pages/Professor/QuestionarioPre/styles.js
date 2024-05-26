@@ -17,7 +17,7 @@ export const titleQuest = styled.h2`
 export const line = styled.hr`
   color: #00396d;
   margin-left: 40px;
-  width: 96%;
+  margin-right: 40px;
   border: 2px solid;
 `;
 
@@ -35,20 +35,21 @@ export const Content = styled.div`
   flex: 1; /* Faz com que o conteúdo ocupe todo o espaço disponível */
   display: flex;
   justify-content: space-between;
-
 `;
 
 export const textoAbertura = styled.p`
   padding-top: 1%;
   margin-right: 30px;
-  color: #797979
-`
+  color: #797979;
+`;
 
 export const ContentQuest = styled.div`
   flex: 100; /* Faz com que o conteúdo ocupe todo o espaço disponível */
   background-color: white;
-  margin: 20px;
-  width: 97%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  max-width: calc(100% - 60px); /* Limitar a largura ao espaço disponível */
   border-radius: 15px;
 `;
 
@@ -57,23 +58,5 @@ export const Container = styled.div`
   min-height: 100vh; /* Garante que o container ocupe toda a altura da tela */
   display: flex;
   flex-direction: column;
-`;
-
-export const ContainerPergunta = styled.div`
-  margin: 5%;
-`;
-
-export const Pergunta = styled.h4`
-  margin-bottom: 10px;
-  font-size: 20px;
-`;
-
-export const ContainerResposta = styled.div``;
-
-export const Resposta = styled.input.attrs({ type: 'radio' })`
-  margin-right: 10px
-`;
-
-export const LabelResposta = styled.label`
-  margin-right: 80px
+  overflow-x: hidden;
 `;

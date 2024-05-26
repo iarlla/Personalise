@@ -10,6 +10,7 @@ export const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: #ffffff;
+  overflow: hidden; // Esconder qualquer transbordamento
   color: themed("textColor");
   z-index: 999;
 `;

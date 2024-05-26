@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import disciplinasRoutes from "./routes/disciplinas.js";
 import turmasRoutes from "./routes/turmas.js";
+import questionRoutes from "./routes/questoes.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/disciplinas", disciplinasRoutes);
 app.use("/api/turmas", turmasRoutes);
+app.use("/api/questions", questionRoutes);
 
 app.listen(3001, () => {
   console.log("Rodando na porta 3001");

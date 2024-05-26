@@ -9,12 +9,14 @@ const Navbar = ({ Text }) => {
         src={`${window.location.origin}/Logo.png`}
         alt="logo"
         width="150px"
+        style={{ maxHeight: "100%" }} // Ajustar a altura máxima da imagem
       />
       <C.ContainerPerfil>
         <img
           src={`${window.location.origin}/User.png`}
-          alt="logo"
+          alt="user"
           width="35px"
+          style={{ maxHeight: "100%" }} // Ajustar a altura máxima da imagem
         />
         <div
           style={{
