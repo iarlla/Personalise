@@ -114,18 +114,53 @@ export const login = (req, res) => {
       return res.status(400).json("Senha ou email incorretos!");
     }
 
-    const token = jwt.sign({ id: data[0].id }, "secretKey");
+    const token = jwt.sign({ id: data[0].id }, "secretKey", { expiresIn: '1h' });
 
     const { senha: senhaUsuario, ...others } = data[0];
 
     res
       .cookie("accessToken", token, {
         httpOnly: true,
+        secure: false, // Defina como true em produção
+        sameSite: 'strict'
       })
       .status(200)
       .json(others);
   });
 };
+
+// export const login = (req, res) => {
+//   const { email, senha } = req.body;
+
+//   const q = "SELECT * FROM usuarios WHERE email = ?";
+
+//   db.query(q, [email], (err, data) => {
+//     if (err) return res.status(500).json(err);
+
+//     if (data.length === 0)
+//       return res.status(404).json("Usuário não encontrado");
+
+//     const senhaArmazenada = data[0].senha;
+
+//     const checkPassword = bcrypt.compareSync(senha, senhaArmazenada);
+
+//     if (!checkPassword) {
+//       return res.status(400).json("Senha ou email incorretos!");
+//     }
+
+//     const token = jwt.sign({ id: data[0].id }, "secretKey");
+
+//     const { senha: senhaUsuario, ...others } = data[0];
+
+    
+//     res
+//       .cookie("accessToken", token, {
+//         httpOnly: true,
+//       })
+//       .status(200)
+//       .json(others);
+//   });
+// };
 
 export const logout = (req, res) => {
   res

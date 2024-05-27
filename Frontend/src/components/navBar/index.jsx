@@ -27,7 +27,7 @@ const Navbar = ({ Text }) => {
           }}
         >
           <span>
-            <b>Joao</b>
+            <b>{ currentUser.id }</b>
           </span>
           <p style={{ fontSize: "12px" }}>{Text}</p>
         </div>
