@@ -9,10 +9,10 @@ export const registerAluno = (req, res) => {
 
   db.query(q, [email], (err, data) => {
     if (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ message: "Erro no servidor", error: err });
     }
     if (data.length) {
-      return res.status(409).json("Usuário já cadastrado!");
+      return res.status(409).json({ message: "Usuário já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -23,7 +23,9 @@ export const registerAluno = (req, res) => {
 
     db.query(q2, [nome, email, hashedPassword], (err, data) => {
       if (err) {
-        return res.status(500).json(err);
+        return res
+          .status(500)
+          .json({ message: "Erro no servidor", error: err });
       }
 
       const usuarioID = data.insertId;
@@ -33,9 +35,13 @@ export const registerAluno = (req, res) => {
 
       db.query(q3, [usuarioID, matricula, curso], (err, data) => {
         if (err) {
-          return res.status(500).json(err);
+          return res
+            .status(500)
+            .json({ message: "Erro no servidor", error: err });
         }
-        return res.status(200).json("Aluno foi cadastrado com sucesso!");
+        return res
+          .status(200)
+          .json({ message: "Aluno foi cadastrado com sucesso!" });
       });
     });
   });
@@ -48,10 +54,10 @@ export const registerProfessor = (req, res) => {
 
   db.query(q, [email], (err, data) => {
     if (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ message: "Erro no servidor", error: err });
     }
     if (data.length) {
-      return res.status(409).json("Usuário já cadastrado!");
+      return res.status(409).json({ message: "Usuário já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -62,7 +68,9 @@ export const registerProfessor = (req, res) => {
 
     db.query(q2, [nome, email, hashedPassword], (err, data) => {
       if (err) {
-        return res.status(500).json(err);
+        return res
+          .status(500)
+          .json({ message: "Erro no servidor", error: err });
       }
       const usuarioID = data.insertId;
 
@@ -71,7 +79,9 @@ export const registerProfessor = (req, res) => {
 
       db.query(q3, [usuarioID, matricula], (err, data) => {
         if (err) {
-          return res.status(500).json(err);
+          return res
+            .status(500)
+            .json({ message: "Erro no servidor", error: err });
         }
         const professorID = data.insertId;
 
@@ -84,12 +94,16 @@ export const registerProfessor = (req, res) => {
             "INSERT INTO professor_turma (idprofessor, idturma) VALUES (?, ?)";
           db.query(q4, [professorID, idTurma], (err) => {
             if (err) {
-              return res.status(500).json(err);
+              return res
+                .status(500)
+                .json({ message: "Erro no servidor", error: err });
             }
           });
         });
 
-        return res.status(200).json("Professor foi cadastrado com sucesso!");
+        return res
+          .status(200)
+          .json({ message: "Professor foi cadastrado com sucesso!" });
       });
     });
   });
@@ -121,6 +135,8 @@ export const login = (req, res) => {
     res
       .cookie("accessToken", token, {
         httpOnly: true,
+        secure: false, // Defina como true em produção
+        sameSite: "strict",
       })
       .status(200)
       .json(others);

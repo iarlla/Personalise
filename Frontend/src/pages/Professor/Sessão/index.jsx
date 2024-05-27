@@ -2,14 +2,19 @@ import { useState, useEffect } from "react";
 import Navbar from "../../../components/navBar";
 import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
+import useAuth from "../../../hooks/useAuth";
 import * as C from "./styles";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const Sessao = () => {
   const [turma, setTurma] = useState({});
   const [disciplinas, setDisciplinas] = useState({});
+  const [professor, setProfessor] = useState({});
+  const [questionario, setQuestionario] = useState({});
   const { idDisc, idturma } = useParams();
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchDataDisc = async () => {
@@ -39,6 +44,46 @@ const Sessao = () => {
     fetchDataDisc();
   }, [idturma]);
 
+  useEffect(() => {
+    const fetchDataID = async () => {
+      try {
+        const res = await Axios.post("http://localhost:3001/api/professor/id", {
+          professorId: currentUser.id,
+        });
+        setProfessor(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataID();
+  }, [currentUser.id]);
+
+  useEffect(() => {
+    const fetchDataQuestID = async () => {
+      try {
+        const res = await Axios.get(
+          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+        );
+        setQuestionario(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataQuestID();
+  }, [professor]);
+
+  const handleClickRedirect = async (e) => {
+    e.preventDefault();
+    try {
+      if (questionario.length > 0) {
+        navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
+      } else {
+        navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <C.Container>
@@ -78,9 +123,10 @@ const Sessao = () => {
               </div>
               <C.line />
               <C.ContainerButtons>
-                <Link to={`/sessao/${idDisc}/${idturma}/preQuest`}>
-                  <ButtonPrincipal Text="Questionario pré-aula"></ButtonPrincipal>
-                </Link>
+                <ButtonPrincipal
+                  Text="Questionario pré-aula"
+                  onClick={handleClickRedirect}
+                ></ButtonPrincipal>
                 <Link to={`/sessao/${idDisc}/${idturma}/posQuest`}>
                   <ButtonPrincipal Text="Questionario pós-aula"></ButtonPrincipal>
                 </Link>

@@ -26,6 +26,18 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
+    for (const key in inputs) {
+      if (inputs[key] === "") {
+        setError("Todos os campos devem ser preenchidos!");
+        return;
+      }
+    }
+
+    if (inputs.email !== inputs.emailConf) {
+      setError("Os emails não são iguais!");
+      return;
+    }
+
     try {
       await Axios.post("http://localhost:3001/api/auth/cadastro-aluno", {
         email: inputs.email,
@@ -35,9 +47,11 @@ const Signup = () => {
         curso: inputs.curso,
       }).then((response) => {
         console.log(response);
+        alert("Usuário cadastrado com sucesso!");
+        navigate("/");
       });
     } catch (error) {
-      setError(error.response.data);
+      setError(error.response.data.message || "Erro desconhecido");
     }
 
     alert("Usuário cadatrado com sucesso!");

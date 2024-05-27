@@ -14,6 +14,7 @@ import Sessao from "../pages/Professor/Sessão";
 import EnviadoSucesso from "../pages/Professor/EnviadoSucesso";
 import DeletadoSucesso from "../pages/Professor/DeletadoSucesso";
 import EditarQuest from "../pages/Professor/EditarQuest";
+import MeuQuestionario from "../pages/Professor/MeuQuestionario";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -48,10 +49,17 @@ const RouteApp = () => {
             path="/sessao/:idDisc/:idturma/preQuest/enviado"
             element={<EnviadoSucesso />}
           />
-          <Route path="/deletado" element={<DeletadoSucesso />} />
+          <Route
+            path="/sessao/:idDisc/:idturma/preQuest/deletado"
+            element={<DeletadoSucesso />}
+          />
           <Route
             path="/sessao/:idDisc/:idturma/preQuest/editar"
             element={<EditarQuest />}
+          />
+          <Route
+            path="/sessao/:idDisc/:idturma/preQuest/meuQuest"
+            element={<MeuQuestionario />}
           />
         </Routes>
       </Fragment>

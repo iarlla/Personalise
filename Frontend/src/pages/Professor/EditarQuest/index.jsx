@@ -6,6 +6,7 @@ import * as C from "./styles";
 import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth"
 
 const EditarQuest = () => {
   // Estado para armazenar as perguntas
@@ -84,12 +85,19 @@ const EditarQuest = () => {
 
   const navigate = useNavigate();
 
+  const { currentUser } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:3001/api/questions/preQuest/editar",
-        { questions }
+        { 
+          questions, 
+          professorId: currentUser.id,
+          idturma
+        },
+        { withCredentials: true } // Para enviar cookies junto com a requisição
       );
       console.log("Resposta do servidor:", response.data);
       navigate(`/sessao/${idDisc}/${idturma}/preQuest/enviado`);
