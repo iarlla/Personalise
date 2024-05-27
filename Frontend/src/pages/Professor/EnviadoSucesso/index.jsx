@@ -1,19 +1,48 @@
 import Navbar from "../../../components/navBar";
+import { useState, useEffect } from "react";
 import Button from "../../../components/button";
-import { Link } from "react-router-dom";
+import Axios from "axios";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as C from "./styles";
 
 const EnviadoSucesso = () => {
-  // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Processar as perguntas aqui (enviar para o banco de dados, etc.)
-    console.log("Perguntas:", questions);
-  };
+  const navigate = useNavigate();
+
+  const [turma, setTurma] = useState({});
+  const [disciplinas, setDisciplinas] = useState({});
+  const { idDisc, idturma } = useParams();
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await Axios.get(
+          `http://localhost:3001/api/disciplinas/${idDisc}`
+        );
+        setDisciplinas(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, [idDisc]);
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await Axios.get(
+          `http://localhost:3001/api/turmas/${idturma}`
+        );
+        setTurma(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, [idturma]);
 
   const handleClick = (e) => {
     e.preventDefault();
-    // navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);
+    navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
   };
 
   return (

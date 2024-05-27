@@ -25,21 +25,34 @@ const SignupProfessor = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    try {
-      await Axios.post("http://localhost:3001/api/auth/cadastro-professor", {
-        email: inputs.email,
-        nome: inputs.nome,
-        senha: inputs.senha,
-        matricula: inputs.matricula,
-      }).then((response) => {
-        console.log(response);
-      });
-    } catch (error) {
-      setError(error.response.data);
+    for (const key in inputs) {
+      if (inputs[key] === "") {
+        setError("Todos os campos devem ser preenchidos!");
+        return;
+      }
     }
 
-    alert("Usuário cadastrado com sucesso!");
-    navigate("/");
+    if (inputs.email !== inputs.emailConf) {
+      setError("Os emails não são iguais!");
+      return;
+    }
+
+    try {
+      const response = await Axios.post(
+        "http://localhost:3001/api/auth/cadastro-professor",
+        {
+          email: inputs.email,
+          nome: inputs.nome,
+          senha: inputs.senha,
+          matricula: inputs.matricula,
+        }
+      );
+      console.log(response);
+      alert("Usuário cadastrado com sucesso!");
+      navigate("/");
+    } catch (error) {
+      setError(error.response.data.message || "Erro desconhecido");
+    }
   };
 
   return (

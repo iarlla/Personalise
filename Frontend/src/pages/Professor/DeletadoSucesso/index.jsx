@@ -1,44 +1,66 @@
 import Navbar from "../../../components/navBar";
-import MiniMenu from "../../../components/miniMenu";
-import deletadoImage from "/deletado.png"
-import Button from "../../../components/button"
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Button from "../../../components/button";
+import Axios from "axios";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as C from "./styles";
 
 const DeletadoSucesso = () => {
-  // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Processar as perguntas aqui (enviar para o banco de dados, etc.)
-    console.log("Perguntas:", questions);
-  };
+  const navigate = useNavigate();
 
-  
+  const [turma, setTurma] = useState({});
+  const [disciplinas, setDisciplinas] = useState({});
+  const { idDisc, idturma } = useParams();
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await Axios.get(
+          `http://localhost:3001/api/disciplinas/${idDisc}`
+        );
+        setDisciplinas(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, [idDisc]);
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await Axios.get(
+          `http://localhost:3001/api/turmas/${idturma}`
+        );
+        setTurma(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, [idturma]);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
+  };
   return (
     <>
       <C.Container>
         <Navbar Text="Professor" />
-        <MiniMenu
-          TitleOne="Minhas materias"
-          symbolOne=">"
-          urlOne="/MateriasP"
-          TitleTwo="Sessões"
-          symbolTwo=">"
-          TitleThree="Questionário Pré-Aula"
-        />
         <C.Content>
           <C.titlePage>Questionário Deletado</C.titlePage>
-          <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
         </C.Content>
         <C.ContentQuest>
           <C.containerSucesso>
-            <C.imagemSucesso src={deletadoImage} />
+            <C.imagemSucesso src={`${window.location.origin}/deletado.png`} />
             <C.containerTextoSucesso>
-              <C.textoSucesso> Questionário Deletado Com Sucesso</C.textoSucesso>
+              <C.textoSucesso>
+                {" "}
+                Questionário Deletado Com Sucesso!
+              </C.textoSucesso>
             </C.containerTextoSucesso>
-            <Link to="/MateriasP">
-                <Button Text="Voltar"></Button>
-            </Link>
+            <Button Text="Voltar" onClick={handleClick}></Button>
           </C.containerSucesso>
         </C.ContentQuest>
       </C.Container>
