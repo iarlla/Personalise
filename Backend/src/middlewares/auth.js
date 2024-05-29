@@ -2,35 +2,110 @@ import { db } from "../database/db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const register = (req, res) => {
+export const registerAluno = (req, res) => {
   const { email, nome, senha, matricula, curso } = req.body;
 
   const q = "SELECT * FROM usuarios WHERE email = ?";
 
   db.query(q, [email], (err, data) => {
     if (err) {
-      return res.status(500).json(err);
+      return res.status(500).json({ message: "Erro no servidor", error: err });
     }
     if (data.length) {
-      return res.status(409).json("Usuário já cadastrado!");
+      return res.status(409).json({ message: "Usuário já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(senha, salt);
 
     const q2 =
-      "INSERT INTO usuarios (nome, matricula, curso, email, senha) VALUES (?, ?, ?, ?, ?)";
+      "INSERT INTO usuarios (nome, email, senha, tipo_usuario) VALUES (?, ?, ?, 'Aluno')";
 
-    db.query(
-      q2,
-      [nome, matricula, curso, email, hashedPassword],
-      (err, data) => {
-        if (err) {
-          return res.status(500).json(err);
-        }
-        return res.status(200).json("Usuário foi criado!");
+    db.query(q2, [nome, email, hashedPassword], (err, data) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "Erro no servidor", error: err });
       }
-    );
+
+      const usuarioID = data.insertId;
+
+      const q3 =
+        "INSERT INTO alunos (id_usuario, matricula, curso) VALUES (?, ?, ?)";
+
+      db.query(q3, [usuarioID, matricula, curso], (err, data) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ message: "Erro no servidor", error: err });
+        }
+        return res
+          .status(200)
+          .json({ message: "Aluno foi cadastrado com sucesso!" });
+      });
+    });
+  });
+};
+
+export const registerProfessor = (req, res) => {
+  const { email, nome, senha, matricula } = req.body;
+
+  const q = "SELECT * FROM usuarios WHERE email = ?";
+
+  db.query(q, [email], (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: "Erro no servidor", error: err });
+    }
+    if (data.length) {
+      return res.status(409).json({ message: "Usuário já cadastrado!" });
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(senha, salt);
+
+    const q2 =
+      "INSERT INTO usuarios (nome, email, senha, tipo_usuario) VALUES (?, ?, ?, 'professor')";
+
+    db.query(q2, [nome, email, hashedPassword], (err, data) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "Erro no servidor", error: err });
+      }
+      const usuarioID = data.insertId;
+
+      const q3 =
+        "INSERT INTO professores (id_usuario, matricula) VALUES (?, ?)";
+
+      db.query(q3, [usuarioID, matricula], (err, data) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ message: "Erro no servidor", error: err });
+        }
+        const professorID = data.insertId;
+
+        // IDs das turmas estáticos
+        const turmas = [1, 2, 3, 4];
+
+        // Inserindo na tabela professor_turma para cada turma
+        turmas.forEach((idTurma) => {
+          const q4 =
+            "INSERT INTO professor_turma (idprofessor, idturma) VALUES (?, ?)";
+          db.query(q4, [professorID, idTurma], (err) => {
+            if (err) {
+              return res
+                .status(500)
+                .json({ message: "Erro no servidor", error: err });
+            }
+          });
+        });
+
+        return res
+          .status(200)
+          .json({ message: "Professor foi cadastrado com sucesso!" });
+      });
+    });
   });
 };
 
@@ -60,6 +135,8 @@ export const login = (req, res) => {
     res
       .cookie("accessToken", token, {
         httpOnly: true,
+        secure: false, // Defina como true em produção
+        sameSite: "strict",
       })
       .status(200)
       .json(others);

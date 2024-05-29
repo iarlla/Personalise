@@ -5,18 +5,22 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif
+        font-family: Poppins, Arial, sans-serif !important;
     }
 
-    body {
-        width: 100vw;
-        height: 100vh;
+    html, body {
+        width: 100%;
+        height: 100%;
         background-color: #FFFFFF;
-        font-family: poppins;
-
+        font-family: "Poppins" !important;
+        overflow-x: hidden; /* Aplicar apenas ao body e html */
     }
 
-
+    #root {
+        min-height: 100vh; /* Garantir que o root ocupe toda a altura da viewport */
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export default GlobalStyle;
