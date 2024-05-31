@@ -5,6 +5,4 @@ const router = express.Router();
 
 router.get("/", getUsers);
 
-// router.post("/cadastro", cadUsers);
-
 export default router;

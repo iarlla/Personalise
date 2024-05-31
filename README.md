@@ -4,12 +4,12 @@ Nosso software se baseia na coleta de dados de alunos de diversas turmas e em di
 
 ### Como funciona?
 Haverão dois questionários, sendo um deles, feito pelo próprio professor:
-1. O primeiro, será no começo do semestre e feito pelo professor. Nele, o professor pode fazer perguntas objetivas para saber qual o nível de conhecimento de seus alunos. 
+1. O primeiro, será no começo do semestre e feito pelo professor. Nele, o professor pode fazer perguntas objetivas para saber qual o nível de conhecimento de seus alunos.
 2. O segundo, será no final do semestre. Nele, os alunos podem dar feedback da matéria que tiveram como também do professor e responder algumas perguntas.
 
 ## Tecnologias Utilizadas
 
-- MongoDB
+- MySQL
 - Express.js
 - React.js
 - Node.js
@@ -17,8 +17,7 @@ Haverão dois questionários, sendo um deles, feito pelo próprio professor:
 ## Instalação
 
 1. Clone o repositório: `git clone https://github.com/seu_usuario/nome-do-projeto.git`
-2. Instale as dependências:
-3. Configure as variáveis de ambiente (se necessário).
+2. Rode o docker o comando docker-compose up
 
 ## Uso
 
