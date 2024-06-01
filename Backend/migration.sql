@@ -76,7 +76,7 @@ CREATE TABLE `disciplinas` (
   PRIMARY KEY (`id_disciplina`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `disciplinas` VALUES
-    (1,'Programação web',120,'Programação para web com JavaScript, Html e CSS'),
+    (1,'Programacao web',120,'Programacao para web com JavaScript, Html e CSS'),
     (2,'Novas Tecnologias',80,'Aprendizado em Python'),
     (3,'Engenharia de Software',80,'UML'),
     (4,'Design de Software',80,'Arquitetura de softwate com base na UML e melhores praticas'),

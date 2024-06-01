@@ -10,14 +10,12 @@ export const getProfessores = (_, res) => {
 };
 
 export const getProfessorID = (req, res) => {
-  const { professorId } = req.body; // Obtenha o idturma do corpo da requisição
+  const { professorId } = req.body;
 
-  // Realize o JOIN para obter o id_professor correspondente ao id_usuario
   const q1 = `
     SELECT idprofessores
     FROM professores
-    JOIN usuarios ON usuarios.id = professores.id_usuario
-    WHERE professores.id_usuario = ?
+    WHERE id_usuario = ?
   `;
 
   db.query(q1, [professorId], (err, data) => {
