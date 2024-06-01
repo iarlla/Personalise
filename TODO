@@ -19,17 +19,21 @@ http://localhost:3001/api/users/usuario/:idusuario
 
 
 ## Questionario
-# Criar um novo questionario pelo professor
+# Cria um novo questionario pelo professor
 http://localhost:3001/api/questions/preQuest/editar
 http://localhost:3001/api/questions/posQuest/editar
 Obs: Alterei o padrão do DTO, que pode ser encontrado em ./docs/modelo_questionario.json
 
 # Obtem todos os questionarios registrados de uma turma.
 # Usado pelo aluno para obter os possíveis ids dos questionarios usuado na requisicao a baixo
+# Obs: Não é para ser usado pelo professor
 http://localhost:3001/api/questionario/turma/:idturma
 
 # Obtem as perguntas de um questionario
 http://localhost:3001/api/questionario/:idquestionario
+
+# Envia as respostas de um questionario
+http://localhost:3001/api/questionario/responder
 
 
 ## FIX:

@@ -147,14 +147,45 @@ CREATE TABLE `respostas` (
   `idrespostas` int NOT NULL AUTO_INCREMENT,
   `idaluno` int DEFAULT NULL,
   `idquestionario` int DEFAULT NULL,
-  `respostas` json DEFAULT NULL,
   PRIMARY KEY (`idrespostas`),
   KEY `id_aluno_respostas_idx` (`idaluno`),
   KEY `teste_idx` (`idquestionario`),
   CONSTRAINT `id_aluno_respostas` FOREIGN KEY (`idaluno`) REFERENCES `alunos` (`idaluno`),
   CONSTRAINT `id_quest_resp` FOREIGN KEY (`idquestionario`) REFERENCES `questionario` (`id_questionario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `respostas` VALUES
+    (1, 1, 1),
+    (2, 2, 1),
+    (3, 3, 1),
+    (4, 4, 1),
+    (5, 5, 1),
+    (6, 6, 1),
+    (7, 7, 1),
+    (8, 8, 1),
+    (9, 9, 1),
+    (10, 10, 1),
+    (11, 1, 2),
+    (12, 2, 2),
+    (13, 3, 2),
+    (14, 4, 2),
+    (15, 5, 2),
+    (16, 6, 2),
+    (17, 7, 2),
+    (18, 8, 2),
+    (19, 9, 2),
+    (20, 10, 2);
 
+
+DROP TABLE IF EXISTS `respostas_questionario`;
+CREATE TABLE `respostas_questionario` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idrespostas` int NOT NULL,
+  `num` int DEFAULT NULL,
+  `resposta` int DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `idrespostas_idx` (`idrespostas`),
+    CONSTRAINT `idrespostas` FOREIGN KEY (`idrespostas`) REFERENCES `respostas` (`idrespostas`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 DROP TABLE IF EXISTS `turma_disciplina`;

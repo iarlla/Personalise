@@ -14,18 +14,14 @@ export const getQuestionarios = (_, res) => {
 export const getQuestionario = (req, res) => {
     const q = "SELECT perguntas FROM questionario where id_questionario = ?";
 
-
     db.query(q, [req.params.idquestionario], (err, data) => {
         if (err) return res.status(500).json(err);
 
-        let perguntas;
         try {
-            perguntas = JSON.parse(data[0].perguntas);
+            return res.status(200).json(JSON.parse(data[0].perguntas));
         } catch (parseErr) {
             return res.status(500).json({ error: 'Failed to parse JSON' });
         }
-
-        return res.status(200).json(perguntas);
     });
   };
 

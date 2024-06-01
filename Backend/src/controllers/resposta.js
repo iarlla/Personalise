@@ -10,65 +10,56 @@ export const getRespostas = (_, res) => {
 };
 
 
-export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
-  const { idProfessor, idDisc, idTurma } = req.params;
-
-  const q = `
-    SELECT q.id_questionario
-    FROM questionario q
-    LEFT JOIN professor_turma pt ON q.id_professor_turma = pt.id
-    LEFT JOIN turma t ON pt.idturma = t.idturma
-    LEFT JOIN turma_disciplina td ON t.idturma = td.idturma
-    LEFT JOIN disciplinas d on d.id_disciplina = td.iddisciplina
-    WHERE pt.idprofessor = ? AND d.id_disciplina = ? AND t.idturma = ?
-  `;
-
-  db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {
-    if (err) return res.status(500).json(err);
-
-    return res.status(200).json(data);
-  });
-};
 
 
 
-export const deleteQuestionarioByDiscTurmaProfessor = (req, res) => {
-  const { idProfessor, idDisc, idTurma } = req.params;
+export const postResposta = (req, res) => {
+  const { id_questionario, id_usuario, respostas } = req.body;
 
-  // Primeiro, identifique o questionário
-  const q = `
-      SELECT q.id_questionario
-      FROM questionario q
-      LEFT JOIN professor_turma pt ON q.id_professor_turma = pt.id
-      LEFT JOIN turma t ON pt.idturma = t.idturma
-      LEFT JOIN turma_disciplina td ON t.idturma = td.idturma
-      LEFT JOIN disciplinas d on d.id_disciplina = td.iddisciplina
-      WHERE pt.idprofessor = ? AND d.id_disciplina = ? AND t.idturma = ?
+    const q1 = `
+        SELECT idaluno
+        FROM alunos
+        LEFT JOIN usuarios ON usuarios.id = alunos.id_usuario
+        WHERE usuarios.id = ?
     `;
 
-  db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {
-    if (err)
-      return res
-        .status(500)
-        .json({ message: "Erro ao buscar o questionário", error: err });
+    db.query(q1, [id_usuario], (err, data) => {
+        if (err) {
+            console.error("Erro ao buscar aluno:", err);
+            return res.status(500).json(err);
+        }
 
-    if (data.length === 0)
-      return res.status(404).json({ message: "Questionário não encontrado" });
+        if (data.length === 0) {
+            console.log(id_usuario)
+            return res.status(404).json("Aluno não encontrado");
+        }
 
-    const questionarioId = data[0].id_questionario;
+        const idAluno = data[0].idaluno;
 
-    // Agora delete o questionário identificado
-    const q2 = "DELETE FROM questionario WHERE id_questionario = ?";
+        const q2 = "INSERT INTO respostas (idaluno, idquestionario) VALUES (?, ?)";
+        db.query(q2, [idAluno, id_questionario], (err, data) => {
+            if (err) {
+                return res
+                .status(500)
+                .json({ message: "Erro no servidor", error: err });
+            }
+            const idResposta = data.insertId;
 
-    db.query(q2, [questionarioId], (err, result) => {
-      if (err)
-        return res
-          .status(500)
-          .json({ message: "Erro ao deletar o questionário", error: err });
+            respostas.forEach((r) => {
+                const q3 = "INSERT INTO respostas_questionario (idrespostas, num, resposta) VALUES (?, ?, ?)";
+                if (r.resposta === undefined || r.resposta === null) {
+                    return
+                }
+                db.query(q3, [idResposta, r.num, r.resposta], (err) => {
+                    if (err) {
+                        return res
+                        .status(500)
+                        .json({ message: "Erro no servidor", error: err });
+                    }
+                });
+            });
+            return res.status(201).json({ message: "Respostas inseridas com sucesso", data });
+        });
 
-      return res
-        .status(200)
-        .json({ message: "Questionário deletado com sucesso" });
     });
-  });
 };
