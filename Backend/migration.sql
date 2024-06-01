@@ -120,21 +120,26 @@ INSERT INTO `professor_turma` VALUES
     (5, 2, 1),
     (6, 2, 2),
     (7, 2, 3),
-    (8, 2, 4);
+    (8, 2, 4),
+    (9, 3, 1),
+    (10, 3, 2),
+    (11, 3, 3),
+    (12, 3, 4);
 
 
 DROP TABLE IF EXISTS `questionario`;
 CREATE TABLE `questionario` (
   `id_questionario` int NOT NULL AUTO_INCREMENT,
   `id_professor_turma` int DEFAULT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
   `perguntas` json DEFAULT NULL,
   PRIMARY KEY (`id_questionario`),
   KEY `professor_turma_idx` (`id_professor_turma`),
   CONSTRAINT `questionario_id` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `questionario` VALUES
-    (1,2,'[{\"num\": 1, \"pergunta\": \"Pergunta 1\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}, {\"num\": 8, \"pergunta\": \"Pergunta 8\", \"nomeLabel\": \"pergunta-8\"}]'),
-    (2,1,'[{\"num\": 1, \"pergunta\": \"Pergunta 1\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}]');
+    (1, 2, 'PRE', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortável escrevendo código em mais de uma linguagem de programação.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 2,\"pergunta\": \"Eu tenho experiência trabalhando com sistemas de controle de versão, como o Git.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 3,\"pergunta\": \"Eu me sinto confortável escrevendo testes unitários para o meu código.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 4,\"pergunta\": \"Eu consigo implementar algoritmos básicos, como ordenação e busca.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 5,\"pergunta\": \"Eu consigo escrever scripts para automatizar tarefas repetitivas.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 6,\"pergunta\": \"Eu estou confortável com o uso de ambientes de desenvolvimento integrados (IDEs).\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 7,\"pergunta\": \"Alunos trabalham na area\",\"tipo\": \"SIM_NAO\"},{\"num\": 8,\"pergunta\": \"Alunos conhecem python\",\"tipo\": \"SIM_NAO\"},{\"num\": 9,\"pergunta\": \"Alunos conhecem Github\",\"tipo\": \"SIM_NAO\"},{\"num\": 10,\"pergunta\": \"Alunos utilizam VScode\",\"tipo\": \"SIM_NAO\"},{\"num\": 11,\"pergunta\": \"Alunos fizeram as matérias de requisito\",\"tipo\": \"SIM_NAO\"}]'),
+    (2, 1, 'POS', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortável trabalhando com bancos de dados relacionais.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 2,\"pergunta\": \"Eu entendo e aplico conceitos de programação funcional.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 3,\"pergunta\": \"Eu consigo usar ferramentas de depuração para encontrar e corrigir erros no meu código.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 4,\"pergunta\": \"Eu estou familiarizado com o desenvolvimento de aplicações web.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 5,\"pergunta\": \"Eu entendo os princípios de design de APIs RESTful.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 6,\"pergunta\": \"Eu consigo utilizar contêineres, como Docker, para criar ambientes de desenvolvimento isolados.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 7,\"pergunta\": \"Eu estou familiarizado com o uso de testes de integração em meus projetos.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 8,\"pergunta\": \"Eu entendo e aplico padrões de design em meu código.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 9,\"pergunta\": \"Eu consigo utilizar ferramentas de CI/CD para automatizar o pipeline de desenvolvimento.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 10,\"pergunta\": \"Eu me sinto confortável com o desenvolvimento de aplicações móveis.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 11,\"pergunta\": \"Eu uso frequentemente técnicas de refatoração para melhorar a qualidade do código.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 12,\"pergunta\": \"Eu trabalho regularmente em projetos open source.\",\"tipo\": \"SIM_NAO\"},{\"num\": 13,\"pergunta\": \"Eu utilizo metodologias ágeis em meus projetos de desenvolvimento.\",\"tipo\": \"SIM_NAO\"},{\"num\": 14,\"pergunta\": \"Eu já participei de hackathons ou competições de programação.\",\"tipo\": \"SIM_NAO\"},{\"num\": 15,\"pergunta\": \"Eu tenho experiência em programação de sistemas embarcados.\",\"tipo\": \"SIM_NAO\"},{\"num\": 16,\"pergunta\": \"Eu já desenvolvi projetos utilizando computação em nuvem.\",\"tipo\": \"SIM_NAO\"},{\"num\": 17,\"pergunta\": \"Eu entendo os conceitos básicos de segurança da informação e os aplico no desenvolvimento de software.\",\"tipo\": \"SIM_NAO\"},{\"num\": 18,\"pergunta\": \"Eu participo de comunidades ou fóruns de desenvolvedores online.\",\"tipo\": \"SIM_NAO\"},{\"num\": 19,\"pergunta\": \"Eu já contribui com código para projetos de outras pessoas.\",\"tipo\": \"SIM_NAO\"},{\"num\": 20,\"pergunta\": \"Eu me sinto confortável apresentando e explicando meu código para outros desenvolvedores.\",\"tipo\": \"SIM_NAO\"}]');
 
 
 DROP TABLE IF EXISTS `respostas`;

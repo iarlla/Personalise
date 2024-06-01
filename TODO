@@ -4,9 +4,27 @@
 # Assim, conseguimos compartilhar as alterações no banco de dados modificando o arquivo ./Backend/migration.sql
 
 
-## Novos endpoints
+## Novos endpoints - Caso queira implementar no frontend
 ## Obtem as turmas a partir do id do usuário
-http://localhost:3001/api/turmas/usuario/:idUsuario
+http://localhost:3001/api/turmas/usuario/:idusuario
 
 # Obtem as disciplinas a partir do id do usuário
-http://localhost:3001/api/disciplinas/usuario/:idUsuario
+http://localhost:3001/api/disciplinas/usuario/:idusuario
+
+## Obtem as informações a partir do id do usuario
+http://localhost:3001/api/users/usuario/:idusuario
+
+
+
+## Questionario
+# Criar um novo questionario pelo professor
+http://localhost:3001/api/questions/preQuest/editar
+http://localhost:3001/api/questions/posQuest/editar
+Obs: Alterei o padrão do DTO, que pode ser encontrado em ./docs/modelo_questionario.json
+
+
+
+
+
+## FIX:
+Ao criar professor, inserir questionarios padroes.

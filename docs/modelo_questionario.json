@@ -1,0 +1,57 @@
+[
+  {
+    "num": 1,
+    "pergunta": "Eu me sinto confortável escrevendo código em mais de uma linguagem de programação.",
+    "tipo": "MULTIPLA_ESCOLHA"
+  },
+  {
+    "num": 2,
+    "pergunta": "Eu tenho experiência trabalhando com sistemas de controle de versão, como o Git.",
+    "tipo": "MULTIPLA_ESCOLHA"
+  },
+  {
+    "num": 3,
+    "pergunta": "Eu me sinto confortável escrevendo testes unitários para o meu código.",
+    "tipo": "MULTIPLA_ESCOLHA"
+  },
+  {
+    "num": 4,
+    "pergunta": "Eu consigo implementar algoritmos básicos, como ordenação e busca.",
+    "tipo": "MULTIPLA_ESCOLHA"
+  },
+  {
+    "num": 5,
+    "pergunta": "Eu consigo escrever scripts para automatizar tarefas repetitivas.",
+    "tipo": "MULTIPLA_ESCOLHA"
+  },
+  {
+    "num": 6,
+    "pergunta": "Eu estou confortável com o uso de ambientes de desenvolvimento integrados (IDEs).",
+    "tipo": "MULTIPLA_ESCOLHA"
+  },
+  {
+    "num": 7,
+    "pergunta": "Alunos trabalham na area",
+    "tipo": "SIM_NAO"
+  },
+  {
+    "num": 8,
+    "pergunta": "Alunos conhecem python",
+    "tipo": "SIM_NAO"
+  },
+  {
+    "num": 9,
+    "pergunta": "Alunos conhecem Github",
+    "tipo": "SIM_NAO"
+  },
+  {
+    "num": 10,
+    "pergunta": "Alunos utilizam VScode",
+    "tipo": "SIM_NAO"
+  },
+  {
+    "num": 11,
+    "pergunta": "Alunos fizeram as matérias de requisito",
+    "tipo": "SIM_NAO"
+  }
+]
