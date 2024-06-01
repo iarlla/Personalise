@@ -2,6 +2,7 @@
 ## Adicionei migrations via SQL
 # Agora basta instalar o docker e rodar o comando `docker-compose up` para rodar o banco de dados.
 # Assim, conseguimos compartilhar as alterações no banco de dados modificando o arquivo ./Backend/migration.sql
+# Da para colocar depois o backend e o front end para subir tudo junto com um comando só.
 
 
 ## Novos endpoints - Caso queira implementar no frontend
@@ -19,7 +20,7 @@ http://localhost:3001/api/users/usuario/:idusuario
 
 
 ## Questionario
-# Cria um novo questionario pelo professor
+# Cria um novo questionario pelo professor (POST)
 http://localhost:3001/api/questions/preQuest/editar
 http://localhost:3001/api/questions/posQuest/editar
 Obs: Alterei o padrão do DTO, que pode ser encontrado em ./docs/modelo_questionario.json
@@ -32,9 +33,12 @@ http://localhost:3001/api/questionario/turma/:idturma
 # Obtem as perguntas de um questionario
 http://localhost:3001/api/questionario/:idquestionario
 
-# Envia as respostas de um questionario
+# Envia as respostas de um questionario (POST)
 http://localhost:3001/api/questionario/responder
+Obs: Criei um padrão do DTO, que pode ser encontrado em ./docs/modelo_resposta.json
 
+# Obtem as respostas de um questionario
+http://localhost:3001/api/respostas/:idquestionario
 
 ## FIX:
 Ao criar professor, inserir questionarios padroes.
