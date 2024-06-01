@@ -17,8 +17,10 @@ export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
     SELECT q.id_questionario
     FROM questionario q
     LEFT JOIN professor_turma pt ON q.id_professor_turma = pt.id
-    LEFT JOIN turma_disciplina td ON pt.idturma = td.idturma
-    WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?
+    LEFT JOIN turma t ON pt.idturma = t.idturma
+    LEFT JOIN turma_disciplina td ON t.idturma = td.idturma
+    LEFT JOIN disciplinas d on d.id_disciplina = td.iddisciplina
+    WHERE pt.idprofessor = ? AND d.id_disciplina = ? AND t.idturma = ?
   `;
 
   db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {
@@ -28,6 +30,8 @@ export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
   });
 };
 
+
+
 export const deleteQuestionarioByDiscTurmaProfessor = (req, res) => {
   const { idProfessor, idDisc, idTurma } = req.params;
 
@@ -35,9 +39,11 @@ export const deleteQuestionarioByDiscTurmaProfessor = (req, res) => {
   const q = `
       SELECT q.id_questionario
       FROM questionario q
-      JOIN professor_turma pt ON q.id_professor_turma = pt.id
-      JOIN turma_disciplina td ON pt.idturma = td.idturma
-      WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?;
+      LEFT JOIN professor_turma pt ON q.id_professor_turma = pt.id
+      LEFT JOIN turma t ON pt.idturma = t.idturma
+      LEFT JOIN turma_disciplina td ON t.idturma = td.idturma
+      LEFT JOIN disciplinas d on d.id_disciplina = td.iddisciplina
+      WHERE pt.idprofessor = ? AND d.id_disciplina = ? AND t.idturma = ?
     `;
 
   db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {
