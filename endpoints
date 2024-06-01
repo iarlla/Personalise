@@ -1,7 +1,0 @@
-
-# Obtem as turmas a partir do id do usuário
-http://localhost:3001/api/turmas/usuario/:idUsuario
-
-
-# Obtem as disciplinas a partir do id do usuário
-http://localhost:3001/api/disciplinas/usuario/:idUsuario

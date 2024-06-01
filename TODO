@@ -1,0 +1,12 @@
+
+## Adicionei migrations via SQL
+# Agora basta instalar o docker e rodar o comando docker-compose up para rodar o banco de dados.
+# Assim, conseguimos compartilhar as alterações no banco de dados modificando o arquivo ./Backend/migration.sql
+
+
+## Novos endpoints
+## Obtem as turmas a partir do id do usuário
+http://localhost:3001/api/turmas/usuario/:idUsuario
+
+# Obtem as disciplinas a partir do id do usuário
+http://localhost:3001/api/disciplinas/usuario/:idUsuario

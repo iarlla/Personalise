@@ -17,7 +17,7 @@ export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
     FROM questionario q
     JOIN professor_turma pt ON q.id_professor_turma = pt.id
     JOIN turma_disciplina td ON pt.idturma = td.idturma
-    WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?;
+    WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?
   `;
 
   db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {
