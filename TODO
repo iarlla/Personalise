@@ -11,8 +11,10 @@ http://localhost:3001/api/turmas/usuario/:idusuario
 # Obtem as disciplinas a partir do id do usuário
 http://localhost:3001/api/disciplinas/usuario/:idusuario
 
-## Obtem as informações a partir do id do usuario
+## Obtem as informações do usuario a partir do id do usuario
 http://localhost:3001/api/users/usuario/:idusuario
+
+
 
 
 
@@ -22,8 +24,12 @@ http://localhost:3001/api/questions/preQuest/editar
 http://localhost:3001/api/questions/posQuest/editar
 Obs: Alterei o padrão do DTO, que pode ser encontrado em ./docs/modelo_questionario.json
 
+# Obtem todos os questionarios registrados de uma turma.
+# Usado pelo aluno para obter os possíveis ids dos questionarios usuado na requisicao a baixo
+http://localhost:3001/api/questionario/turma/:idturma
 
-
+# Obtem as perguntas de um questionario
+http://localhost:3001/api/questionario/:idquestionario
 
 
 ## FIX:

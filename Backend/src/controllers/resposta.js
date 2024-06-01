@@ -1,46 +1,10 @@
 import { db } from "../database/db.js";
 
-export const getQuestionarios = (_, res) => {
-  const q = "SELECT * FROM questionario";
+export const getRespostas = (_, res) => {
+  const q = "SELECT * FROM respostas";
 
   db.query(q, (err, data) => {
     if (err) return res.json(err);
-    return res.status(200).json(data);
-  });
-};
-
-
-
-export const getQuestionario = (req, res) => {
-    const q = "SELECT perguntas FROM questionario where id_questionario = ?";
-
-
-    db.query(q, [req.params.idquestionario], (err, data) => {
-        if (err) return res.status(500).json(err);
-
-        let perguntas;
-        try {
-            perguntas = JSON.parse(data[0].perguntas);
-        } catch (parseErr) {
-            return res.status(500).json({ error: 'Failed to parse JSON' });
-        }
-
-        return res.status(200).json(perguntas);
-    });
-  };
-
-
-export const getListQuestionariosByTurma = (req, res) => {
-  const q = `
-    SELECT q.id_questionario
-    FROM questionario q
-    LEFT JOIN professor_turma pt ON q.id_professor_turma = pt.id
-    LEFT JOIN turma t ON pt.idturma = t.idturma
-    WHERE t.idturma = ?
-  `;
-
-  db.query(q, [req.params.idTurma], (err, data) => {
-    if (err) return res.status(500).json(err);
     return res.status(200).json(data);
   });
 };
