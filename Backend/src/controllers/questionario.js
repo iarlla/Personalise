@@ -9,14 +9,15 @@ export const getQuestionarios = (_, res) => {
   });
 };
 
+
 export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
   const { idProfessor, idDisc, idTurma } = req.params;
 
   const q = `
     SELECT q.id_questionario
     FROM questionario q
-    JOIN professor_turma pt ON q.id_professor_turma = pt.id
-    JOIN turma_disciplina td ON pt.idturma = td.idturma
+    LEFT JOIN professor_turma pt ON q.id_professor_turma = pt.id
+    LEFT JOIN turma_disciplina td ON pt.idturma = td.idturma
     WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?
   `;
 

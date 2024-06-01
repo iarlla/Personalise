@@ -23,8 +23,12 @@ INSERT INTO `usuarios` VALUES
     (10,'Maximiliano', 'max@aluno.com','$2a$10$765sn65XuKYX85Fuf5mDeu.OFsExjzJWZMQURe/U4FtH36w83IjOm'),
     (11,'Joao Evangelista Nunes','joao@professor.com','$2a$10$fVmduO.IgONnQBZJhNfahee1cuHmPLSberzcgc5EzHjtcpdCctbtG'),
     (12,'marcelo','marcelo@professor.com','$2a$10$QCdYVp0VvIk7B4slE1BAh.4GRuKNXpPRHvTuQNBVlaHDFdd8cXwqS'),
-    (13,'Hugo','victor@professor.com','$2a$10$kCLwmTBoUXbd/Aax78KraOhm4KmyXUsTBLnkQD7ehBkz69HOlQR9y')
-    ;
+    (13,'Hugo','hugo@professor.com','$2a$10$kCLwmTBoUXbd/Aax78KraOhm4KmyXUsTBLnkQD7ehBkz69HOlQR9y');
+
+-- Usuario para testes:
+-- aluno: victor@aluno.com senha: 123456
+-- professor: hugo@professor.com senha: 123456
+
 
 
 DROP TABLE IF EXISTS `alunos`;
@@ -64,7 +68,7 @@ CREATE TABLE `professores` (
 INSERT INTO `professores` VALUES
     (1, 11, 'UC240011'),
     (2, 12, 'UC240012'),
-    (2, 13, 'UC240013');
+    (3, 13, 'UC240013');
 
 
 DROP TABLE IF EXISTS `disciplinas`;
@@ -99,19 +103,24 @@ INSERT INTO `turma` VALUES
 
 DROP TABLE IF EXISTS `professor_turma`;
 CREATE TABLE `professor_turma` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `idprofessor` int NOT NULL,
   `idturma` int NOT NULL,
-  PRIMARY KEY (`idprofessor`,`idturma`),
+  PRIMARY KEY (`id`, `idprofessor`,`idturma`),
   KEY `turma_id_idx` (`idturma`),
   KEY `professor_id_idx` (`idprofessor`),
   CONSTRAINT `professor_id` FOREIGN KEY (`idprofessor`) REFERENCES `professores` (`idprofessores`),
   CONSTRAINT `turma_id` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `professor_turma` VALUES
-    (1, 1),
-    (1, 2),
-    (2, 3),
-    (2, 4);
+    (1, 1, 1),
+    (2, 1, 2),
+    (3, 1, 3),
+    (4, 1, 4),
+    (5, 2, 1),
+    (6, 2, 2),
+    (7, 2, 3),
+    (8, 2, 4);
 
 
 DROP TABLE IF EXISTS `questionario`;
@@ -120,7 +129,8 @@ CREATE TABLE `questionario` (
   `id_professor_turma` int DEFAULT NULL,
   `perguntas` json DEFAULT NULL,
   PRIMARY KEY (`id_questionario`),
-  KEY `professor_turma_idx` (`id_professor_turma`)
+  KEY `professor_turma_idx` (`id_professor_turma`),
+  CONSTRAINT `questionario_id` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `questionario` VALUES
     (1,2,'[{\"num\": 1, \"pergunta\": \"Pergunta 1\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}, {\"num\": 8, \"pergunta\": \"Pergunta 8\", \"nomeLabel\": \"pergunta-8\"}]'),

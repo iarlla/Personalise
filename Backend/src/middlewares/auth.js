@@ -76,8 +76,7 @@ export const registerProfessor = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(senha, salt);
 
-    const q2 =
-      "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    const q2 = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
     db.query(q2, [nome, email, hashedPassword], (err, data) => {
       if (err) {

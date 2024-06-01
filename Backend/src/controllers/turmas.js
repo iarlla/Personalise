@@ -23,7 +23,7 @@ export const getTurma = (req, res) => {
 
 export const getTurmasByIdUsuario = (req, res) => {
     const q = `
-    SELECT DISTINCT t.nome
+    SELECT DISTINCT t.idturma, t.nome
         FROM turma t
     LEFT JOIN professor_turma pt ON t.idturma = pt.idturma
     LEFT JOIN professores p ON p.idprofessores = pt.idprofessor

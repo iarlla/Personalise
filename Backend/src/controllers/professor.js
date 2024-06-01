@@ -9,6 +9,7 @@ export const getProfessores = (_, res) => {
   });
 };
 
+
 export const getProfessorID = (req, res) => {
   const { professorId } = req.body;
 

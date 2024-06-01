@@ -20,14 +20,9 @@ export const getDisciplina = (req, res) => {
 };
 
 
-
-
-
-
-
 export const getDisciplinasByIdUsuario = (req, res) => {
     const q = `
-        SELECT DISTINCT d.nome, d.descricao, d.carga_horaria
+        SELECT DISTINCT d.id_disciplina, d.nome, d.descricao, d.carga_horaria
             FROM disciplinas d
         LEFT JOIN turma_disciplina td on d.id_disciplina = td.iddisciplina
         LEFT JOIN turma t on td.idturma = t.idturma
@@ -36,7 +31,7 @@ export const getDisciplinasByIdUsuario = (req, res) => {
         LEFT JOIN aluno_turma at ON at.idturma = t.idturma
         LEFT JOIN alunos a ON a.idaluno = at.idaluno
         LEFT JOIN usuarios u ON (u.id = p.id_usuario OR u.id = a.id_usuario)
-        WHERE u.id = 11;
+        WHERE u.id = ?;
     `;
 
     db.query(q, [req.params.idusuario], (err, data) => {
@@ -45,4 +40,5 @@ export const getDisciplinasByIdUsuario = (req, res) => {
         return res.status(200).json(data);
     });
 }
+
 
