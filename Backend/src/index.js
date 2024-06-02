@@ -8,6 +8,7 @@ import turmasRoutes from "./routes/turmas.js";
 import questionRoutes from "./routes/questoes.js";
 import questionarioRoutes from "./routes/questionario.js";
 import professorRoutes from "./routes/professor.js";
+import respostaRoutes from "./routes/resposta.js";
 
 const app = express();
 
@@ -30,7 +31,9 @@ app.use("/api/turmas", turmasRoutes);
 app.use("/api/questions", questionRoutes);
 app.use("/api/questionario", questionarioRoutes);
 app.use("/api/professor", professorRoutes);
+app.use("/api/respostas", respostaRoutes);
 
 app.listen(3001, () => {
+  console.log("");
   console.log("Rodando na porta 3001");
 });
