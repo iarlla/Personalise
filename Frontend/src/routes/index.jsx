@@ -73,7 +73,7 @@ const RouteApp = () => {
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/enviado" element={<EnviadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/deletado" element={<DeletadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/editar" element={<EditarQuestAluno />} />
-          <Route path="/dashboardAluno" element={<TelaMateriaAluno/>}/>
+          <Route path="/dashboardAluno" element={<DashBoardAluno/>}/>
         </Routes>
       </Fragment>
     </BrowserRouter>
