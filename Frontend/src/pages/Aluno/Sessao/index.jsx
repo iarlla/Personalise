@@ -7,7 +7,7 @@ import * as C from "./styles";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
-const Sessao = () => {
+const SessaoA = () => {
   const [turma, setTurma] = useState({});
   const [disciplinas, setDisciplinas] = useState({});
   const [professor, setProfessor] = useState({});
@@ -142,4 +142,4 @@ const Sessao = () => {
   );
 };
 
-export default Sessao;
+export default SessaoA;

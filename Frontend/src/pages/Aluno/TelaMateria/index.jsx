@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from "../../../components/navBar";
 import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
@@ -10,7 +9,7 @@ const TelaMateriaAluno = () => {
     <C.Container>
       <Navbar Text="Aluno" />
       <C.Content>
-        <MiniMenu TitleOne="Minhas matérias" urlOne="/materiasA" />
+        <MiniMenu TitleOne="Minhas materias" urlOne="/materiasA" />
         <C.ContainerSejaBemvindo>
           <C.TextSejaBemvindo>Seja bem-vindo, aluno(a)!</C.TextSejaBemvindo>
         </C.ContainerSejaBemvindo>
@@ -20,28 +19,34 @@ const TelaMateriaAluno = () => {
             <C.MainLeftTextoDiv>
               <h3>Selecione, ao lado, a matéria desejada</h3>
             </C.MainLeftTextoDiv>
-            <C.MainLeftImg src="rafiki.png" alt="Imagem ilustrativa" />
+            <C.MainLeftImg src="rafiki.png"></C.MainLeftImg>
           </C.MainLeftContainer>
           <C.MainRightContainer>
-            <C.CenteredTitle>
-              <h1>Minhas matérias</h1>
-            </C.CenteredTitle>
-            <C.Line />
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <h1 style={{ marginBottom: "30px" }}>Minhas matérias</h1>
+            </div>
+            <C.line />
             <C.ContainerButtons>
-              <Link to="/materias/eng-software">
+              <Link to="/turmas/3">
                 <ButtonPrincipal Text="Engenharia de Software" />
               </Link>
-              <Link to="/materias/design-software">
+              <Link to="/turmas/4">
                 <ButtonPrincipal Text="Design de Software" />
               </Link>
-              <Link to="/materias/sistemas-operacionais">
+              <Link to="/turmas/5">
                 <ButtonPrincipal Text="Sistemas Operacionais" />
               </Link>
-              <Link to="/materias/redes-computadores">
+              <Link to="/turmas/6">
                 <ButtonPrincipal Text="Redes de Computadores" />
               </Link>
-              <Link to="/materias/novas-tecnologias">
-                <ButtonPrincipal Text="Novas Tecnologias" />
+              <Link to="/turmas/2">
+                <ButtonPrincipal Text="Novas tecnologias" />
               </Link>
             </C.ContainerButtons>
           </C.MainRightContainer>

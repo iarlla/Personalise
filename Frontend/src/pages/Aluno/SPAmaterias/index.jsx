@@ -6,7 +6,7 @@ import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 
-const Turmas = () => {
+const TurmasA = () => {
   const [disciplinas, setDisciplinas] = useState({});
   const [turmas, setTurmas] = useState([]);
   const { idDisc } = useParams();
@@ -87,4 +87,4 @@ const Turmas = () => {
   );
 };
 
-export default Turmas;
+export default TurmasA;

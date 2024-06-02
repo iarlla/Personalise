@@ -30,7 +30,7 @@ import SessaoAluno from "../pages/Aluno/Sessao";
 import EnviadoSucessoAluno from "../pages/Aluno/EnviadoSucesso";
 import DeletadoSucessoAluno from "../pages/Aluno/DeletadoSucesso";
 import EditarQuestAluno from "../pages/Aluno/EditarQuest";
-import MeuQuestionarioAluno from "../pages/Aluno/MeuQuestionario";
+import DashBoardAluno from "../pages/Aluno/DashBoard";
 
 // Componente Private para proteger rotas que exigem autenticação
 const Private = ({ Item }) => {
@@ -73,7 +73,7 @@ const RouteApp = () => {
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/enviado" element={<EnviadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/deletado" element={<DeletadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/editar" element={<EditarQuestAluno />} />
-          <Route path="/sessaoA/:idDisc/:idturma/preQuest/meuQuest" element={<MeuQuestionarioAluno />} />
+          <Route path="/dashboardAluno" element={<TelaMateriaAluno/>}/>
         </Routes>
       </Fragment>
     </BrowserRouter>
