@@ -25,7 +25,6 @@ import MeuQuestionario from "../pages/Professor/MeuQuestionario";
 // Importações de Páginas do Aluno
 import TelaMateriaAluno from "../pages/Aluno/TelaMateria";
 import QuestionarioPreAluno from "../pages/Aluno/QuestionarioPre";
-import TurmasAluno from "../pages/Aluno/SPAmaterias";
 import SessaoAluno from "../pages/Aluno/Sessao";
 import EnviadoSucessoAluno from "../pages/Aluno/EnviadoSucesso";
 import DeletadoSucessoAluno from "../pages/Aluno/DeletadoSucesso";
@@ -67,8 +66,7 @@ const RouteApp = () => {
 
           {/* Rotas do Aluno */}
           <Route path="/materiasA" element={<TelaMateriaAluno />} />
-          <Route path="/turmasA/:idDisc" element={<TurmasAluno />} />
-          <Route path="/turmasA/:idDisc/:idturma" element={<SessaoAluno />} />
+          <Route path="/turmas/:idDisc/:idturma" element={<SessaoAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest" element={<QuestionarioPreAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/enviado" element={<EnviadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/:idturma/preQuest/deletado" element={<DeletadoSucessoAluno />} />
