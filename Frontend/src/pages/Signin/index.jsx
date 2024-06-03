@@ -32,7 +32,7 @@ const Signin = () => {
       if (verify == "professor") {
         navigate("/materiasP");
       } else if (verify === "aluno") {
-        navigate("/home");
+        navigate("/materiasA");
       } else {
         navigate("/");
       }

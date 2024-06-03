@@ -4,141 +4,98 @@ import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import useAuth from "../../../hooks/useAuth";
 import * as C from "./styles";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const SessaoA = () => {
   const [turma, setTurma] = useState({});
-  const [disciplinas, setDisciplinas] = useState({});
-  const [professor, setProfessor] = useState({});
-  const [questionario, setQuestionario] = useState({});
-  const { idDisc, idturma } = useParams();
+  const [questionario, setQuestionario] = useState([]);
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    const fetchDataDisc = async () => {
+    const fetchData = async () => {
       try {
-        const res = await Axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
-        );
-        setDisciplinas(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataDisc();
-  }, [idDisc]);
+        const turmaId = currentUser.turmaId;
 
-  useEffect(() => {
-    const fetchDataDisc = async () => {
-      try {
-        const res = await Axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
-        );
-        setTurma(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataDisc();
-  }, [idturma]);
+        // Buscar dados da turma
+        const resTurma = await Axios.get(`http://localhost:3001/api/turmas/${turmaId}`);
+        setTurma(resTurma.data);
 
-  useEffect(() => {
-    const fetchDataID = async () => {
-      try {
-        const res = await Axios.post("http://localhost:3001/api/professor/id", {
-          professorId: currentUser.id,
-        });
-        setProfessor(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataID();
-  }, [currentUser.id]);
-
-  useEffect(() => {
-    const fetchDataQuestID = async () => {
-      try {
-        const res = await Axios.get(
-          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+        // Buscar questionários da turma
+        const resQuestionario = await Axios.get(
+          `http://localhost:3001/api/questionario/byTurma/${turmaId}`
         );
-        setQuestionario(res.data);
+        setQuestionario(resQuestionario.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchDataQuestID();
-  }, [professor]);
+    fetchData();
+  }, [currentUser.turmaId]);
 
   const handleClickRedirect = async (e) => {
     e.preventDefault();
     try {
-      if (questionario.length > 0) {
-        navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
-      } else {
-        navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
-      }
+        navigate(`/sessaoA/${turma.id}/preQuest`);
     } catch (error) {
       console.log(error);
     }
   };
-  return (
-    <>
-      <C.Container>
-        <Navbar Text="Professor" />
-        <C.Content>
-          <MiniMenu
-            TitleOne="Minhas materias"
-            urlOne="/materiasP"
-            symbolOne=">"
-            TitleTwo="Minhas turmas"
-            urlTwo={`/turmas/${idDisc}`}
-            symbolTwo=">"
-            TitleThree="Sessões"
-          />
-          <C.ContainerSejaBemvindo>
-            <C.TextSejaBemvindo>Sessão (TURMA {turma.nome})</C.TextSejaBemvindo>
-          </C.ContainerSejaBemvindo>
 
-          <C.MainContainer>
-            <C.MainLeftContainer>
-              <C.MainLeftTextoDiv>
-                <h3>Selecione, ao lado, a sessão desejada</h3>
-              </C.MainLeftTextoDiv>
-              <C.MainLeftImg
-                src={`${window.location.origin}/rafiki.png`}
-              ></C.MainLeftImg>
-            </C.MainLeftContainer>
-            <C.MainRightContainer>
-              <div
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  justifyContent: "center",
-                }}
-              >
-                <h1 style={{ marginBottom: "30px" }}>Sessões</h1>
-              </div>
-              <C.line />
-              <C.ContainerButtons>
-                <ButtonPrincipal
-                  Text="Questionario pré-aula"
-                  onClick={handleClickRedirect}
-                ></ButtonPrincipal>
-                <Link to={`/sessao/${idDisc}/${idturma}/posQuest`}>
-                  <ButtonPrincipal Text="Questionario pós-aula"></ButtonPrincipal>
-                </Link>
-                <Link to={`/sessao/${idDisc}/${idturma}/relatorio`}>
-                  <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
-                </Link>
-              </C.ContainerButtons>
-            </C.MainRightContainer>
-          </C.MainContainer>
-        </C.Content>
-      </C.Container>
-    </>
+  return (
+    <C.Container>
+      <Navbar Text="Aluno" />
+      <C.Content>
+        <MiniMenu
+          TitleOne="Minhas matérias"
+          urlOne="/materiasA"
+          symbolOne=">"
+          TitleTwo="Minhas turmas"
+          urlTwo={`/turmas/${turma.id}`}
+          symbolTwo=">"
+          TitleThree="Sessões"
+        />
+        <C.ContainerSejaBemvindo>
+          <C.TextSejaBemvindo>Sessão (TURMA {turma.nome})</C.TextSejaBemvindo>
+        </C.ContainerSejaBemvindo>
+
+        <C.MainContainer>
+          <C.MainLeftContainer>
+            <C.MainLeftTextoDiv>
+              <h3>Selecione, ao lado, a sessão desejada</h3>
+            </C.MainLeftTextoDiv>
+            <C.MainLeftImg
+              src={`${window.location.origin}/rafiki.png`}
+            ></C.MainLeftImg>
+          </C.MainLeftContainer>
+          <C.MainRightContainer>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <h1 style={{ marginBottom: "30px" }}>Sessões</h1>
+            </div>
+            <C.line />
+            <C.ContainerButtons>
+              <ButtonPrincipal
+                Text="Questionário pré-aula"
+                onClick={handleClickRedirect}
+              ></ButtonPrincipal>
+              <Link to={`/sessaoA/${turma.id}/posQuest`}>
+                <ButtonPrincipal Text="Questionário pós-aula"></ButtonPrincipal>
+              </Link>
+              <Link to={`/sessaoA/${turma.id}/relatorio`}>
+                <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
+              </Link>
+            </C.ContainerButtons>
+          </C.MainRightContainer>
+        </C.MainContainer>
+      </C.Content>
+    </C.Container>
   );
 };
 

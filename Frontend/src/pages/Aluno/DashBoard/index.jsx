@@ -10,7 +10,7 @@ const dashboardAluno = () => {
         <C.Container>
           <Navbar Text="Aluno" />
           <C.Content>
-            <MiniMenu TitleOne="Relatório" urlOne="/dashboardAluno" />
+            <MiniMenu TitleOne="Relatório" urlOne="/relatorio" />
             <C.ContainerSejaBemvindo>
               <C.TextSejaBemvindo>Design de Software - GPE10101</C.TextSejaBemvindo>
             </C.ContainerSejaBemvindo>

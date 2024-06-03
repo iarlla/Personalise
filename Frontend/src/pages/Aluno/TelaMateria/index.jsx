@@ -2,9 +2,43 @@ import Navbar from "../../../components/navBar";
 import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 const TelaMateriaAluno = () => {
+  const [disciplinas, setDisciplinas] = useState({});
+  const { idAluno, idDisc } = useParams();
+  const [turmas, setTurmas] = useState([]);
+  const { idDisc } = useParams();
+
+  useEffect(() => {
+    const fetchDataTurmas = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3001/api/aluno_turma/${idAluno}`);
+        setTurmas(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataTurmas();
+  }, []);
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/api/disciplinas/${idDisc}`
+        );
+        setDisciplinas(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, [idDisc]);
+
+  
   return (
     <C.Container>
       <Navbar Text="Aluno" />
@@ -33,19 +67,19 @@ const TelaMateriaAluno = () => {
             </div>
             <C.line />
             <C.ContainerButtons>
-              <Link to="/turmas/3">
+              <Link to="/turmasA/3/${turma.id}">
                 <ButtonPrincipal Text="Engenharia de Software" />
               </Link>
-              <Link to="/turmas/4">
+              <Link to="/turmasA/4/${turma.idturma}">
                 <ButtonPrincipal Text="Design de Software" />
               </Link>
-              <Link to="/turmas/5">
+              <Link to="/turmasA/5/${turma.idturma}">
                 <ButtonPrincipal Text="Sistemas Operacionais" />
               </Link>
-              <Link to="/turmas/6">
+              <Link to="/turmasA/6/${turma.idturma}">
                 <ButtonPrincipal Text="Redes de Computadores" />
               </Link>
-              <Link to="/turmas/2">
+              <Link to="/turmasA/2${turma.idturma}">
                 <ButtonPrincipal Text="Novas tecnologias" />
               </Link>
             </C.ContainerButtons>

@@ -27,11 +27,7 @@ const Navbar = ({ Text }) => {
           }}
         >
           <span>
-<<<<<<< HEAD
-            <b>iarla</b>
-=======
             <b>{currentUser.id}</b>
->>>>>>> main
           </span>
           <p style={{ fontSize: "12px" }}>{Text}</p>
         </div>

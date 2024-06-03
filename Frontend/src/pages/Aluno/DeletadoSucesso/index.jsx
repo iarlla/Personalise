@@ -47,7 +47,7 @@ const DeletadoSucesso = () => {
   return (
     <>
       <C.Container>
-        <Navbar Text="Professor" />
+        <Navbar Text="Aluno" />
         <C.Content>
           <C.titlePage>Questionário Deletado</C.titlePage>
         </C.Content>

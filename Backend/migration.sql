@@ -1,20 +1,7 @@
 CREATE DATABASE IF NOT EXISTS personalise;
 USE personalise;
 
--- Dropping tables in reverse dependency order
-DROP TABLE IF EXISTS `respostas_questionario`;
-DROP TABLE IF EXISTS `respostas`;
-DROP TABLE IF EXISTS `questionario`;
-DROP TABLE IF EXISTS `professor_turma`;
-DROP TABLE IF EXISTS `turma_disciplina`;
-DROP TABLE IF EXISTS `aluno_turma`;
-DROP TABLE IF EXISTS `turma`;
-DROP TABLE IF EXISTS `disciplinas`;
-DROP TABLE IF EXISTS `professores`;
-DROP TABLE IF EXISTS `alunos`;
 DROP TABLE IF EXISTS `usuarios`;
-
--- Creating and populating `usuarios` table
 CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome` text NOT NULL,
@@ -22,8 +9,7 @@ CREATE TABLE `usuarios` (
   `senha` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `usuarios` VALUES
+INSERT INTO `usuarios` VALUES 
     (1,'alex maxwel','alex@devteste.com','$2a$10$765sn65XuKYX85Fuf5mDeu.OFsExjzJWZMQURe/U4FtH36w83IjOm'),
     (2,'rafael','rafael@dev.com','$2a$10$Oj7pgmw.4HcNpBRIWptrMOHBl7b.rMpL5eugIttbCON6T8C26IR1y'),
     (3,'Pedro Nunes','pedro@aluno.com','$2a$10$8yTu9/kpQvp4cLQlzXDwNeSljVyqlrgCvXQrRe21So3kg.CpYSwiS'),
@@ -39,7 +25,12 @@ INSERT INTO `usuarios` VALUES
     (13,'Hugo','hugo@professor.com','$2a$10$kCLwmTBoUXbd/Aax78KraOhm4KmyXUsTBLnkQD7ehBkz69HOlQR9y'),
     (14,'kin','kin@professor.com','$2a$10$O2mooZPhfGT5FlJu36441efzxuAkAmtRmCT7yp5gL9uCIBAa1t4i.');
 
--- Creating and populating `alunos` table
+-- Usuario para testes:
+-- aluno: victor@aluno.com senha: 123456
+-- professor: hugo@professor.com senha: 123456
+
+
+DROP TABLE IF EXISTS `alunos`;
 CREATE TABLE `alunos` (
   `idaluno` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int DEFAULT NULL,
@@ -50,8 +41,7 @@ CREATE TABLE `alunos` (
   UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`),
   CONSTRAINT `id_usuario_aluno` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `alunos` VALUES
+INSERT INTO `alunos` VALUES 
     (1,1,'UC240001','Analise e Desenvolvimento de sistema'),
     (2,2,'UC240002','Analise e Desenvolvimento de sistema'),
     (3,3,'UC240003','Analise e Desenvolvimento de sistema'),
@@ -63,7 +53,8 @@ INSERT INTO `alunos` VALUES
     (9,9,'UC240009','Analise e Desenvolvimento de sistema'),
     (10,10,'UC2400010','Analise e Desenvolvimento de sistema');
 
--- Creating and populating `professores` table
+
+DROP TABLE IF EXISTS `professores`;
 CREATE TABLE `professores` (
   `idprofessores` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int DEFAULT NULL,
@@ -73,14 +64,13 @@ CREATE TABLE `professores` (
   UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`),
   CONSTRAINT `id_usuairo_professor` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `professores` VALUES
+INSERT INTO `professores` VALUES 
     (1,11,'UC240011'),
     (2,12,'UC240012'),
     (3,13,'UC240013'),
     (4,14,'UC123');
 
--- Creating and populating `disciplinas` table
+DROP TABLE IF EXISTS `disciplinas`;
 CREATE TABLE `disciplinas` (
   `id_disciplina` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
@@ -88,8 +78,7 @@ CREATE TABLE `disciplinas` (
   `descricao` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_disciplina`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `disciplinas` VALUES
+INSERT INTO `disciplinas` VALUES 
     (1,'Programacao web',120,'Programacao para web com JavaScript, Html e CSS'),
     (2,'Novas Tecnologias',80,'Aprendizado em Python'),
     (3,'Engenharia de Software',80,'UML'),
@@ -97,20 +86,20 @@ INSERT INTO `disciplinas` VALUES
     (5,'Sistemas Operacionais',80,'Sistemas'),
     (6,'Redes de Computadores',80,'Redes');
 
--- Creating and populating `turma` table
+
+DROP TABLE IF EXISTS `turma`;
 CREATE TABLE `turma` (
   `idturma` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`idturma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `turma` VALUES
+INSERT INTO `turma` VALUES 
     (1,'GPE100'),
     (2,'GPE110'),
     (3,'GPE120'),
     (4,'GPE130');
 
--- Creating and populating `professor_turma` table
+DROP TABLE IF EXISTS `professor_turma`;
 CREATE TABLE `professor_turma` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idprofessor` int NOT NULL,
@@ -120,96 +109,132 @@ CREATE TABLE `professor_turma` (
   KEY `professor_id_idx` (`idprofessor`),
   CONSTRAINT `professor_id` FOREIGN KEY (`idprofessor`) REFERENCES `professores` (`idprofessores`),
   CONSTRAINT `turma_id` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `professor_turma` VALUES
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `professor_turma` VALUES 
     (1,1,1),
-    (2,2,2);
-
--- Creating and populating `aluno_turma` table
-CREATE TABLE `aluno_turma` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `idturma` int NOT NULL,
-  `idaluno` int NOT NULL,
-  PRIMARY KEY (`id`,`idturma`,`idaluno`),
-  KEY `turma_idaluno_idx` (`idturma`),
-  KEY `aluno_id_idx` (`idaluno`),
-  CONSTRAINT `aluno_id` FOREIGN KEY (`idaluno`) REFERENCES `alunos` (`idaluno`),
-  CONSTRAINT `turma_idaluno` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `aluno_turma` VALUES
-    (1,1,1),
+    (5,2,1),
+    (9,3,1),
+    (13,4,1),
     (2,1,2),
+    (6,2,2),
+    (10,3,2),
+    (14,4,2),
     (3,1,3),
-    (4,2,4),
-    (5,2,5),
-    (6,3,6);
+    (7,2,3),
+    (11,3,3),
+    (15,4,3),
+    (4,1,4),
+    (8,2,4),
+    (12,3,4),
+    (16,4,4);
 
--- Creating and populating `turma_disciplina` table
+DROP TABLE IF EXISTS `questionario`;
+CREATE TABLE `questionario` (
+  `id_questionario` int NOT NULL AUTO_INCREMENT,
+  `id_professor_turma` int DEFAULT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
+  `perguntas` json DEFAULT NULL,
+  PRIMARY KEY (`id_questionario`),
+  KEY `professor_turma_idx` (`id_professor_turma`),
+  CONSTRAINT `professor_turma` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `questionario` VALUES 
+    (3,1,'PRE','[{\"num\": 1, \"pergunta\": \"teste\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}]');
+
+
+DROP TABLE IF EXISTS `respostas`;
+CREATE TABLE `respostas` (
+  `idrespostas` int NOT NULL AUTO_INCREMENT,
+  `idaluno` int DEFAULT NULL,
+  `idquestionario` int DEFAULT NULL,
+  PRIMARY KEY (`idrespostas`),
+  KEY `id_aluno_respostas_idx` (`idaluno`),
+  KEY `teste_idx` (`idquestionario`),
+  CONSTRAINT `id_aluno_respostas` FOREIGN KEY (`idaluno`) REFERENCES `alunos` (`idaluno`),
+  CONSTRAINT `id_quest_resp` FOREIGN KEY (`idquestionario`) REFERENCES `questionario` (`id_questionario`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `respostas` VALUES
+    (1, 1, 3);
+
+DROP TABLE IF EXISTS `respostas_questionario`;
+CREATE TABLE `respostas_questionario` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idrespostas` int NOT NULL,
+  `num` int DEFAULT NULL,
+  `resposta` int DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `idrespostas_idx` (`idrespostas`),
+    CONSTRAINT `idrespostas` FOREIGN KEY (`idrespostas`) REFERENCES `respostas` (`idrespostas`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `respostas_questionario` (`idrespostas`, `num`, `resposta`) VALUES
+    (1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),(1, 7, 1),
+    (1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),(1, 8, 1),
+    (1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),(1, 9, 1),
+    (1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),(1, 10, 1),
+    (1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),(1, 11, 1),
+    (1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),(1, 1, 0),
+    (1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),(1, 1, 1),
+    (1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2),(1, 1, 2)
+    ;
+
+DROP TABLE IF EXISTS `turma_disciplina`;
 CREATE TABLE `turma_disciplina` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idturma` int NOT NULL,
   `iddisciplina` int NOT NULL,
-  PRIMARY KEY (`id`,`idturma`,`iddisciplina`),
-  KEY `disciplina_id_idx` (`iddisciplina`),
-  KEY `turma_iddisciplina_idx` (`idturma`),
-  CONSTRAINT `disciplina_id` FOREIGN KEY (`iddisciplina`) REFERENCES `disciplinas` (`id_disciplina`),
-  CONSTRAINT `turma_iddisciplina` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `turma_disciplina` VALUES
+  PRIMARY KEY (`id`),
+  KEY `id_disciplina_idx` (`iddisciplina`),
+  KEY `id_turma_idx` (`idturma`),
+  CONSTRAINT `id_disciplina` FOREIGN KEY (`iddisciplina`) REFERENCES `disciplinas` (`id_disciplina`),
+  CONSTRAINT `id_turma` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `turma_disciplina` VALUES 
     (1,1,1),
     (2,1,2),
-    (3,2,3),
-    (4,3,4),
-    (5,3,5);
+    (3,1,3),
+    (4,1,4),
+    (5,1,5),
+    (6,1,6),
+    (7,2,1),
+    (8,2,2),
+    (9,2,3),
+    (10,2,4),
+    (11,2,5),
+    (12,2,6),
+    (13,3,1),
+    (14,3,2),
+    (15,3,3),
+    (16,3,4),
+    (17,3,5),
+    (18,3,6),
+    (19,4,1),
+    (20,4,2),
+    (21,4,3),
+    (22,4,4),
+    (23,4,5),
+    (24,4,6);
 
--- Creating and populating `questionario` table
-CREATE TABLE `questionario` (
+DROP TABLE IF EXISTS `aluno_turma`;
+
+CREATE TABLE `aluno_turma` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `titulo` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `idaluno` int NOT NULL,
+  `idturma` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `aluno_turma_idaluno_idx` (`idaluno`),
+  KEY `aluno_turma_idturma_idx` (`idturma`),
+  CONSTRAINT `aluno_turma_aluno_id` FOREIGN KEY (`idaluno`) REFERENCES `alunos` (`idaluno`),
+  CONSTRAINT `aluno_turma_turma_id` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `questionario` VALUES
-    (1,'Questionário de avaliação de curso'),
-    (2,'Questionário de avaliação de docente'),
-    (3,'Questionário de avaliação de disciplina'),
-    (4,'Questionário de avaliação institucional'),
-    (5,'Questionário de avaliação da biblioteca'),
-    (6,'Questionário de avaliação do laboratório de informática');
-
--- Creating and populating `respostas` table
-CREATE TABLE `respostas` (
-  `idrespostas` int NOT NULL AUTO_INCREMENT,
-  `resposta` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`idrespostas`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `respostas` VALUES
-    (1,'1'),
-    (2,'2'),
-    (3,'3'),
-    (4,'4');
-
--- Creating and populating `respostas_questionario` table
-CREATE TABLE `respostas_questionario` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `idresposta` int DEFAULT NULL,
-  `id_questionario` int NOT NULL,
-  PRIMARY KEY (`id`,`id_questionario`),
-  KEY `resposta_id_idx` (`idresposta`),
-  KEY `questionario_id_idx` (`id_questionario`),
-  CONSTRAINT `questionario_id` FOREIGN KEY (`id_questionario`) REFERENCES `questionario` (`id`),
-  CONSTRAINT `resposta_id` FOREIGN KEY (`idresposta`) REFERENCES `respostas` (`idrespostas`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-INSERT INTO `respostas_questionario` VALUES
-    (1,1,1),
-    (2,2,1),
-    (3,3,2),
-    (4,4,2),
-    (5,NULL,3),
-    (6,NULL,4),
-    (7,NULL,5);
+INSERT INTO `aluno_turma` (`idaluno`, `idturma`) VALUES
+    (1, 1),
+    (2, 1),
+    (3, 1),
+    (4, 2),
+    (5, 2),
+    (6, 2),
+    (7, 3),
+    (8, 3),
+    (9, 4),
+    (10, 4);
