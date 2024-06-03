@@ -154,7 +154,7 @@ CREATE TABLE `respostas` (
   CONSTRAINT `id_quest_resp` FOREIGN KEY (`idquestionario`) REFERENCES `questionario` (`id_questionario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `respostas` VALUES
-    (1, 1, 1);
+    (1, 1, 3);
 
 DROP TABLE IF EXISTS `respostas_questionario`;
 CREATE TABLE `respostas_questionario` (
