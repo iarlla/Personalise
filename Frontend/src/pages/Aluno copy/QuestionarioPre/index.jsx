@@ -73,8 +73,11 @@ const QuestionarioPreAluno = () => {
           TitleOne="Minhas matérias"
           urlOne="/materiasA"
           symbolOne=">"
+          TitleTwo="Minhas turmas"
+          urlTwo={`/turmasA/${idDisc}`}
+          symbolTwo=">"
           TitleThree="Sessões"
-          urlThree={`/disciplina/${idDisc}`}
+          urlThree={`/turmasA/${idDisc}/${idturma}`}
           symbolThree=">"
           TitleFour="Questionário pré-aula"
         />

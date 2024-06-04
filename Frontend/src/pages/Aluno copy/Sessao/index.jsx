@@ -34,7 +34,7 @@ const SessaoA = () => {
   const handleClickRedirect = async (e) => {
     e.preventDefault();
     try {
-        navigate(`/sessaoA/${idDisc}/preQuest`);
+        navigate(`/sessaoA/${1}/preQuest`);
     } catch (error) {
       console.log(error);
     }
@@ -79,10 +79,10 @@ const SessaoA = () => {
                 Text="Questionário pré-aula"
                 onClick={handleClickRedirect}
               ></ButtonPrincipal>
-              <Link to={`/sessaoA/${idDisc}/posQuest`}>
+              <Link to={`/sessaoA/${"turma.id"}/posQuest`}>
                 <ButtonPrincipal Text="Questionário pós-aula"></ButtonPrincipal>
               </Link>
-              <Link to={`/sessao/${idDisc}/relatorio`}>
+              <Link to={`/sessaoA/${"turma.id"}/relatorio`}>
                 <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
               </Link>
             </C.ContainerButtons>
