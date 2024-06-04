@@ -4,11 +4,12 @@ import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import useAuth from "../../../hooks/useAuth";
 import * as C from "./styles";
-import { Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const SessaoA = () => {
-  const [turma, setTurma] = useState({});
+  const { idDisc } = useParams();
+  const [disciplina, setDisciplina] = useState('');
   const [questionario, setQuestionario] = useState([]);
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -16,28 +17,24 @@ const SessaoA = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const turmaId = currentUser.turmaId;
-
-        // Buscar dados da turma
-        const resTurma = await Axios.get(`http://localhost:3001/api/turmas/${turmaId}`);
-        setTurma(resTurma.data);
-
-        // Buscar questionários da turma
-        const resQuestionario = await Axios.get(
-          `http://localhost:3001/api/questionario/byTurma/${turmaId}`
+        const nomeDisciplina = await Axios.get(
+          `http://localhost:3001/api/disciplinas/${idDisc}`
         );
-        setQuestionario(resQuestionario.data);
+        setDisciplina(nomeDisciplina.data.nome);
+
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [currentUser.turmaId]);
+  }, [currentUser.id, idDisc]);
+
+
 
   const handleClickRedirect = async (e) => {
     e.preventDefault();
     try {
-        navigate(`/sessaoA/${turma.id}/preQuest`);
+        navigate(`/sessaoA/${1}/preQuest`);
     } catch (error) {
       console.log(error);
     }
@@ -51,13 +48,10 @@ const SessaoA = () => {
           TitleOne="Minhas matérias"
           urlOne="/materiasA"
           symbolOne=">"
-          TitleTwo="Minhas turmas"
-          urlTwo={`/turmas/${turma.id}`}
-          symbolTwo=">"
-          TitleThree="Sessões"
+          TitleTwo="Sessões"
         />
         <C.ContainerSejaBemvindo>
-          <C.TextSejaBemvindo>Sessão (TURMA {turma.nome})</C.TextSejaBemvindo>
+          <C.TextSejaBemvindo>Sessão ({disciplina})</C.TextSejaBemvindo>
         </C.ContainerSejaBemvindo>
 
         <C.MainContainer>
@@ -85,10 +79,10 @@ const SessaoA = () => {
                 Text="Questionário pré-aula"
                 onClick={handleClickRedirect}
               ></ButtonPrincipal>
-              <Link to={`/sessaoA/${turma.id}/posQuest`}>
+              <Link to={`/sessaoA/${"turma.id"}/posQuest`}>
                 <ButtonPrincipal Text="Questionário pós-aula"></ButtonPrincipal>
               </Link>
-              <Link to={`/sessaoA/${turma.id}/relatorio`}>
+              <Link to={`/sessaoA/${"turma.id"}/relatorio`}>
                 <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
               </Link>
             </C.ContainerButtons>

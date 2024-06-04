@@ -3,32 +3,19 @@ import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 
 const TelaMateriaAluno = () => {
-  const [disciplinas, setDisciplinas] = useState({});
-  const { idAluno, idDisc } = useParams();
-  const [turmas, setTurmas] = useState([]);
-  const { idDisc } = useParams();
-
-  useEffect(() => {
-    const fetchDataTurmas = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3001/api/aluno_turma/${idAluno}`);
-        setTurmas(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataTurmas();
-  }, []);
+  const [disciplinas, setDisciplinas] = useState([]);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `http://localhost:3001/api/disciplinas/usuario/${currentUser.id}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -36,9 +23,10 @@ const TelaMateriaAluno = () => {
       }
     };
     fetchDataDisc();
-  }, [idDisc]);
+  }, [currentUser.id]);
 
-  
+
+
   return (
     <C.Container>
       <Navbar Text="Aluno" />
@@ -67,21 +55,14 @@ const TelaMateriaAluno = () => {
             </div>
             <C.line />
             <C.ContainerButtons>
-              <Link to="/turmasA/3/${turma.id}">
-                <ButtonPrincipal Text="Engenharia de Software" />
-              </Link>
-              <Link to="/turmasA/4/${turma.idturma}">
-                <ButtonPrincipal Text="Design de Software" />
-              </Link>
-              <Link to="/turmasA/5/${turma.idturma}">
-                <ButtonPrincipal Text="Sistemas Operacionais" />
-              </Link>
-              <Link to="/turmasA/6/${turma.idturma}">
-                <ButtonPrincipal Text="Redes de Computadores" />
-              </Link>
-              <Link to="/turmasA/2${turma.idturma}">
-                <ButtonPrincipal Text="Novas tecnologias" />
-              </Link>
+                {disciplinas.map((disciplina) => (
+                    <Link
+                        key={disciplina.id_disciplina}
+                        to={`/disciplina/${disciplina.id_disciplina}`}
+                    >
+                        <ButtonPrincipal Text={disciplina.nome} />
+                    </Link>
+                ))}
             </C.ContainerButtons>
           </C.MainRightContainer>
         </C.MainContainer>

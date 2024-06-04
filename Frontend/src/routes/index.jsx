@@ -51,7 +51,7 @@ const RouteApp = () => {
           <Route exact path="/home" element={<Home />} />
           <Route path="/minha-conta" element={<MinhaConta />} />
           <Route path="*" element={<TelaInicio />} />
-          
+
           {/* Rotas do Professor */}
           <Route path="/materiasP" element={<TelaMateria />} />
           <Route path="/preQuest" element={<QuestionarioPre />} />
@@ -66,12 +66,12 @@ const RouteApp = () => {
           {/* Rotas do Aluno */}
           <Route path="/materiasA" element={<TelaMateriaAluno />} />
           <Route path="/preQuestAluno" element={<QuestionarioPreAluno />} />
-          <Route path="/turmasA/:idDisc/:idturma" element={<SessaoAluno />} />
-          <Route path="/sessaoA/:idDisc/:idturma/preQuest" element={<QuestionarioPreAluno />} />
-          <Route path="/sessaoA/:idDisc/:idturma/preQuest/enviado" element={<EnviadoSucessoAluno />} />
-          <Route path="/sessaoA/:idDisc/:idturma/preQuest/deletado" element={<DeletadoSucessoAluno />} />
+          <Route path="/disciplina/:idDisc/" element={<SessaoAluno />} />
+          <Route path="/sessao/:idDisc/relatorio" element={<DashBoardAluno />} />
+          <Route path="/sessaoA/:idDisc/preQuest" element={<QuestionarioPreAluno />} />
+          <Route path="/sessaoA/:idDisc/preQuest/enviado" element={<EnviadoSucessoAluno />} />
+          <Route path="/sessaoA/:idDisc/preQuest/deletado" element={<DeletadoSucessoAluno />} />
           <Route path="/relatorio" element={<DashBoardAluno />} />
-          <Route path="/sessao/:idDisc/:idturma/relatorio" element={<DashBoardAluno />} />
           <Route exact path="/home" element={<Private Item={Home} />} />
         </Routes>
       </Fragment>
