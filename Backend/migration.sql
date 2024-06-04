@@ -132,14 +132,16 @@ DROP TABLE IF EXISTS `questionario`;
 CREATE TABLE `questionario` (
   `id_questionario` int NOT NULL AUTO_INCREMENT,
   `id_professor_turma` int DEFAULT NULL,
+  `id_disciplina` int DEFAULT NULL,
   `tipo` varchar(45) DEFAULT NULL,
   `perguntas` json DEFAULT NULL,
   PRIMARY KEY (`id_questionario`),
   KEY `professor_turma_idx` (`id_professor_turma`),
-  CONSTRAINT `professor_turma` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`)
+  CONSTRAINT `professor_turma` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`),
+  CONSTRAINT `disciplina_id` FOREIGN KEY (`id_disciplina`) REFERENCES `disciplinas` (`id_disciplina`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `questionario` VALUES 
-    (3,1,'PRE','[{\"num\": 1, \"pergunta\": \"teste\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}]');
+    (3,1,1,'PRE','[{\"num\": 1, \"pergunta\": \"teste\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}]');
 
 
 DROP TABLE IF EXISTS `respostas`;

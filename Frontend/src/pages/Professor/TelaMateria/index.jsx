@@ -3,8 +3,25 @@ import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const TelaMateria = () => {
+  const [disciplinas, setDisciplinas] = useState([]);
+
+  useEffect(() => {
+    const fetchDataDisc = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3001/api/disciplinas/`);
+        setDisciplinas(res.data);
+        console.log(disciplinas);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataDisc();
+  }, []);
+
   return (
     <C.Container>
       <Navbar Text="Professor" />
@@ -33,7 +50,7 @@ const TelaMateria = () => {
             </div>
             <C.line />
             <C.ContainerButtons>
-              <Link to="/turmas/3">
+              {/* <Link to="/turmas/3">
                 <ButtonPrincipal Text="Engenharia de Software" />
               </Link>
               <Link to="/turmas/4">
@@ -47,7 +64,15 @@ const TelaMateria = () => {
               </Link>
               <Link to="/turmas/2">
                 <ButtonPrincipal Text="Novas tecnologias" />
-              </Link>
+              </Link> */}
+              {disciplinas.map((disciplina) => (
+                <Link
+                  key={disciplina.id_disciplina}
+                  to={`/turmas/${disciplina.id_disciplina}`}
+                >
+                  <ButtonPrincipal Text={disciplina.nome} />
+                </Link>
+              ))}
             </C.ContainerButtons>
           </C.MainRightContainer>
         </C.MainContainer>
