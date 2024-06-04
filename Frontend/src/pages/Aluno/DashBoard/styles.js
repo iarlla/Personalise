@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const titlePage = styled.h2`
+  color: #00396d;
+  font-size: 40px;
+  margin-left: 20px;
+`;
+
 export const Content = styled.div`
   flex: 1; /* Faz com que o conteúdo ocupe todo o espaço disponível */
 `;
@@ -119,3 +125,4 @@ export const MainTopContainer = styled.div`
   justify-content: center;
   color: #00396d;
 `;
+

@@ -82,7 +82,7 @@ const SessaoA = () => {
               <Link to={`/sessaoA/${idDisc}/posQuest`}>
                 <ButtonPrincipal Text="Questionário pós-aula"></ButtonPrincipal>
               </Link>
-              <Link to={`/sessao/${idDisc}/relatorio`}>
+              <Link to={`/sessaoA/${idDisc}/relatorio`}>
                 <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
               </Link>
             </C.ContainerButtons>

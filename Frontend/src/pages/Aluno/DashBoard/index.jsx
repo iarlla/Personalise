@@ -1,13 +1,45 @@
+import { useState, useEffect } from "react";
+import {useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import Navbar from "../../../components/navBar";
-import { useParams } from "react-router-dom";
-import ButtonPrincipal from "../../../components/ButtonPrincipal";
-import ButtonReverse from "../../../components/ButtonReverse";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
-import { Link } from "react-router-dom";
 
 const dashboardAluno = () => {
-    const { idDisc, relatorio } = useParams();
+    const [disciplinas, setDisciplinas] = useState({});
+    const [turma, setTurma] = useState([]);
+    const { idDisc, idturma, relatorio} = useParams();
+    
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchDataDisc = async () => {
+          try {
+            const res = await axios.get(
+              `http://localhost:3001/api/disciplinas/${idDisc}`
+            );
+            setDisciplinas(res.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchDataDisc();
+    }, [idDisc]);
+
+    useEffect(() => {
+        const fetchDataTurma = async () => {
+          try {
+            const res = await axios.get(
+              `http://localhost:3001/api/turmas/${idturma}`
+            );
+            setTurma(res.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchDataTurma();
+      }, [idturma]);
+
     return (
         <C.Container>
           <Navbar Text="Aluno" />
@@ -22,7 +54,7 @@ const dashboardAluno = () => {
           TitleFour="Relatorio"
             />
             <C.ContainerSejaBemvindo>
-              <C.TextSejaBemvindo>Design de Software - GPE10101</C.TextSejaBemvindo>
+              <C.titlePage>{disciplinas.nome}</C.titlePage>
             </C.ContainerSejaBemvindo>
 
             <C.MainContainer>

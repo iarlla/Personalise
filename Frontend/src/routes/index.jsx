@@ -25,6 +25,7 @@ import MeuQuestionario from "../pages/Professor/MeuQuestionario";
 // Importações de Páginas do Aluno
 import TelaMateriaAluno from "../pages/Aluno/TelaMateria";
 import QuestionarioPreAluno from "../pages/Aluno/QuestionarioPre";
+import QuestionarioPosAluno from "../pages/Aluno/QuestionarioPos";
 import SessaoAluno from "../pages/Aluno/Sessao";
 import EnviadoSucessoAluno from "../pages/Aluno/EnviadoSucesso";
 import DeletadoSucessoAluno from "../pages/Aluno/DeletadoSucesso";
@@ -67,11 +68,16 @@ const RouteApp = () => {
           <Route path="/materiasA" element={<TelaMateriaAluno />} />
           <Route path="/preQuestAluno" element={<QuestionarioPreAluno />} />
           <Route path="/disciplina/:idDisc/" element={<SessaoAluno />} />
-          <Route path="/sessao/:idDisc/relatorio" element={<DashBoardAluno />} />
+
           <Route path="/sessaoA/:idDisc/preQuest" element={<QuestionarioPreAluno />} />
           <Route path="/sessaoA/:idDisc/preQuest/enviado" element={<EnviadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/preQuest/deletado" element={<DeletadoSucessoAluno />} />
-          <Route path="/relatorio" element={<DashBoardAluno />} />
+
+          <Route path="/sessaoA/:idDisc/posQuest" element={<QuestionarioPosAluno />} />
+          <Route path="/sessaoA/:idDisc/posQuest/enviado" element={<EnviadoSucessoAluno />} />
+          <Route path="/sessaoA/:idDisc/posQuest/deletado" element={<DeletadoSucessoAluno />} />
+          
+          <Route path="/sessaoA/:idDisc/relatorio" element={<DashBoardAluno />} />
           <Route exact path="/home" element={<Private Item={Home} />} />
         </Routes>
       </Fragment>

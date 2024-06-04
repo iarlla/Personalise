@@ -7,7 +7,7 @@ import * as C from "./styles";
 import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
 
-const QuestionarioPreAluno = () => {
+const QuestionarioPosAluno = () => {
   const [disciplinas, setDisciplinas] = useState({});
   const [turma, setTurma] = useState([]);
   const [respostas, setRespostas] = useState({});
@@ -59,7 +59,7 @@ const QuestionarioPreAluno = () => {
         idturma,
         respostas,
       });
-      navigate(`/sessaoA/${idDisc}/${idturma}/preQuest/enviado`);
+      navigate(`/sessaoA/${idDisc}/${idturma}/posQuest/enviado`);
     } catch (error) {
       console.log(error);
     }
@@ -73,20 +73,17 @@ const QuestionarioPreAluno = () => {
           TitleOne="Minhas matérias"
           urlOne="/materiasA"
           symbolOne=">"
-          TitleTwo="Minhas turmas"
-          urlTwo={`/turmasA/${idDisc}`}
-          symbolTwo=">"
           TitleThree="Sessões"
-          urlThree={`/turmasA/${idDisc}/${idturma}`}
+          urlThree={`/disciplina/${idDisc}`}
           symbolThree=">"
-          TitleFour="Questionário pré-aula"
+          TitleFour="Questionário pós-aula"
         />
         <C.Content>
           <C.titlePage>{disciplinas.nome}</C.titlePage>
           <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
         </C.Content>
         <C.ContentQuest>
-          <C.titleQuest>Questionário Pré-Aula</C.titleQuest>
+          <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
           <C.line />
           <C.PerguntasQuest>
             <Pergunta
@@ -142,4 +139,4 @@ const QuestionarioPreAluno = () => {
   );
 };
 
-export default QuestionarioPreAluno;
+export default QuestionarioPosAluno;
