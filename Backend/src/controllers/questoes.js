@@ -10,7 +10,7 @@ export const postPosQuestoes = (req, res) => {
 
 function postQuestoes(req, res, tipo) {
   // NOTA: o professorId passado é na verdade o id do usuário
-  const { questions, professorId, idturma } = req.body; // Obtenha o idturma do corpo da requisição
+  const { questions, professorId, idturma, idDisc } = req.body; // Obtenha o idturma do corpo da requisição
 
   // Realize o JOIN para obter o id_professor correspondente ao id_usuario
   const q1 = `
@@ -50,11 +50,11 @@ function postQuestoes(req, res, tipo) {
 
       // Insira as perguntas na tabela questionario
       const q3 =
-        "INSERT INTO questionario (id_professor_turma, perguntas, tipo) VALUES (?, ?, ?)";
+        "INSERT INTO questionario (id_professor_turma, id_disciplina, perguntas, tipo) VALUES (?, ?, ?, ?)";
 
       db.query(
         q3,
-        [idProfessorTurma, JSON.stringify(questions), tipo],
+        [idProfessorTurma, idDisc, JSON.stringify(questions), tipo],
         (err, data) => {
           if (err) {
             console.error("Erro ao inserir dados no banco de dados:", err);
