@@ -18,8 +18,7 @@ export const registerAluno = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(senha, salt);
 
-    const q2 =
-      "INSERT INTO usuarios (nome, email, senha, tipo_usuario) VALUES (?, ?, ?, 'Aluno')";
+    const q2 = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
     db.query(q2, [nome, email, hashedPassword], (err, data) => {
       if (err) {
@@ -39,6 +38,16 @@ export const registerAluno = (req, res) => {
             .status(500)
             .json({ message: "Erro no servidor", error: err });
         }
+
+        const idTurma = 1;
+        const q4 = "INSERT INTO aluno_turma (idaluno, idturma) VALUES (?, ?)";
+        db.query(q4, [usuarioID, idTurma], (err) => {
+          if (err) {
+            return res
+              .status(500)
+              .json({ message: "Erro no servidor", error: err });
+          }
+        });
         return res
           .status(200)
           .json({ message: "Aluno foi cadastrado com sucesso!" });
@@ -63,8 +72,7 @@ export const registerProfessor = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(senha, salt);
 
-    const q2 =
-      "INSERT INTO usuarios (nome, email, senha, tipo_usuario) VALUES (?, ?, ?, 'professor')";
+    const q2 = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
 
     db.query(q2, [nome, email, hashedPassword], (err, data) => {
       if (err) {

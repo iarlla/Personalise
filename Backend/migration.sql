@@ -132,10 +132,15 @@ DROP TABLE IF EXISTS `questionario`;
 CREATE TABLE `questionario` (
   `id_questionario` int NOT NULL AUTO_INCREMENT,
   `id_professor_turma` int DEFAULT NULL,
+<<<<<<< HEAD
+=======
+  `id_disciplina` int DEFAULT NULL,
+>>>>>>> main
   `tipo` varchar(45) DEFAULT NULL,
   `perguntas` json DEFAULT NULL,
   PRIMARY KEY (`id_questionario`),
   KEY `professor_turma_idx` (`id_professor_turma`),
+<<<<<<< HEAD
   CONSTRAINT `professor_turma` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `questionario` VALUES 
@@ -171,6 +176,13 @@ INSERT INTO `questionario` VALUES
     (30, 15, 'POS', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortavel trabalhando com bancos de dados relacionais.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 2,\"pergunta\": \"Eu entendo e aplico conceitos de programacao funcional.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 3,\"pergunta\": \"Eu consigo usar ferramentas de depuracao para encontrar e corrigir erros no meu codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 4,\"pergunta\": \"Eu estou familiarizado com o desenvolvimento de aplicacoes web.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 5,\"pergunta\": \"Eu entendo os principios de design de APIs RESTful.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 6,\"pergunta\": \"Eu consigo utilizar conteineres, como Docker, para criar ambientes de desenvolvimento isolados.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 7,\"pergunta\": \"Eu estou familiarizado com o uso de testes de integracao em meus projetos.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 8,\"pergunta\": \"Eu entendo e aplico padroes de design em meu codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 9,\"pergunta\": \"Eu consigo utilizar ferramentas de CI/CD para automatizar o pipeline de desenvolvimento.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 10,\"pergunta\": \"Eu me sinto confortavel com o desenvolvimento de aplicacoes moveis.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 11,\"pergunta\": \"Eu uso frequentemente tecnicas de refatoracao para melhorar a qualidade do codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 12,\"pergunta\": \"Eu trabalho regularmente em projetos open source.\",\"tipo\": \"SIM_NAO\"},{\"num\": 13,\"pergunta\": \"Eu utilizo metodologias ageis em meus projetos de desenvolvimento.\",\"tipo\": \"SIM_NAO\"},{\"num\": 14,\"pergunta\": \"Eu ja participei de hackathons ou competicoes de programacao.\",\"tipo\": \"SIM_NAO\"},{\"num\": 15,\"pergunta\": \"Eu tenho experiencia em programacao de sistemas embarcados.\",\"tipo\": \"SIM_NAO\"},{\"num\": 16,\"pergunta\": \"Eu ja desenvolvi projetos utilizando computacao em nuvem.\",\"tipo\": \"SIM_NAO\"},{\"num\": 17,\"pergunta\": \"Eu entendo os conceitos basicos de seguranca da informacao e os aplico no desenvolvimento de software.\",\"tipo\": \"SIM_NAO\"},{\"num\": 18,\"pergunta\": \"Eu participo de comunidades ou foruns de desenvolvedores online.\",\"tipo\": \"SIM_NAO\"},{\"num\": 19,\"pergunta\": \"Eu ja contribui com codigo para projetos de outras pessoas.\",\"tipo\": \"SIM_NAO\"},{\"num\": 20,\"pergunta\": \"Eu me sinto confortavel apresentando e explicando meu codigo para outros desenvolvedores.\",\"tipo\": \"SIM_NAO\"}]'),
     (31, 16, 'PRE', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortavel escrevendo codigo em mais de uma linguagem de programacao.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 2,\"pergunta\": \"Eu tenho experiencia trabalhando com sistemas de controle de versao, como o Git.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 3,\"pergunta\": \"Eu me sinto confortavel escrevendo testes unitarios para o meu codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 4,\"pergunta\": \"Eu consigo implementar algoritmos basicos, como ordenacao e busca.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 5,\"pergunta\": \"Eu consigo escrever scripts para automatizar tarefas repetitivas.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 6,\"pergunta\": \"Eu estou confortavel com o uso de ambientes de desenvolvimento integrados (IDEs).\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 7,\"pergunta\": \"Alunos trabalham na area\",\"tipo\": \"SIM_NAO\"},{\"num\": 8,\"pergunta\": \"Alunos conhecem python\",\"tipo\": \"SIM_NAO\"},{\"num\": 9,\"pergunta\": \"Alunos conhecem Github\",\"tipo\": \"SIM_NAO\"},{\"num\": 10,\"pergunta\": \"Alunos utilizam VScode\",\"tipo\": \"SIM_NAO\"},{\"num\": 11,\"pergunta\": \"Alunos fizeram as materias de requisito\",\"tipo\": \"SIM_NAO\"}]'),
     (32, 16, 'POS', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortavel trabalhando com bancos de dados relacionais.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 2,\"pergunta\": \"Eu entendo e aplico conceitos de programacao funcional.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 3,\"pergunta\": \"Eu consigo usar ferramentas de depuracao para encontrar e corrigir erros no meu codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 4,\"pergunta\": \"Eu estou familiarizado com o desenvolvimento de aplicacoes web.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 5,\"pergunta\": \"Eu entendo os principios de design de APIs RESTful.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 6,\"pergunta\": \"Eu consigo utilizar conteineres, como Docker, para criar ambientes de desenvolvimento isolados.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 7,\"pergunta\": \"Eu estou familiarizado com o uso de testes de integracao em meus projetos.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 8,\"pergunta\": \"Eu entendo e aplico padroes de design em meu codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 9,\"pergunta\": \"Eu consigo utilizar ferramentas de CI/CD para automatizar o pipeline de desenvolvimento.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 10,\"pergunta\": \"Eu me sinto confortavel com o desenvolvimento de aplicacoes moveis.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 11,\"pergunta\": \"Eu uso frequentemente tecnicas de refatoracao para melhorar a qualidade do codigo.\",\"tipo\": \"MULTIPLA_ESCOLHA\"},{\"num\": 12,\"pergunta\": \"Eu trabalho regularmente em projetos open source.\",\"tipo\": \"SIM_NAO\"},{\"num\": 13,\"pergunta\": \"Eu utilizo metodologias ageis em meus projetos de desenvolvimento.\",\"tipo\": \"SIM_NAO\"},{\"num\": 14,\"pergunta\": \"Eu ja participei de hackathons ou competicoes de programacao.\",\"tipo\": \"SIM_NAO\"},{\"num\": 15,\"pergunta\": \"Eu tenho experiencia em programacao de sistemas embarcados.\",\"tipo\": \"SIM_NAO\"},{\"num\": 16,\"pergunta\": \"Eu ja desenvolvi projetos utilizando computacao em nuvem.\",\"tipo\": \"SIM_NAO\"},{\"num\": 17,\"pergunta\": \"Eu entendo os conceitos basicos de seguranca da informacao e os aplico no desenvolvimento de software.\",\"tipo\": \"SIM_NAO\"},{\"num\": 18,\"pergunta\": \"Eu participo de comunidades ou foruns de desenvolvedores online.\",\"tipo\": \"SIM_NAO\"},{\"num\": 19,\"pergunta\": \"Eu ja contribui com codigo para projetos de outras pessoas.\",\"tipo\": \"SIM_NAO\"},{\"num\": 20,\"pergunta\": \"Eu me sinto confortavel apresentando e explicando meu codigo para outros desenvolvedores.\",\"tipo\": \"SIM_NAO\"}]');
+=======
+  CONSTRAINT `professor_turma` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`),
+  CONSTRAINT `disciplina_id` FOREIGN KEY (`id_disciplina`) REFERENCES `disciplinas` (`id_disciplina`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `questionario` VALUES 
+    (3,1,1,'PRE','[{\"num\": 1, \"pergunta\": \"teste\", \"nomeLabel\": \"pergunta-1\"}, {\"num\": 2, \"pergunta\": \"Pergunta 2\", \"nomeLabel\": \"pergunta-2\"}, {\"num\": 3, \"pergunta\": \"Pergunta 3\", \"nomeLabel\": \"pergunta-3\"}, {\"num\": 4, \"pergunta\": \"Pergunta 4\", \"nomeLabel\": \"pergunta-4\"}, {\"num\": 5, \"pergunta\": \"Pergunta 5\", \"nomeLabel\": \"pergunta-5\"}, {\"num\": 6, \"pergunta\": \"Pergunta 6\", \"nomeLabel\": \"pergunta-6\"}, {\"num\": 7, \"pergunta\": \"Pergunta 7\", \"nomeLabel\": \"pergunta-7\"}]');
+>>>>>>> main
 
 
 DROP TABLE IF EXISTS `respostas`;
@@ -246,19 +258,30 @@ INSERT INTO `turma_disciplina` VALUES
     (24,4,6);
 
 DROP TABLE IF EXISTS `aluno_turma`;
+<<<<<<< HEAD
 
 CREATE TABLE `aluno_turma` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idaluno` int NOT NULL,
   `idturma` int NOT NULL,
   PRIMARY KEY (`id`),
+=======
+CREATE TABLE `aluno_turma` (
+  `idaluno` int NOT NULL,
+  `idturma` int NOT NULL,
+  PRIMARY KEY (`idaluno`,`idturma`),
+>>>>>>> main
   KEY `aluno_turma_idaluno_idx` (`idaluno`),
   KEY `aluno_turma_idturma_idx` (`idturma`),
   CONSTRAINT `aluno_turma_aluno_id` FOREIGN KEY (`idaluno`) REFERENCES `alunos` (`idaluno`),
   CONSTRAINT `aluno_turma_turma_id` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+<<<<<<< HEAD
 
 INSERT INTO `aluno_turma` (`idaluno`, `idturma`) VALUES
+=======
+INSERT INTO `aluno_turma` VALUES
+>>>>>>> main
     (1, 1),
     (2, 1),
     (3, 1),
@@ -269,3 +292,13 @@ INSERT INTO `aluno_turma` (`idaluno`, `idturma`) VALUES
     (8, 3),
     (9, 4),
     (10, 4);
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+>>>>>>> main

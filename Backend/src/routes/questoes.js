@@ -1,8 +1,9 @@
 import express from "express";
-import { getQuestoes } from "../controllers/questoes.js";
+import { postPreQuestoes, postPosQuestoes } from "../controllers/questoes.js";
 
 const router = express.Router();
 
-router.post("/preQuest/editar", getQuestoes); // Usar POST
+router.post("/preQuest/editar", postPreQuestoes);
+router.post("/proQuest/editar", postPosQuestoes);
 
 export default router;

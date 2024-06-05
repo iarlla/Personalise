@@ -9,6 +9,20 @@ export const getQuestionarios = (_, res) => {
   });
 };
 
+export const getQuestionario = (req, res) => {
+  const q = "SELECT perguntas FROM questionario where id_questionario = ?";
+
+  db.query(q, [req.params.idquestionario], (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    try {
+      return res.status(200).json(JSON.parse(data[0].perguntas));
+    } catch (parseErr) {
+      return res.status(500).json({ error: "Failed to parse JSON" });
+    }
+  });
+};
+
 export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
   const { idProfessor, idDisc, idTurma } = req.params;
 
@@ -16,8 +30,7 @@ export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
     SELECT q.id_questionario
     FROM questionario q
     JOIN professor_turma pt ON q.id_professor_turma = pt.id
-    JOIN turma_disciplina td ON pt.idturma = td.idturma
-    WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?;
+    WHERE pt.idprofessor = ? AND q.id_disciplina = ? AND pt.idturma = ?;
   `;
 
   db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {
@@ -35,8 +48,7 @@ export const deleteQuestionarioByDiscTurmaProfessor = (req, res) => {
       SELECT q.id_questionario
       FROM questionario q
       JOIN professor_turma pt ON q.id_professor_turma = pt.id
-      JOIN turma_disciplina td ON pt.idturma = td.idturma
-      WHERE pt.idprofessor = ? AND td.iddisciplina = ? AND pt.idturma = ?;
+      WHERE pt.idprofessor = ? AND q.id_disciplina = ? AND pt.idturma = ?;
     `;
 
   db.query(q, [idProfessor, idDisc, idTurma], (err, data) => {

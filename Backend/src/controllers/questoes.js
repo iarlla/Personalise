@@ -1,14 +1,23 @@
 import { db } from "../database/db.js";
 
-export const getQuestoes = (req, res) => {
-  const { questions, professorId, idturma } = req.body; // Obtenha o idturma do corpo da requisição
+export const postPreQuestoes = (req, res) => {
+  postQuestoes(req, res, "PRE");
+};
+
+export const postPosQuestoes = (req, res) => {
+  postQuestoes(req, res, "POS");
+};
+
+function postQuestoes(req, res, tipo) {
+  // NOTA: o professorId passado é na verdade o id do usuário
+  const { questions, professorId, idturma, idDisc } = req.body; // Obtenha o idturma do corpo da requisição
 
   // Realize o JOIN para obter o id_professor correspondente ao id_usuario
   const q1 = `
-    SELECT idprofessores
-    FROM professores
-    JOIN usuarios ON usuarios.id = professores.id_usuario
-    WHERE professores.id_usuario = ?
+      SELECT idprofessores
+      FROM professores
+      LEFT JOIN usuarios ON usuarios.id = professores.id_usuario
+      WHERE usuarios.id = ?
   `;
 
   db.query(q1, [professorId], (err, data) => {
@@ -22,11 +31,10 @@ export const getQuestoes = (req, res) => {
     }
 
     const idProfessor = data[0].idprofessores;
-    console.log(idProfessor)
-    console.log(data)
 
     // Obtenha o id_professor_turma correspondente
-    const q2 = "SELECT id FROM professor_turma WHERE idprofessor = ? AND idturma = ?";
+    const q2 =
+      "SELECT id FROM professor_turma WHERE idprofessor = ? AND idturma = ?";
 
     db.query(q2, [idProfessor, idturma], (err, data) => {
       if (err) {
@@ -41,15 +49,22 @@ export const getQuestoes = (req, res) => {
       const idProfessorTurma = data[0].id;
 
       // Insira as perguntas na tabela questionario
-      const q3 = "INSERT INTO questionario (id_professor_turma, perguntas) VALUES (?, ?)";
+      const q3 =
+        "INSERT INTO questionario (id_professor_turma, id_disciplina, perguntas, tipo) VALUES (?, ?, ?, ?)";
 
-      db.query(q3, [idProfessorTurma, JSON.stringify(questions)], (err, data) => {
-        if (err) {
-          console.error("Erro ao inserir dados no banco de dados:", err);
-          return res.status(500).json(err);
+      db.query(
+        q3,
+        [idProfessorTurma, idDisc, JSON.stringify(questions), tipo],
+        (err, data) => {
+          if (err) {
+            console.error("Erro ao inserir dados no banco de dados:", err);
+            return res.status(500).json(err);
+          }
+          return res
+            .status(200)
+            .json({ message: "Perguntas inseridas com sucesso", data });
         }
-        return res.status(200).json({ message: "Perguntas inseridas com sucesso", data });
-      });
+      );
     });
   });
-};
+}
