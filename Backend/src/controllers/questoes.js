@@ -8,6 +8,8 @@ export const postPosQuestoes = (req, res) => {
   postQuestoes(req, res, "POS");
 };
 
+
+
 function postQuestoes(req, res, tipo) {
   // NOTA: o professorId passado é na verdade o id do usuário
   const { questions, professorId, idturma, idDisc } = req.body; // Obtenha o idturma do corpo da requisição
@@ -49,8 +51,7 @@ function postQuestoes(req, res, tipo) {
       const idProfessorTurma = data[0].id;
 
       // Insira as perguntas na tabela questionario
-      const q3 =
-        "INSERT INTO questionario (id_professor_turma, id_disciplina, perguntas, tipo) VALUES (?, ?, ?, ?)";
+      const q3 = "INSERT INTO questionario (id_professor_turma, id_disciplina, perguntas, tipo) VALUES (?, ?, ?, ?)";
 
       db.query(
         q3,
