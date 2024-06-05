@@ -31,7 +31,7 @@ export const MainContainer = styled.div`
   margin-left: 85px;
   margin-right: 5%;
   margin-top: -20px;
-  padding: 30px;
+  padding: 0px;
   display: flex;
   justify-content: space-between;
 `;
@@ -63,7 +63,7 @@ export const MainLeftTextoDiv = styled.div`
 
 export const ContainerBlue = styled.div`
   text-align: center;
-  margin-top: 30px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-around;
   `;
@@ -124,5 +124,6 @@ export const MainTopContainer = styled.div`
   padding: 40px;
   justify-content: center;
   color: #00396d;
+  
 `;
 
