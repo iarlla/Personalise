@@ -2,85 +2,57 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f0f0f0;
-  font-family: Arial, sans-serif;
-`;
-
-export const Header = styled.div`
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #d9d9d9;
-  padding: 16px;
-`;
-
-export const Title = styled.h2`
-  margin: 0;
-  font-size: 24px;
-  color: #00396d;
-`;
-
-export const CloseButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #00396d;
+  height: 100vh;
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  padding: 20px;
 `;
 
 export const Content = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 16px;
-`;
-
-export const ProfilePicture = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: #d9d9d9;
-  border-radius: 50%;
-  margin-bottom: 16px;
-  display: flex;
   justify-content: center;
-  align-items: center;
-  color: #818181;
+  align-items: flex-start;
+  width: 40%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 60%;
+  margin-top: 100px; /* Add margin to adjust position */
+  margin-left: 200px; /* Add margin to adjust position */
 `;
 
-export const EditPhoto = styled.div`
-  font-size: 14px;
-  text-align: center;
+export const Title = styled.h2`
+  font-size: 35px;
+  color: #00396d;
+  margin-bottom: 10px;
+  align-self: flex-start;
 `;
 
 export const Info = styled.div`
+  margin-top: 90px;
   width: 100%;
-  max-width: 600px;
 `;
 
 export const InfoItem = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; 
+  align-items: flex-start;
   margin-bottom: 16px;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-  }
 `;
 
 export const Label = styled.span`
-  font-size: 18px;
+  font-size: 14px;
   color: #00396d;
 `;
 
 export const Value = styled.span`
-  font-size: 18px;
+  font-size: 14px;
   color: #818181;
+  margin-top: 4px; 
 `;
 
 export const EditButton = styled.button`
@@ -88,5 +60,35 @@ export const EditButton = styled.button`
   border: none;
   cursor: pointer;
   color: #00396d;
-  font-size: 18px;
+  font-size: 14px;
+  align-self: flex-end; 
+  margin-top: -20px; 
+`;
+
+export const ButtonSection = styled.div`
+  display: flex;
+  align-self: flex-end;
+  margin-top: 40px;
+`;
+
+export const ActionButton = styled.button`
+  background-color: #00396d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px; 
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #002244;
+  }
+`;
+
+export const Image = styled.img`
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+  align-self: center;
 `;
