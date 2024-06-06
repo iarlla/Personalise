@@ -9,7 +9,7 @@ CREATE TABLE `usuarios` (
   `senha` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `usuarios` VALUES 
+INSERT INTO `usuarios` VALUES
     (1,'alex maxwel','alex@devteste.com','$2a$10$765sn65XuKYX85Fuf5mDeu.OFsExjzJWZMQURe/U4FtH36w83IjOm'),
     (2,'rafael','rafael@dev.com','$2a$10$Oj7pgmw.4HcNpBRIWptrMOHBl7b.rMpL5eugIttbCON6T8C26IR1y'),
     (3,'Pedro Nunes','pedro@aluno.com','$2a$10$8yTu9/kpQvp4cLQlzXDwNeSljVyqlrgCvXQrRe21So3kg.CpYSwiS'),
@@ -41,7 +41,7 @@ CREATE TABLE `alunos` (
   UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`),
   CONSTRAINT `id_usuario_aluno` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `alunos` VALUES 
+INSERT INTO `alunos` VALUES
     (1,1,'UC240001','Analise e Desenvolvimento de sistema'),
     (2,2,'UC240002','Analise e Desenvolvimento de sistema'),
     (3,3,'UC240003','Analise e Desenvolvimento de sistema'),
@@ -64,7 +64,7 @@ CREATE TABLE `professores` (
   UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`),
   CONSTRAINT `id_usuairo_professor` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `professores` VALUES 
+INSERT INTO `professores` VALUES
     (1,11,'UC240011'),
     (2,12,'UC240012'),
     (3,13,'UC240013'),
@@ -78,7 +78,7 @@ CREATE TABLE `disciplinas` (
   `descricao` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_disciplina`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `disciplinas` VALUES 
+INSERT INTO `disciplinas` VALUES
     (1,'Programacao web',120,'Programacao para web com JavaScript, Html e CSS'),
     (2,'Novas Tecnologias',80,'Aprendizado em Python'),
     (3,'Engenharia de Software',80,'UML'),
@@ -93,7 +93,7 @@ CREATE TABLE `turma` (
   `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`idturma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `turma` VALUES 
+INSERT INTO `turma` VALUES
     (1,'GPE100'),
     (2,'GPE110'),
     (3,'GPE120'),
@@ -101,7 +101,7 @@ INSERT INTO `turma` VALUES
 
 
 DROP TABLE IF EXISTS `professor_turma`;
-CREATE TABLE `professor_turma_disciplina` (
+CREATE TABLE `professor_turma` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idprofessor` int NOT NULL,
   `idturma` int NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE `professor_turma_disciplina` (
   CONSTRAINT `professor_id` FOREIGN KEY (`idprofessor`) REFERENCES `professores` (`idprofessores`),
   CONSTRAINT `turma_id` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `professor_turma` VALUES 
+INSERT INTO `professor_turma` VALUES
     (1,1,1),
     (2,1,2),
     (3,1,3),
@@ -139,7 +139,7 @@ CREATE TABLE `questionario` (
   KEY `professor_turma_idx` (`id_professor_turma`),
   CONSTRAINT `professor_turma` FOREIGN KEY (`id_professor_turma`) REFERENCES `professor_turma` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `questionario` VALUES 
+INSERT INTO `questionario` VALUES
     (1, 1, 'PRE', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortavel escrevendo codigo em mais de uma linguagem de programacao.\"},{\"num\": 2,\"pergunta\": \"Eu tenho experiencia trabalhando com sistemas de controle de versao, como o Git.\"},{\"num\": 3,\"pergunta\": \"Eu me sinto confortavel escrevendo testes unitarios para o meu codigo.\"},{\"num\": 4,\"pergunta\": \"Eu consigo implementar algoritmos basicos, como ordenacao e busca.\"},{\"num\": 5,\"pergunta\": \"Eu consigo escrever scripts para automatizar tarefas repetitivas.\"},{\"num\": 6,\"pergunta\": \"Eu estou confortavel com o uso de ambientes de desenvolvimento integrados (IDEs).\"}]'),
     (2, 1, 'POS', '[{\"num\": 1,\"pergunta\": \"Eu me sinto confortavel trabalhando com bancos de dados relacionais.\"},{\"num\": 2,\"pergunta\": \"Eu entendo e aplico conceitos de programacao funcional.\"},{\"num\": 3,\"pergunta\": \"Eu consigo usar ferramentas de depuracao para encontrar e corrigir erros no meu codigo.\"},{\"num\": 4,\"pergunta\": \"Eu estou familiarizado com o desenvolvimento de aplicacoes web.\"},{\"num\": 5,\"pergunta\": \"Eu entendo os principios de design de APIs RESTful.\"},{\"num\": 6,\"pergunta\": \"Eu consigo utilizar conteineres, como Docker, para criar ambientes de desenvolvimento isolados.\"},{\"num\": 7,\"pergunta\": \"Eu estou familiarizado com o uso de testes de integracao em meus projetos.\"},{\"num\": 8,\"pergunta\": \"Eu entendo e aplico padroes de design em meu codigo.\"},{\"num\": 9,\"pergunta\": \"Eu consigo utilizar ferramentas de CI/CD para automatizar o pipeline de desenvolvimento.\"},{\"num\": 10,\"pergunta\": \"Eu me sinto confortavel com o desenvolvimento de aplicacoes moveis.\"},{\"num\": 11,\"pergunta\": \"Eu uso frequentemente tecnicas de refatoracao para melhorar a qualidade do codigo.\"}]');
 
@@ -191,7 +191,7 @@ CREATE TABLE `turma_disciplina` (
   CONSTRAINT `id_disciplina` FOREIGN KEY (`iddisciplina`) REFERENCES `disciplinas` (`id_disciplina`),
   CONSTRAINT `id_turma` FOREIGN KEY (`idturma`) REFERENCES `turma` (`idturma`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `turma_disciplina` VALUES 
+INSERT INTO `turma_disciplina` VALUES
     (1,1,1),
     (2,1,2),
     (3,1,3),
