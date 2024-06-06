@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Signin from "../pages/Signin";
 import Signup from "../pages/SignupAluno";
+import RedefinirSenha from "../pages/RedefinirSenha";
 import SignupProfessor from "../pages/SignupProfessor";
 import useAuth from "../hooks/useAuth";
 import TelaMateria from "../pages/Professor/TelaMateria";
@@ -30,6 +31,7 @@ const RouteApp = () => {
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route path="/preQuest" element={<QuestionarioPre />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/RedefinirSenha" element={<RedefinirSenha />} />
           <Route exact path="/cadastroAluno" element={<Signup />} />
           <Route
             exact

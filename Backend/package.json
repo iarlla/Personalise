@@ -16,7 +16,9 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "mathjs": "^13.0.0",
     "mysql2": "^3.9.7",
+    "nodemailer": "^6.9.13",
     "nodemon": "^1.10.2"
   }
 }

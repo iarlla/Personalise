@@ -43,7 +43,7 @@ const Signin = () => {
 
   const SolicitarSenha = (e) => {
     e.preventDefault();
-    return alert("VOCE ESQUECEU A SENHA");
+    navigate("/redefinirSenha");
   };
 
   return (
