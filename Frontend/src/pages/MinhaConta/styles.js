@@ -14,32 +14,30 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 40%;
-  max-width: 500px;
+  width: 45%;
+  max-width: 600px;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 60%;
-  margin-top: 100px; /* Add margin to adjust position */
-  margin-left: 200px; /* Add margin to adjust position */
+  height: auto;
+  margin-top: 20px; /* Adjusted margin for better alignment */
 `;
 
 export const Title = styled.h2`
   font-size: 35px;
   color: #00396d;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   align-self: flex-start;
 `;
 
 export const Info = styled.div`
-  margin-top: 90px;
   width: 100%;
 `;
 
 export const InfoItem = styled.div`
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: flex-start;
   margin-bottom: 16px;
 `;
@@ -52,23 +50,13 @@ export const Label = styled.span`
 export const Value = styled.span`
   font-size: 14px;
   color: #818181;
-  margin-top: 4px; 
-`;
-
-export const EditButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #00396d;
-  font-size: 14px;
-  align-self: flex-end; 
-  margin-top: -20px; 
+  margin-top: 4px;
 `;
 
 export const ButtonSection = styled.div`
   display: flex;
   align-self: flex-end;
-  margin-top: 40px;
+  margin-top: 400px;
 `;
 
 export const ActionButton = styled.button`
@@ -76,18 +64,17 @@ export const ActionButton = styled.button`
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 8px; 
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   margin-right: 10px;
-
   &:hover {
     background-color: #002244;
   }
 `;
 
 export const Image = styled.img`
-  width: 50%;
+  width: 45%;
   height: auto;
   object-fit: cover;
   align-self: center;
