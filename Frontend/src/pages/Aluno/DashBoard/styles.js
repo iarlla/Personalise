@@ -61,28 +61,6 @@ export const MainLeftTextoDiv = styled.div`
   border-radius: 30px 30px 60% 0%;
 `;
 
-export const ContainerBlue = styled.div`
-  text-align: center;
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-around;
-  `;
-
-export const BlueBox = styled.div`
-  padding: 20px 20px;
-  outline: none;
-  border: none;
-  border-radius: 10px;
-  width: 262px;  // ajuste manual
-  cursor: pointer;
-  background-color: #00396d;
-  color: white;
-  font-weight: 600;
-  font-size: 16px;
-  max-width: 700px;
-  margin: 5px;
-`;
-
 export const ContainerWhite = styled.div`
   text-align: center;
   margin-top: 10px;

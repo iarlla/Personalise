@@ -101,7 +101,7 @@ INSERT INTO `turma` VALUES
 
 
 DROP TABLE IF EXISTS `professor_turma`;
-CREATE TABLE `professor_turma` (
+CREATE TABLE `professor_turma_disciplina` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idprofessor` int NOT NULL,
   `idturma` int NOT NULL,
@@ -113,20 +113,20 @@ CREATE TABLE `professor_turma` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `professor_turma` VALUES 
     (1,1,1),
-    (5,2,1),
-    (9,3,1),
-    (13,4,1),
     (2,1,2),
-    (6,2,2),
-    (10,3,2),
-    (14,4,2),
     (3,1,3),
-    (7,2,3),
-    (11,3,3),
-    (15,4,3),
     (4,1,4),
+    (5,2,1),
+    (6,2,2),
+    (7,2,3),
     (8,2,4),
+    (9,3,1),
+    (10,3,2),
+    (11,3,3),
     (12,3,4),
+    (13,4,1),
+    (14,4,2),
+    (15,4,3),
     (16,4,4);
 
 DROP TABLE IF EXISTS `questionario`;

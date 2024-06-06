@@ -6,55 +6,66 @@ import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
+import useAuth from "../../../hooks/useAuth";
 
 const QuestionarioPreAluno = () => {
   const [disciplinas, setDisciplinas] = useState({});
-  const [turma, setTurma] = useState([]);
   const [perguntas, setPerguntas] = useState([]);
   const [respostas, setRespostas] = useState({});
-  const { idDisc, idturma } = useParams();
+  const {idDisc, tipo } = useParams();
+  const { currentUser } = useAuth();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const rest = await axios.get(
+          `http://localhost:3001/api/disciplinas/${idDisc}`
+        );
+        setDisciplinas(rest.data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [currentUser.id, idDisc]);
+
+
 
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `http://localhost:3001/api/questionario/aluno/${idDisc}`,
+          {
+            headers: {
+              'idUsuario': currentUser.id,
+              'tipoQuestionario': 'PRE'
+            }
+          }
         );
-        setDisciplinas(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataDisc();
-  }, [idDisc]);
-
-  useEffect(() => {
-    const fetchDataTurma = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
-        );
-        setTurma(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataTurma();
-  }, [idturma]);
-
-  useEffect(() => {
-    const fetchPerguntas = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3001/api/perguntas/${idDisc}/${idturma}`);
         setPerguntas(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchPerguntas();
-  }, [idDisc, idturma]);
+    fetchDataDisc();
+  }, [currentUser.id, idDisc]);
+
+
+  // useEffect(() => {
+  //   const fetchPerguntas = async () => {
+  //     try {
+  //       const res = await axios.get(`http://localhost:3001/api/perguntas/${idDisc}/${idturma}`);
+  //       setPerguntas(res.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchPerguntas();
+  // }, [idDisc, idturma]);
   
 
   const handleInputChange = (e) => {
@@ -104,7 +115,7 @@ const QuestionarioPreAluno = () => {
               <Pergunta
                 key={index}
                 num={index + 1}
-                pergunta={pergunta.texto}
+                pergunta={pergunta.pergunta}
                 nomeLabel={`pergunta-${index + 1}`}
                 onChange={handleInputChange}
               />

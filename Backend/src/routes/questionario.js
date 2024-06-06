@@ -4,6 +4,7 @@ import {
   getQuestionarios,
   deleteQuestionarioByDiscTurmaProfessor,
   getQuestionario,
+  getQuestionarioDaTurmaByIdUsuarioAndIdDisciplina
 } from "../controllers/questionario.js";
 
 const router = express.Router();
@@ -11,6 +12,8 @@ const router = express.Router();
 router.get("/", getQuestionarios);
 
 router.get("/:idquestionario", getQuestionario);
+
+router.get("/aluno/:idDisciplina", getQuestionarioDaTurmaByIdUsuarioAndIdDisciplina);
 
 router.get(
   "/byDiscTurmaProfessor/:idProfessor/:idDisc/:idTurma",

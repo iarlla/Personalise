@@ -60,28 +60,6 @@ const dashboardAluno = () => {
             <C.MainContainer>
                 <C.MainTopContainer>
 
-                    <C.ContainerBlue>
-                        <C.BlueBox>
-                            <h1>20 </h1>
-                            <p>alunos fizeram a matéria de requisito</p>
-                        </C.BlueBox>
-                        <C.BlueBox>
-                            <h1>20 </h1>
-                            <p>alunos fizeram a matéria de requisito</p>
-                        </C.BlueBox>
-                        <C.BlueBox>
-                            <h1>20 </h1>
-                            <p>alunos fizeram a matéria de requisito</p>
-                        </C.BlueBox>
-                        <C.BlueBox>
-                            <h1>20 </h1>
-                            <p>alunos fizeram a matéria de requisito</p>
-                        </C.BlueBox>
-                        <C.BlueBox>
-                            <h1>20 </h1>
-                            <p>alunos fizeram a matéria de requisito</p>
-                        </C.BlueBox>
-                    </C.ContainerBlue>
                     <C.ContainerWhite>
                         <C.WhiteBox>
                             <h3>Pergunta 1</h3>

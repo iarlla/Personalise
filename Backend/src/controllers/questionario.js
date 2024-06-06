@@ -1,5 +1,7 @@
 import { db } from "../database/db.js";
 
+
+
 export const getQuestionarios = (_, res) => {
   const q = "SELECT * FROM questionario";
 
@@ -48,6 +50,7 @@ export const getQuestionarioByDiscTurmaProfessor = (req, res) => {
 };
 
 
+
 export const deleteQuestionarioByDiscTurmaProfessor = (req, res) => {
   const { idProfessor, idDisc, idTurma } = req.params;
 
@@ -85,3 +88,40 @@ export const deleteQuestionarioByDiscTurmaProfessor = (req, res) => {
     });
   });
 };
+
+
+
+
+export const getQuestionarioDaTurmaByIdUsuarioAndIdDisciplina = (req, res) => {
+  const query = `
+      SELECT distinct q.perguntas, q.id_questionario
+      from questionario q
+      left join professor_turma pt on pt.id = q.id_professor_turma 
+      left join turma t on t.idturma = pt.idturma 
+      left join turma_disciplina td on td.idturma = t.idturma 
+      left join disciplinas d on d.id_disciplina = td.iddisciplina 
+      left join aluno_turma at2 on at2.idturma = at2.idturma 
+      left join alunos a on a.idaluno = at2.idaluno 
+      left join usuarios u on u.id = a.id_usuario 
+      WHERE u.id = ?
+      and d.id_disciplina = ?
+      and q.tipo = ?
+    `
+
+    const { idDisciplina } = req.params;
+    const { idusuario: idUsuario, tipoquestionario: tipoQuestionario } = req.headers;
+
+
+    db.query(query, [idUsuario, idDisciplina, tipoQuestionario], (err, data) => {
+      if (err)
+        return res
+          .status(500)
+          .json({ message: "Erro ao buscar o perguntas", error: err });
+  
+      if (data.length === 0)
+        return res.status(404).json({ message: "Perguntas não encontrada" });
+
+      return res.status(200).json(data[0].perguntas);
+    });
+  
+}
