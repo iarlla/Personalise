@@ -39,23 +39,28 @@ const Signup = () => {
     }
 
     try {
-      await Axios.post("http://localhost:3001/api/auth/cadastro-aluno", {
-        email: inputs.email,
-        nome: inputs.nome,
-        senha: inputs.senha,
-        matricula: inputs.matricula,
-        curso: inputs.curso,
-      }).then((response) => {
-        console.log(response);
-        alert("Usuário cadastrado com sucesso!");
-        navigate("/");
-      });
-    } catch (error) {
-      setError(error.response.data.message || "Erro desconhecido");
-    }
+        const response = await Axios.post("http://localhost:3001/api/auth/cadastro-aluno", {
+          email: inputs.email,
+          nome: inputs.nome,
+          senha: inputs.senha,
+          matricula: inputs.matricula,
+          curso: inputs.curso,
+        });
 
-    alert("Usuário cadatrado com sucesso!");
-    navigate("/");
+        if (response.status === 201) {
+          console.log(response);
+          alert("Usuário cadastrado com sucesso!");
+          navigate("/");
+
+        } else {
+          console.log(response);
+          alert("Falha ao cadastrar aluno " + response.status);
+        }
+
+      } catch (error) {
+        alert(error.response?.data?.message || "Erro desconhecido");
+        setError(error.response?.data?.message || "Erro desconhecido");
+      }
   };
 
   return (
