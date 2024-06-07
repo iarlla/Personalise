@@ -40,27 +40,27 @@ const Signup = () => {
 
     try {
         const response = await Axios.post("http://localhost:3001/api/auth/cadastro-aluno", {
-          email: inputs.email,
-          nome: inputs.nome,
-          senha: inputs.senha,
-          matricula: inputs.matricula,
-          curso: inputs.curso,
+            email: inputs.email,
+            nome: inputs.nome,
+            senha: inputs.senha,
+            matricula: inputs.matricula,
+            curso: inputs.curso,
         });
 
         if (response.status === 201) {
-          console.log(response);
-          alert("Usuário cadastrado com sucesso!");
-          navigate("/");
+            console.log(response);
+            alert("Usuário cadastrado com sucesso!");
+            navigate("/");
 
         } else {
-          console.log(response);
-          alert("Falha ao cadastrar aluno " + response.status);
+            console.log(response);
+            alert("Falha ao cadastrar aluno " + response.status);
         }
 
-      } catch (error) {
+    } catch (error) {
         alert(error.response?.data?.message || "Erro desconhecido");
         setError(error.response?.data?.message || "Erro desconhecido");
-      }
+    }
   };
 
   return (

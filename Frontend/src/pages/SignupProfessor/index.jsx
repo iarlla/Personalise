@@ -47,11 +47,19 @@ const SignupProfessor = () => {
           matricula: inputs.matricula,
         }
       );
-      console.log(response);
-      alert("Usuário cadastrado com sucesso!");
-      navigate("/");
+
+      if (response.status === 201) {
+        console.log(response);
+        alert("Usuário cadastrado com sucesso!");
+        navigate("/");
+      } else {
+        console.log(response);
+        alert("Falha ao cadastrar aluno " + response.status);
+      }
+
     } catch (error) {
-      setError(error.response.data.message || "Erro desconhecido");
+      alert(error.response?.data?.message || "Erro desconhecido");
+      setError(error.response?.data?.message || "Erro desconhecido");
     }
   };
 

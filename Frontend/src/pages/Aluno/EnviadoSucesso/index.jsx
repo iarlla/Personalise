@@ -42,7 +42,7 @@ const EnviadoSucesso = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
+    navigate(`/materiasA`);
   };
 
   return (

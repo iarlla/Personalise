@@ -66,7 +66,7 @@ const QuestionarioPreAluno = () => {
   //   };
   //   fetchPerguntas();
   // }, [idDisc, idturma]);
-  
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,12 +79,12 @@ const QuestionarioPreAluno = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:3001/api/respostas`, {
-        idDisc,
-        idturma,
-        respostas,
-      });
-      navigate(`/sessaoA/${idDisc}/${idturma}/preQuest/enviado`);
+    //   await axios.post(`http://localhost:3001/api/respostas`, {
+    //     idDisc,
+    //     idturma,
+    //     respostas,
+    //   });
+      navigate(`/sessaoA/${idDisc}/preQuest/enviado`);
     } catch (error) {
       console.log(error);
     }
@@ -110,17 +110,23 @@ const QuestionarioPreAluno = () => {
         <C.ContentQuest>
           <C.titleQuest>Questionário Pré-Aula</C.titleQuest>
           <C.line />
-          <C.PerguntasQuest>
-            {perguntas.map((pergunta, index) => (
-              <Pergunta
-                key={index}
-                num={index + 1}
-                pergunta={pergunta.pergunta}
-                nomeLabel={`pergunta-${index + 1}`}
-                onChange={handleInputChange}
-              />
-            ))}
-          </C.PerguntasQuest>
+          {perguntas.length > 0 ? (
+            <C.PerguntasQuest>
+              {perguntas.map((pergunta, index) => (
+                <Pergunta
+                  key={index}
+                  num={index + 1}
+                  pergunta={pergunta.pergunta}
+                  nomeLabel={`pergunta-${index + 1}`}
+                  onChange={handleInputChange}
+                />
+              ))}
+            </C.PerguntasQuest>
+          ) : (
+            <div style={{ textAlign: "center", marginTop: "28px" }}>
+              Nao existem questionario
+            </div>
+          )}
           <div style={{ margin: "30px" }}>
             <Button Text="Enviar" onClick={handleSubmit} />
           </div>
@@ -128,6 +134,7 @@ const QuestionarioPreAluno = () => {
       </C.Container>
     </>
   );
+
 };
 
 export default QuestionarioPreAluno;

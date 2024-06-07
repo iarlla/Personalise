@@ -6,137 +6,134 @@ import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
 import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
+import useAuth from "../../../hooks/useAuth";
 
 const QuestionarioPosAluno = () => {
-  const [disciplinas, setDisciplinas] = useState({});
-  const [turma, setTurma] = useState([]);
-  const [respostas, setRespostas] = useState({});
-  const { idDisc, idturma } = useParams();
+    const [disciplinas, setDisciplinas] = useState({});
+    const [perguntas, setPerguntas] = useState([]);
+    const [respostas, setRespostas] = useState({});
+    const {idDisc, tipo } = useParams();
+    const { currentUser } = useAuth();
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchDataDisc = async () => {
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const rest = await axios.get(
+            `http://localhost:3001/api/disciplinas/${idDisc}`
+          );
+          setDisciplinas(rest.data);
+
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }, [currentUser.id, idDisc]);
+
+
+
+    useEffect(() => {
+      const fetchDataDisc = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3001/api/questionario/aluno/${idDisc}`,
+            {
+              headers: {
+                'idUsuario': currentUser.id,
+                'tipoQuestionario': 'POS'
+              }
+            }
+          );
+          setPerguntas(res.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchDataDisc();
+    }, [currentUser.id, idDisc]);
+
+
+    // useEffect(() => {
+    //   const fetchPerguntas = async () => {
+    //     try {
+    //       const res = await axios.get(`http://localhost:3001/api/perguntas/${idDisc}/${idturma}`);
+    //       setPerguntas(res.data);
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   };
+    //   fetchPerguntas();
+    // }, [idDisc, idturma]);
+
+
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setRespostas((prevRespostas) => ({
+        ...prevRespostas,
+        [name]: value,
+      }));
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
       try {
-        const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
-        );
-        setDisciplinas(res.data);
+        // await axios.post(`http://localhost:3001/api/respostas`, {
+        //   idDisc,
+        //   idturma,
+        //   respostas,
+        // });
+        navigate(`/sessaoA/${idDisc}/preQuest/enviado`);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchDataDisc();
-  }, [idDisc]);
 
-  useEffect(() => {
-    const fetchDataTurma = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
-        );
-        setTurma(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataTurma();
-  }, [idturma]);
+    return (
+      <>
+        <C.Container>
+          <Navbar Text="Aluno" />
+          <MiniMenu
+            TitleOne="Minhas matérias"
+            urlOne="/materiasA"
+            symbolOne=">"
+            TitleThree="Sessões"
+            urlThree={`/disciplina/${idDisc}`}
+            symbolThree=">"
+            TitleFour="Questionário pós-aula"
+          />
+          <C.Content>
+            <C.titlePage>{disciplinas.nome}</C.titlePage>
+            <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
+          </C.Content>
+          <C.ContentQuest>
+            <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
+            <C.line />
+            {perguntas.length > 0 ? (
+              <C.PerguntasQuest>
+                {perguntas.map((pergunta, index) => (
+                  <Pergunta
+                    key={index}
+                    num={index + 1}
+                    pergunta={pergunta.pergunta}
+                    nomeLabel={`pergunta-${index + 1}`}
+                    onChange={handleInputChange}
+                  />
+                ))}
+              </C.PerguntasQuest>
+            ) : (
+              <div style={{ textAlign: "center", marginTop: "28px" }}>
+                Nao existem questionario
+              </div>
+            )}
+            <div style={{ margin: "30px" }}>
+              <Button Text="Enviar" onClick={handleSubmit} />
+            </div>
+          </C.ContentQuest>
+        </C.Container>
+      </>
+    );
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRespostas((prevRespostas) => ({
-      ...prevRespostas,
-      [name]: value,
-    }));
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`http://localhost:3001/api/respostas`, {
-        idDisc,
-        idturma,
-        respostas,
-      });
-      navigate(`/sessaoA/${idDisc}/${idturma}/posQuest/enviado`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <>
-      <C.Container>
-        <Navbar Text="Aluno" />
-        <MiniMenu
-          TitleOne="Minhas matérias"
-          urlOne="/materiasA"
-          symbolOne=">"
-          TitleThree="Sessões"
-          urlThree={`/disciplina/${idDisc}`}
-          symbolThree=">"
-          TitleFour="Questionário pós-aula"
-        />
-        <C.Content>
-          <C.titlePage>{disciplinas.nome}</C.titlePage>
-          <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
-        </C.Content>
-        <C.ContentQuest>
-          <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
-          <C.line />
-          <C.PerguntasQuest>
-            <Pergunta
-              num="1"
-              pergunta="Pergunta 1"
-              nomeLabel="pergunta-1"
-              onChange={handleInputChange}
-            />
-            <Pergunta
-              num="2"
-              pergunta="Pergunta 2"
-              nomeLabel="pergunta-2"
-              onChange={handleInputChange}
-            />
-            <Pergunta
-              num="3"
-              pergunta="Pergunta 3"
-              nomeLabel="pergunta-3"
-              onChange={handleInputChange}
-            />
-            <Pergunta
-              num="4"
-              pergunta="Pergunta 4"
-              nomeLabel="pergunta-4"
-              onChange={handleInputChange}
-            />
-            <Pergunta
-              num="5"
-              pergunta="Pergunta 5"
-              nomeLabel="pergunta-5"
-              onChange={handleInputChange}
-            />
-            <Pergunta
-              num="6"
-              pergunta="Pergunta 6"
-              nomeLabel="pergunta-6"
-              onChange={handleInputChange}
-            />
-            <Pergunta
-              num="7"
-              pergunta="Pergunta 7"
-              nomeLabel="pergunta-7"
-              onChange={handleInputChange}
-            />
-          </C.PerguntasQuest>
-
-          <div style={{ margin: "30px" }}>
-            <Button Text="Enviar" onClick={handleSubmit} />
-          </div>
-        </C.ContentQuest>
-      </C.Container>
-    </>
-  );
-};
-
 export default QuestionarioPosAluno;

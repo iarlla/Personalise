@@ -13,21 +13,50 @@ export const getRespostas = (_, res) => {
 
 
 export const getRespostaByIdQuestionario = (req, res) => {
-    const q = "SELECT perguntas FROM questionario where id_questionario = ?";
 
-    db.query(q, [req.params.idquestionario], (err, data) => {
+    const { idDisciplina } = req.params;
+    const { idusuario } = req.headers;
+
+    console.log(idDisciplina, idusuario);
+
+    const q = `
+    SELECT DISTINCT q.id_questionario, perguntas
+        from questionario q
+        left join turma_disciplina_professor td on td.id = q.id_turma_disciplina_professor
+        left join turma t on t.idturma = td.idturma
+        left join aluno_turma at2 on at2.idturma = t.idturma
+        left join alunos a on a.idaluno = at2.idaluno
+        left join usuarios u on a.id_usuario = u.id
+        where u.id = ?
+        and td.iddisciplina = ?
+    `;
+
+    db.query(q, [idusuario, idDisciplina], (err, data) => {
         if (err) return res.status(500).json(err);
 
         if (data.length === 0) {
             return res.status(404).json("Questionário não encontrado");
         }
-        const perguntas = data[0].perguntas;
+        const perguntas = []
+
+        data.forEach((d) => {
+            const perguntasArray = d.perguntas;
+            perguntasArray.forEach((pergunta) => {
+                perguntas.push({
+                    id: d.id_questionario,
+                    num: pergunta.num,
+                    pergunta: pergunta.pergunta
+                });
+            });
+        });
+
+        const distinctIds = [...new Set(perguntas.map(pergunta => pergunta.id))];
 
         const q2 = `
             SELECT rq.num, rq.resposta
             FROM respostas r
             LEFT JOIN respostas_questionario rq on rq.idrespostas = r.idrespostas
-            WHERE r.idquestionario = ?
+            WHERE r.idquestionario in (${distinctIds.join(", ")})
             ORDER BY rq.num, rq.resposta
         `;
 

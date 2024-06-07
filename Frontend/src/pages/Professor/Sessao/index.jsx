@@ -9,26 +9,11 @@ import Axios from "axios";
 
 const Sessao = () => {
   const [turma, setTurma] = useState({});
-  const [disciplinas, setDisciplinas] = useState({});
-  const [professor, setProfessor] = useState({});
   const [questionario, setQuestionario] = useState({});
-  const { idDisc, idturma } = useParams();
-  const navigate = useNavigate();
+  const { idturma, idDisc } = useParams();
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchDataDisc = async () => {
-      try {
-        const res = await Axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
-        );
-        setDisciplinas(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataDisc();
-  }, [idDisc]);
 
   useEffect(() => {
     const fetchDataDisc = async () => {
@@ -44,25 +29,12 @@ const Sessao = () => {
     fetchDataDisc();
   }, [idturma]);
 
-  useEffect(() => {
-    const fetchDataID = async () => {
-      try {
-        const res = await Axios.post("http://localhost:3001/api/professor/id", {
-          professorId: currentUser.id,
-        });
-        setProfessor(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataID();
-  }, [currentUser.id]);
 
   useEffect(() => {
     const fetchDataQuestID = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+          `http://localhost:3001/api/questionario/byUserTurmaDisci/PRE/${currentUser.id}/${idturma}/${idDisc}`
         );
         setQuestionario(res.data);
       } catch (error) {
@@ -70,7 +42,8 @@ const Sessao = () => {
       }
     };
     fetchDataQuestID();
-  }, [professor]);
+  }, [currentUser.id]);
+
 
   const handleClickRedirect = async (e) => {
     e.preventDefault();
@@ -84,6 +57,7 @@ const Sessao = () => {
       console.log(error);
     }
   };
+
   return (
     <>
       <C.Container>

@@ -5,16 +5,20 @@ import Navbar from "../../../components/navBar";
 import ButtonPrincipal from "../../../components/ButtonPrincipal";
 import MiniMenu from "../../../components/miniMenu";
 import * as C from "./styles";
+import useAuth from "../../../hooks/useAuth";
 
 const Turmas = () => {
   const [disciplinas, setDisciplinas] = useState({});
   const [turmas, setTurmas] = useState([]);
   const { idDisc } = useParams();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchDataTurmas = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/api/turmas/");
+        const res = await axios.get(
+            `http://localhost:3001/api/turmas/usuario/${currentUser.id}`
+          );
         setTurmas(res.data);
       } catch (error) {
         console.log(error);
@@ -22,6 +26,7 @@ const Turmas = () => {
     };
     fetchDataTurmas();
   }, []);
+
 
   useEffect(() => {
     const fetchDataDisc = async () => {

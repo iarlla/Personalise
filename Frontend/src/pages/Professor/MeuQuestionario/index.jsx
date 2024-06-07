@@ -8,9 +8,7 @@ import * as C from "./styles";
 
 const MeuQuestionario = () => {
   const [disciplinas, setDisciplinas] = useState({});
-  const [turma, setTurma] = useState([]);
-  const { idDisc, idturma } = useParams();
-  const [professor, setProfessor] = useState({});
+  const { idturma, idDisc } = useParams();
   const [questionario, setQuestionario] = useState({});
   const [show, setShow] = useState(false);
   const { currentUser } = useAuth();
@@ -34,39 +32,12 @@ const MeuQuestionario = () => {
     fetchDataDisc();
   }, [idDisc]);
 
-  useEffect(() => {
-    const fetchDataTurma = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
-        );
-        setTurma(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataTurma();
-  }, [idturma]);
-
-  useEffect(() => {
-    const fetchDataID = async () => {
-      try {
-        const res = await axios.post("http://localhost:3001/api/professor/id", {
-          professorId: currentUser.id,
-        });
-        setProfessor(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataID();
-  }, [currentUser.id]);
 
   useEffect(() => {
     const fetchDataQuestID = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+          `http://localhost:3001/api/questionario/byUserTurmaDisci/pre/${currentUser.id}/${idturma}/${idDisc}`
         );
         setQuestionario(res.data);
       } catch (error) {
@@ -74,13 +45,14 @@ const MeuQuestionario = () => {
       }
     };
     fetchDataQuestID();
-  }, [professor]);
+  }, [currentUser.id]);
+
 
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+        `http://localhost:3001/api/questionario/byUserTurmaDisci/pre/${currentUser.id}/${idturma}/${idDisc}`
       );
       console.log(res.data.message); // Imprimir mensagem de sucesso
       navigate(`/sessao/${idDisc}/${idturma}/preQuest/deletado`);

@@ -18,3 +18,6 @@ export const db = mysql.createPool({
     port: 3306,
     insecureAuth: true
 });
+
+
+// export const db = poolConnection.getConnection();

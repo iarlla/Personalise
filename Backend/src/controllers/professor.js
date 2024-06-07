@@ -1,5 +1,7 @@
 import { db } from "../database/db.js";
 
+
+
 export const getProfessores = (_, res) => {
   const q = "SELECT * FROM professores";
 
@@ -9,15 +11,17 @@ export const getProfessores = (_, res) => {
   });
 };
 
+
+
 export const getProfessorID = (req, res) => {
-  const { professorId } = req.body; // Obtenha o idturma do corpo da requisição
+  const { professorId } = req.params; // Obtenha o idturma do corpo da requisição
 
   // Realize o JOIN para obter o id_professor correspondente ao id_usuario
   const q1 = `
-    SELECT idprofessores
-    FROM professores
-    JOIN usuarios ON usuarios.id = professores.id_usuario
-    WHERE professores.id_usuario = ?
+    SELECT p.idprofessores
+    FROM professores p
+    LEFT JOIN usuarios u ON p.id_usuario = u.id
+    WHERE u.id = ?
   `;
 
   db.query(q1, [professorId], (err, data) => {
@@ -32,12 +36,4 @@ export const getProfessorID = (req, res) => {
 
     return res.status(200).json(data[0].idprofessores);
   });
-
-  //   const q = "SELECT `nome` from disciplinas WHERE id_disciplina = ?";
-
-  //   db.query(q, [req.params.idDisc], (err, data) => {
-  //     if (err) return res.status(500).json(err);
-
-  //     return res.status(200).json(data[0]);
-  //   });
 };

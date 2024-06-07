@@ -1,8 +1,8 @@
 import express from "express";
 import {
-  getQuestionarioByDiscTurmaProfessor,
+  byUserTurmaDisci,
   getQuestionarios,
-  deleteQuestionarioByDiscTurmaProfessor,
+  deleteQuestionariobyUserTurmaDisci,
   getQuestionario,
   getQuestionarioDaTurmaByIdUsuarioAndIdDisciplina
 } from "../controllers/questionario.js";
@@ -16,12 +16,12 @@ router.get("/:idquestionario", getQuestionario);
 router.get("/aluno/:idDisciplina", getQuestionarioDaTurmaByIdUsuarioAndIdDisciplina);
 
 router.get(
-  "/byDiscTurmaProfessor/:idProfessor/:idDisc/:idTurma",
-  getQuestionarioByDiscTurmaProfessor
+  "/byUserTurmaDisci/:tipo/:idUsuario/:idTurma/:idDisc",
+  byUserTurmaDisci
 );
 router.delete(
-  "/byDiscTurmaProfessor/:idProfessor/:idDisc/:idTurma",
-  deleteQuestionarioByDiscTurmaProfessor
+  "/byUserTurmaDisci/:tipo/:idUsuario/:idTurma/:idDisc",
+  deleteQuestionariobyUserTurmaDisci
 );
 
 export default router;

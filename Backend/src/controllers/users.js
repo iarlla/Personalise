@@ -23,6 +23,8 @@ export const getUsers = (_, res) => {
   });
 };
 
+
+
 export const getInfoOfUser = (req, res) => {
   const query = `
       SELECT
