@@ -9,6 +9,7 @@ import questionRoutes from "./routes/questoes.js";
 import questionarioRoutes from "./routes/questionario.js";
 import professorRoutes from "./routes/professor.js";
 import respostaRoutes from "./routes/resposta.js";
+import rdSenhaRoutes from "./routes/redSenha.js";
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/questionario", questionarioRoutes);
 app.use("/api/professor", professorRoutes);
 app.use("/api/respostas", respostaRoutes);
+app.use("/api/redefinicaoSenha", rdSenhaRoutes);
 
 app.listen(3001, () => {
   console.log("");

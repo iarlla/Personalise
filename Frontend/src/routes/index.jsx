@@ -8,13 +8,15 @@ import useAuth from "../hooks/useAuth";
 import TelaMateria from "../pages/Professor/TelaMateria";
 import QuestionarioPre from "../pages/Professor/QuestionarioPre";
 import TelaInicio from "../pages/TelaInicio";
-import MinhaConta from "../pages/MinhaConta";
+import MinhaContaProf from "../pages/Professor/MinhaContaProf";
 import Turmas from "../pages/Professor/SPAmaterias";
 import Sessao from "../pages/Professor/Sessão";
 import EnviadoSucesso from "../pages/Professor/EnviadoSucesso";
 import DeletadoSucesso from "../pages/Professor/DeletadoSucesso";
 import EditarQuest from "../pages/Professor/EditarQuest";
 import MeuQuestionario from "../pages/Professor/MeuQuestionario";
+import RedefinirSenha from "../pages/RedefinirSenha";
+import MinhaContaAluno from "../pages/MinhaContaAluno";
 
 const Private = ({ Item }) => {
   const { currentUser } = useAuth();
@@ -30,13 +32,16 @@ const RouteApp = () => {
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route path="/preQuest" element={<QuestionarioPre />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/RedefinirSenha" element={<RedefinirSenha />} />
+
           <Route exact path="/cadastroAluno" element={<Signup />} />
           <Route
             exact
             path="/cadastroProfessor"
             element={<SignupProfessor />}
           />
-          <Route path="/minha-conta" element={<MinhaConta />} />
+          <Route path="/minha-conta-aluno" element={<MinhaContaAluno />} />
+          <Route path="/minha-conta-professor" element={<MinhaContaProf />} />
           <Route path="*" element={<TelaInicio />} />
           <Route path="/materiasP" element={<TelaMateria />} />
           <Route path="/turmas/:idDisc" element={<Turmas />} />

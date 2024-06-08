@@ -42,13 +42,6 @@ const QuestionarioPre = () => {
     fetchDataTurma();
   }, [idturma]);
 
-  // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Processar as perguntas aqui (enviar para o banco de dados, etc.)
-    console.log("Perguntas:", questions);
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);

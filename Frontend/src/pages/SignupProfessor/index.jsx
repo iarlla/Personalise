@@ -47,7 +47,6 @@ const SignupProfessor = () => {
           matricula: inputs.matricula,
         }
       );
-      console.log(response);
       alert("Usuário cadastrado com sucesso!");
       navigate("/");
     } catch (error) {

@@ -45,17 +45,12 @@ const Signup = () => {
         senha: inputs.senha,
         matricula: inputs.matricula,
         curso: inputs.curso,
-      }).then((response) => {
-        console.log(response);
-        alert("Usuário cadastrado com sucesso!");
-        navigate("/");
       });
+      alert("Usuário cadastrado com sucesso!");
+      navigate("/");
     } catch (error) {
       setError(error.response.data.message || "Erro desconhecido");
     }
-
-    alert("Usuário cadatrado com sucesso!");
-    navigate("/");
   };
 
   return (
