@@ -14,7 +14,7 @@ const Turmas = () => {
   useEffect(() => {
     const fetchDataTurmas = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/api/turmas/");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/turmas/`);
         setTurmas(res.data);
       } catch (error) {
         console.log(error);
@@ -27,7 +27,7 @@ const Turmas = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {

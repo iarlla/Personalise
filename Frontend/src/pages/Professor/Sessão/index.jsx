@@ -20,7 +20,7 @@ const Sessao = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -34,7 +34,7 @@ const Sessao = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -47,9 +47,12 @@ const Sessao = () => {
   useEffect(() => {
     const fetchDataID = async () => {
       try {
-        const res = await Axios.post("http://localhost:3001/api/professor/id", {
-          professorId: currentUser.id,
-        });
+        const res = await Axios.post(
+          `${import.meta.env.VITE_API_URL}/professor/id`,
+          {
+            professorId: currentUser.id,
+          }
+        );
         setProfessor(res.data);
       } catch (error) {
         console.log(error);
@@ -62,7 +65,9 @@ const Sessao = () => {
     const fetchDataQuestID = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
         );
         setQuestionario(res.data);
       } catch (error) {

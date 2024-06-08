@@ -37,7 +37,7 @@ const MinhaContaProf = () => {
       if (currentUser && currentUser.id) {
         try {
           const res = await axios.get(
-            `http://localhost:3001/api/users/usuario/${currentUser.id}`
+            `${import.meta.env.VITE_API_URL}/users/usuario/${currentUser.id}`
           );
           if (res.data && res.data.length > 0) {
             setUser(res.data[0]);
@@ -59,7 +59,9 @@ const MinhaContaProf = () => {
 
     try {
       await axios.post(
-        `http://localhost:3001/api/users/usuario/editar/${currentUser.id}`,
+        `${import.meta.env.VITE_API_URL}/users/usuario/editar/${
+          currentUser.id
+        }`,
         {
           nome: user.nome,
           email: user.email,
@@ -81,7 +83,9 @@ const MinhaContaProf = () => {
 
     try {
       await axios.post(
-        `http://localhost:3001/api/users/usuario/alterar-senha/${currentUser.id}`,
+        `${import.meta.env.VITE_API_URL}/users/usuario/alterar-senha/${
+          currentUser.id
+        }`,
         {
           oldSenha: oldPassword,
           senha: newPassword,

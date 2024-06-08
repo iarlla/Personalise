@@ -12,7 +12,9 @@ const TelaMateria = () => {
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/api/disciplinas/`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/disciplinas/`
+        );
         setDisciplinas(res.data);
         console.log(disciplinas);
       } catch (error) {

@@ -4,14 +4,18 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install && \
-    npm run build
+USER root
 
-COPY ./dist /opt/app-root/src
+RUN yum install npm -y && \
+    npm install && \
+    npm run build && \
+    cp -r ./dist/* /opt/app-root/src
 
 # Copiar a configuração personalizada do Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 8080
+
+USER 1001
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -29,7 +29,7 @@ const RedefinirSenha = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/redefinicaoSenha",
+        `${import.meta.env.VITE_API_URL}/redefinicaoSenha`,
         {
           email: input.email,
         },

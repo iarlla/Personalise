@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -20,7 +21,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.APP_WEB_URL,
   })
 );
 app.use(cookieParser());
@@ -35,7 +36,9 @@ app.use("/api/professor", professorRoutes);
 app.use("/api/respostas", respostaRoutes);
 app.use("/api/redefinicaoSenha", rdSenhaRoutes);
 
-app.listen(3001, () => {
+const port = process.env.PORT || 3001;
+
+app.listen(port, () => {
   console.log("");
   console.log("Rodando na porta 3001");
 });

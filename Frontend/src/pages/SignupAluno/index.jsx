@@ -39,7 +39,7 @@ const Signup = () => {
     }
 
     try {
-      await Axios.post("http://localhost:3001/api/auth/cadastro-aluno", {
+      await Axios.post(`${import.meta.env.VITE_API_URL}/auth/cadastro-aluno`, {
         email: inputs.email,
         nome: inputs.nome,
         senha: inputs.senha,

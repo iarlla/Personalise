@@ -30,7 +30,7 @@ const EditarQuest = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -44,7 +44,7 @@ const EditarQuest = () => {
     const fetchDataTurma = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -91,7 +91,7 @@ const EditarQuest = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/questions/preQuest/editar",
+        `${import.meta.env.VITE_API_URL}/questions/preQuest/editar`,
         {
           questions,
           professorId: currentUser.id,

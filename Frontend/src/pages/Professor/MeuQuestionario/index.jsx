@@ -24,7 +24,7 @@ const MeuQuestionario = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const MeuQuestionario = () => {
     const fetchDataTurma = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -51,9 +51,12 @@ const MeuQuestionario = () => {
   useEffect(() => {
     const fetchDataID = async () => {
       try {
-        const res = await axios.post("http://localhost:3001/api/professor/id", {
-          professorId: currentUser.id,
-        });
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/professor/id`,
+          {
+            professorId: currentUser.id,
+          }
+        );
         setProfessor(res.data);
       } catch (error) {
         console.log(error);
@@ -66,7 +69,9 @@ const MeuQuestionario = () => {
     const fetchDataQuestID = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
         );
         setQuestionario(res.data);
       } catch (error) {
@@ -80,7 +85,9 @@ const MeuQuestionario = () => {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+        `${
+          import.meta.env.VITE_API_URL
+        }/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
       );
       console.log(res.data.message); // Imprimir mensagem de sucesso
       navigate(`/sessao/${idDisc}/${idturma}/preQuest/deletado`);

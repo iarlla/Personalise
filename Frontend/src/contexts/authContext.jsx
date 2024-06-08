@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (inputs) => {
     const res = await Axios.post(
-      "http://localhost:3001/api/auth/login",
+      `${import.meta.env.VITE_API_URL}/auth/login`,
       inputs,
       {
         withCredentials: true,
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   }, [currentUser]);
 
   const logout = async () => {
-    await Axios.post("http://localhost:3001/api/auth/logout");
+    await Axios.post(`${import.meta.env.VITE_API_URL}/auth/logout`);
     setCurrentUser(null);
     localStorage.removeItem("user");
   };
