@@ -65,6 +65,25 @@ const DashboardAluno = () => {
 
         <C.MainContainer>
           <C.MainTopContainer>
+            
+          <C.ContainerBlue>
+              <C.BlueBox>
+              <C.MainLeftImg src="../../../public/catolica.svg"></C.MainLeftImg>
+              </C.BlueBox>
+              <C.BlueBox>
+                <h1>+20.000</h1>
+                <h4>Alunos realizando sonhos</h4>
+              </C.BlueBox>
+              <C.BlueBox>
+                <h1>+50</h1>
+                <h4>anos de tradição</h4>
+              </C.BlueBox>
+              <C.BlueBox>
+                <h1>+42</h1> 
+                <h4>cursos de graduação</h4>
+              </C.BlueBox>
+            </C.ContainerBlue>
+
             {questionario.length === 0 ? (
               <C.ContainerWhite>
                 <C.WhiteBox>
