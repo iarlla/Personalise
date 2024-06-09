@@ -1,0 +1,26 @@
+[
+  {
+    "num": 1,
+    "pergunta": "Eu me sinto confortavel escrevendo codigo em mais de uma linguagem de programacao."
+  },
+  {
+    "num": 2,
+    "pergunta": "Eu tenho experiencia trabalhando com sistemas de controle de versao, como o Git."
+  },
+  {
+    "num": 3,
+    "pergunta": "Eu me sinto confortavel escrevendo testes unitarios para o meu codigo."
+  },
+  {
+    "num": 4,
+    "pergunta": "Eu consigo implementar algoritmos basicos, como ordenacao e busca."
+  },
+  {
+    "num": 5,
+    "pergunta": "Eu consigo escrever scripts para automatizar tarefas repetitivas."
+  },
+  {
+    "num": 6,
+    "pergunta": "Eu estou confortavel com o uso de ambientes de desenvolvimento integrados (IDEs)."
+  }
+]

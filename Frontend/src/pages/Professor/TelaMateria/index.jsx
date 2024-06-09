@@ -5,14 +5,20 @@ import * as C from "./styles";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 
 const TelaMateria = () => {
   const [disciplinas, setDisciplinas] = useState([]);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/api/disciplinas/`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/disciplinas/usuario/${
+            currentUser.id
+          }`
+        );
         setDisciplinas(res.data);
         console.log(disciplinas);
       } catch (error) {
@@ -50,21 +56,6 @@ const TelaMateria = () => {
             </div>
             <C.line />
             <C.ContainerButtons>
-              {/* <Link to="/turmas/3">
-                <ButtonPrincipal Text="Engenharia de Software" />
-              </Link>
-              <Link to="/turmas/4">
-                <ButtonPrincipal Text="Design de Software" />
-              </Link>
-              <Link to="/turmas/5">
-                <ButtonPrincipal Text="Sistemas Operacionais" />
-              </Link>
-              <Link to="/turmas/6">
-                <ButtonPrincipal Text="Redes de Computadores" />
-              </Link>
-              <Link to="/turmas/2">
-                <ButtonPrincipal Text="Novas tecnologias" />
-              </Link> */}
               {disciplinas.map((disciplina) => (
                 <Link
                   key={disciplina.id_disciplina}

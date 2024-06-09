@@ -9,7 +9,6 @@ import Button from "../../../components/button";
 
 const QuestionarioPre = () => {
   const [disciplinas, setDisciplinas] = useState({});
-  const [turma, setTurma] = useState([]);
   const { idDisc, idturma } = useParams();
 
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ const QuestionarioPre = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -28,31 +27,11 @@ const QuestionarioPre = () => {
     fetchDataDisc();
   }, [idDisc]);
 
-  useEffect(() => {
-    const fetchDataTurma = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
-        );
-        setTurma(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataTurma();
-  }, [idturma]);
-
-  // Função para processar o envio do formulário (pode ser ajustado conforme necessário)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Processar as perguntas aqui (enviar para o banco de dados, etc.)
-    console.log("Perguntas:", questions);
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);
   };
+
   return (
     <>
       <C.Container>

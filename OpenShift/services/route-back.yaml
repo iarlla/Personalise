@@ -1,0 +1,12 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: backend-personalise
+  labels:
+    name: backend
+spec:
+  to:
+    kind: Service
+    name: backend-service
+  port:
+    targetPort: 3001

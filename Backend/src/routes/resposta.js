@@ -8,7 +8,7 @@ import {
 const router = express.Router();
 
 router.get("/", getRespostas);
-router.get("/:idquestionario", getRespostaByIdQuestionario);
+router.get("/relatorio/:idDisciplina", getRespostaByIdQuestionario);
 router.post("/", postResposta);
 
 export default router;

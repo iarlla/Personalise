@@ -2,119 +2,143 @@ import { db } from "../database/db.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const registerAluno = (req, res) => {
+export const registerAluno = async (req, res) => {
   const { email, nome, senha, matricula, curso } = req.body;
+  let connection;
 
-  const q = "SELECT * FROM usuarios WHERE email = ?";
+  try {
+    connection = await db.promise().getConnection();
+    await connection.beginTransaction();
 
-  db.query(q, [email], (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Erro no servidor", error: err });
-    }
-    if (data.length) {
-      return res.status(409).json({ message: "Usuário já cadastrado!" });
+    const [existingUser] = await connection.execute(
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
+    );
+
+    if (existingUser.length) {
+      await connection.rollback();
+      return res
+        .status(409)
+        .json({ message: "Usuário com esse email já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(senha, salt);
 
-    const q2 = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    const [result] = await connection.execute(
+      "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)",
+      [nome, email, hashedPassword]
+    );
 
-    db.query(q2, [nome, email, hashedPassword], (err, data) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Erro no servidor", error: err });
-      }
+    const usuarioID = result.insertId;
 
-      const usuarioID = data.insertId;
+    const [resultAluno] = await connection.execute(
+      "INSERT INTO alunos (id_usuario, matricula, curso) VALUES (?, ?, ?)",
+      [usuarioID, matricula, curso]
+    );
 
-      const q3 =
-        "INSERT INTO alunos (id_usuario, matricula, curso) VALUES (?, ?, ?)";
+    const alunoID = resultAluno.insertId;
+    const idTurma = 1;
 
-      db.query(q3, [usuarioID, matricula, curso], (err, data) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ message: "Erro no servidor", error: err });
-        }
+    await connection.execute(
+      "INSERT INTO aluno_turma (idaluno, idturma) VALUES (?, ?)",
+      [alunoID, idTurma]
+    );
 
-        const idTurma = 1;
-        const q4 = "INSERT INTO aluno_turma (idaluno, idturma) VALUES (?, ?)";
-        db.query(q4, [usuarioID, idTurma], (err) => {
-          if (err) {
-            return res
-              .status(500)
-              .json({ message: "Erro no servidor", error: err });
-          }
-        });
-        return res
-          .status(200)
-          .json({ message: "Aluno foi cadastrado com sucesso!" });
-      });
-    });
-  });
+    await connection.commit();
+    console.log("Aluno cadastrado com sucesso!");
+    return res
+      .status(201)
+      .json({ message: "Aluno foi cadastrado com sucesso!" });
+  } catch (err) {
+    if (connection) {
+      await connection.rollback();
+    }
+    const duplicateEntryRegex =
+      /Duplicate entry '([^']*)' for key 'alunos\.matricula_UNIQUE'/;
+    let errorMessage = err.message;
+    const match = errorMessage.match(duplicateEntryRegex);
+    if (match) {
+      errorMessage = `Item ja existe: ${match[1]}`;
+    }
+    return res.status(500).json({ message: "Erro: " + errorMessage });
+  } finally {
+    if (connection) {
+      await connection.release();
+    }
+  }
 };
 
-export const registerProfessor = (req, res) => {
+export const registerProfessor = async (req, res) => {
   const { email, nome, senha, matricula } = req.body;
+  let connection;
 
-  const q = "SELECT * FROM usuarios WHERE email = ?";
+  try {
+    connection = await db.promise().getConnection();
+    await connection.beginTransaction();
 
-  db.query(q, [email], (err, data) => {
-    if (err) {
-      return res.status(500).json({ message: "Erro no servidor", error: err });
-    }
-    if (data.length) {
-      return res.status(409).json({ message: "Usuário já cadastrado!" });
+    const [existingUser] = await connection.execute(
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
+    );
+
+    if (existingUser.length) {
+      await connection.rollback();
+      return res
+        .status(409)
+        .json({ message: "Usuário com esse email já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(senha, salt);
 
-    const q2 = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    const [result] = await connection.execute(
+      "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)",
+      [nome, email, hashedPassword]
+    );
 
-    db.query(q2, [nome, email, hashedPassword], (err, data) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Erro no servidor", error: err });
+    const usuarioID = result.insertId;
+
+    const [resultProfessor] = await connection.execute(
+      "INSERT INTO professores (id_usuario, matricula) VALUES (?, ?)",
+      [usuarioID, matricula]
+    );
+
+    const professorID = resultProfessor.insertId;
+    const turmas = [1, 2, 3, 4];
+    const disciplinas = [1, 2, 3, 4, 5, 6];
+
+    for (const turma of turmas) {
+      for (const disciplina of disciplinas) {
+        await connection.execute(
+          "INSERT INTO turma_disciplina_professor (idprofessor, idturma, iddisciplina) VALUES (?, ?, ?)",
+          [professorID, turma, disciplina]
+        );
       }
-      const usuarioID = data.insertId;
+    }
 
-      const q3 =
-        "INSERT INTO professores (id_usuario, matricula) VALUES (?, ?)";
-
-      db.query(q3, [usuarioID, matricula], (err, data) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ message: "Erro no servidor", error: err });
-        }
-        const professorID = data.insertId;
-
-        // IDs das turmas estáticos
-        const turmas = [1, 2, 3, 4];
-
-        // Inserindo na tabela professor_turma para cada turma
-        turmas.forEach((idTurma) => {
-          const q4 =
-            "INSERT INTO professor_turma (idprofessor, idturma) VALUES (?, ?)";
-          db.query(q4, [professorID, idTurma], (err) => {
-            if (err) {
-              return res
-                .status(500)
-                .json({ message: "Erro no servidor", error: err });
-            }
-          });
-        });
-
-        return res
-          .status(200)
-          .json({ message: "Professor foi cadastrado com sucesso!" });
-      });
-    });
-  });
+    await connection.commit();
+    console.log("Professor cadastrado com sucesso!");
+    return res
+      .status(201)
+      .json({ message: "Professor foi cadastrado com sucesso!" });
+  } catch (err) {
+    if (connection) {
+      await connection.rollback();
+    }
+    const duplicateEntryRegex =
+      /Duplicate entry '([^']*)' for key 'professores\.matricula_UNIQUE'/;
+    let errorMessage = err.message;
+    const match = errorMessage.match(duplicateEntryRegex);
+    if (match) {
+      errorMessage = `Item ja existe: ${match[1]}`;
+    }
+    return res.status(500).json({ message: "Erro: " + errorMessage });
+  } finally {
+    if (connection) {
+      await connection.release();
+    }
+  }
 };
 
 export const login = (req, res) => {
@@ -151,7 +175,7 @@ export const login = (req, res) => {
   });
 };
 
-export const logout = (req, res) => {
+export const logout = (_, res) => {
   res
     .clearCookie("accessToken", {
       secure: false,

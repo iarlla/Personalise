@@ -32,7 +32,7 @@ const Signin = () => {
       if (verify == "professor") {
         navigate("/materiasP");
       } else if (verify === "aluno") {
-        navigate("/home");
+        navigate("/materiasA");
       } else {
         navigate("/");
       }
@@ -43,7 +43,7 @@ const Signin = () => {
 
   const SolicitarSenha = (e) => {
     e.preventDefault();
-    return alert("VOCE ESQUECEU A SENHA");
+    return navigate('/redefinirSenha')
   };
 
   return (

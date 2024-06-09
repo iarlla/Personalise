@@ -9,32 +9,17 @@ import Axios from "axios";
 
 const Sessao = () => {
   const [turma, setTurma] = useState({});
-  const [disciplinas, setDisciplinas] = useState({});
-  const [professor, setProfessor] = useState({});
-  const [questionario, setQuestionario] = useState({});
-  const { idDisc, idturma } = useParams();
-  const navigate = useNavigate();
+  const [questionarioPre, setQuestionarioPre] = useState({});
+  const [questionarioPos, setQuestionarioPos] = useState({});
+  const { idturma, idDisc } = useParams();
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
-        );
-        setDisciplinas(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataDisc();
-  }, [idDisc]);
-
-  useEffect(() => {
-    const fetchDataDisc = async () => {
-      try {
-        const res = await Axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -45,37 +30,41 @@ const Sessao = () => {
   }, [idturma]);
 
   useEffect(() => {
-    const fetchDataID = async () => {
+    const fetchDataQuestID = async () => {
       try {
-        const res = await Axios.post("http://localhost:3001/api/professor/id", {
-          professorId: currentUser.id,
-        });
-        setProfessor(res.data);
+        const res = await Axios.get(
+          `${import.meta.env.VITE_API_URL}/questionario/byUserTurmaDisci/PRE/${
+            currentUser.id
+          }/${idturma}/${idDisc}`
+        );
+        setQuestionarioPre(res.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchDataID();
+    fetchDataQuestID();
   }, [currentUser.id]);
 
   useEffect(() => {
     const fetchDataQuestID = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/questionario/byDiscTurmaProfessor/${professor}/${idDisc}/${idturma}`
+          `${import.meta.env.VITE_API_URL}/questionario/byUserTurmaDisci/POS/${
+            currentUser.id
+          }/${idturma}/${idDisc}`
         );
-        setQuestionario(res.data);
+        setQuestionarioPos(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchDataQuestID();
-  }, [professor]);
+  }, [currentUser.id]);
 
-  const handleClickRedirect = async (e) => {
+  const handleClickRedirectPrequest = async (e) => {
     e.preventDefault();
     try {
-      if (questionario.length > 0) {
+      if (questionarioPre.length > 0) {
         navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
       } else {
         navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
@@ -84,6 +73,20 @@ const Sessao = () => {
       console.log(error);
     }
   };
+
+  const handleClickRedirectPosquest = async (e) => {
+    e.preventDefault();
+    try {
+      if (questionarioPos.length > 0) {
+        navigate(`/sessao/${idDisc}/${idturma}/posQuest/meuQuest`);
+      } else {
+        navigate(`/sessao/${idDisc}/${idturma}/posQuest`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <C.Container>
@@ -125,11 +128,12 @@ const Sessao = () => {
               <C.ContainerButtons>
                 <ButtonPrincipal
                   Text="Questionario pré-aula"
-                  onClick={handleClickRedirect}
+                  onClick={handleClickRedirectPrequest}
                 ></ButtonPrincipal>
-                <Link to={`/sessao/${idDisc}/${idturma}/posQuest`}>
-                  <ButtonPrincipal Text="Questionario pós-aula"></ButtonPrincipal>
-                </Link>
+                <ButtonPrincipal
+                  Text="Questionario pós-aula"
+                  onClick={handleClickRedirectPosquest}
+                ></ButtonPrincipal>
                 <Link to={`/sessao/${idDisc}/${idturma}/relatorio`}>
                   <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
                 </Link>
