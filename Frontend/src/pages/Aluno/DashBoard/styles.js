@@ -61,6 +61,35 @@ export const MainLeftTextoDiv = styled.div`
   border-radius: 30px 30px 60% 0%;
 `;
 
+export const ContainerBlue = styled.div`
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-around;
+  h3 {
+    color: #00396d; 
+  }
+  p {
+    color: #797979; 
+  }
+  `;
+
+export const BlueBox = styled.div`
+  padding: 45px 40px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  cursor: pointer;
+  background-color: #00396d;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  max-width: 350px;
+  margin: 15px;
+`;
+
 export const ContainerWhite = styled.div`
   text-align: center;
   margin-top: 10px;
@@ -75,7 +104,7 @@ export const ContainerWhite = styled.div`
   }
   `;
 
-export const WhiteBox = styled.div`
+  export const WhiteBox = styled.div`
   background-color: white;
   padding: 16px 20px;
   outline: none;
@@ -89,6 +118,7 @@ export const WhiteBox = styled.div`
   width: 100%;
   margin: 15px;
 `;
+
 
 export const MainLeftImg = styled.img`
   width: 105%;
