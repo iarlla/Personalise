@@ -9,7 +9,8 @@ import Axios from "axios";
 
 const Sessao = () => {
   const [turma, setTurma] = useState({});
-  const [questionario, setQuestionario] = useState({});
+  const [questionarioPre, setQuestionarioPre] = useState({});
+  const [questionarioPos, setQuestionarioPos] = useState({});
   const { idturma, idDisc } = useParams();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Sessao = () => {
         const res = await Axios.get(
           `http://localhost:3001/api/questionario/byUserTurmaDisci/PRE/${currentUser.id}/${idturma}/${idDisc}`
         );
-        setQuestionario(res.data);
+        setQuestionarioPre(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -45,13 +46,42 @@ const Sessao = () => {
   }, [currentUser.id]);
 
 
-  const handleClickRedirect = async (e) => {
+  useEffect(() => {
+    const fetchDataQuestID = async () => {
+      try {
+        const res = await Axios.get(
+          `http://localhost:3001/api/questionario/byUserTurmaDisci/POS/${currentUser.id}/${idturma}/${idDisc}`
+        );
+        setQuestionarioPos(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDataQuestID();
+  }, [currentUser.id]);
+
+
+  const handleClickRedirectPrequest = async (e) => {
     e.preventDefault();
     try {
-      if (questionario.length > 0) {
+      if (questionarioPre.length > 0) {
         navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
       } else {
         navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const handleClickRedirectPosquest = async (e) => {
+    e.preventDefault();
+    try {
+      if (questionarioPos.length > 0) {
+        navigate(`/sessao/${idDisc}/${idturma}/posQuest/meuQuest`);
+      } else {
+        navigate(`/sessao/${idDisc}/${idturma}/posQuest`);
       }
     } catch (error) {
       console.log(error);
@@ -99,11 +129,12 @@ const Sessao = () => {
               <C.ContainerButtons>
                 <ButtonPrincipal
                   Text="Questionario pré-aula"
-                  onClick={handleClickRedirect}
+                  onClick={handleClickRedirectPrequest}
                 ></ButtonPrincipal>
-                <Link to={`/sessao/${idDisc}/${idturma}/posQuest`}>
-                  <ButtonPrincipal Text="Questionario pós-aula"></ButtonPrincipal>
-                </Link>
+                  <ButtonPrincipal
+                  Text="Questionario pós-aula"
+                    onClick={handleClickRedirectPosquest}
+                ></ButtonPrincipal>
                 <Link to={`/sessao/${idDisc}/${idturma}/relatorio`}>
                   <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>
                 </Link>

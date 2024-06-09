@@ -11,7 +11,7 @@ import useAuth from "../../../hooks/useAuth";
 const QuestionarioPosAluno = () => {
     const [disciplinas, setDisciplinas] = useState({});
     const [perguntas, setPerguntas] = useState([]);
-    const [respostas, setRespostas] = useState({});
+    const [respostas, setRespostas] = useState([]);
     const {idDisc, tipo } = useParams();
     const { currentUser } = useAuth();
 
@@ -55,35 +55,24 @@ const QuestionarioPosAluno = () => {
     }, [currentUser.id, idDisc]);
 
 
-    // useEffect(() => {
-    //   const fetchPerguntas = async () => {
-    //     try {
-    //       const res = await axios.get(`http://localhost:3001/api/perguntas/${idDisc}/${idturma}`);
-    //       setPerguntas(res.data);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    //   fetchPerguntas();
-    // }, [idDisc, idturma]);
-
-
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setRespostas((prevRespostas) => ({
-        ...prevRespostas,
-        [name]: value,
-      }));
+    const handleInputChange = (index, value) => {
+        const updatedValues = [...respostas];
+        updatedValues[index] = value;
+        setRespostas(updatedValues);
     };
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        // await axios.post(`http://localhost:3001/api/respostas`, {
-        //   idDisc,
-        //   idturma,
-        //   respostas,
-        // });
+        await axios.post(`http://localhost:3001/api/respostas`, {
+            disciplina: idDisc,
+            idUsuario: currentUser.id,
+            respostas: respostas
+                            .map((resposta, index) => ({ num: index + 1, resposta }))
+                            .filter(item => item.resposta !== null),
+            tipo: 'POS'
+        });
+        setRespostas([]);
         navigate(`/sessaoA/${idDisc}/preQuest/enviado`);
       } catch (error) {
         console.log(error);
@@ -118,7 +107,7 @@ const QuestionarioPosAluno = () => {
                     num={index + 1}
                     pergunta={pergunta.pergunta}
                     nomeLabel={`pergunta-${index + 1}`}
-                    onChange={handleInputChange}
+                    onChange={(value) => handleInputChange(index, value)}
                   />
                 ))}
               </C.PerguntasQuest>

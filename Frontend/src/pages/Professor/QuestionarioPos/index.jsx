@@ -7,7 +7,7 @@ import * as C from "./styles";
 import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
 
-const QuestionarioPre = () => {
+const QuestionarioPos = () => {
   const [disciplinas, setDisciplinas] = useState({});
   const { idDisc, idturma } = useParams();
 
@@ -30,7 +30,7 @@ const QuestionarioPre = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);
+    navigate(`/sessao/${idDisc}/${idturma}/posQuest/editar`);
   };
 
 
@@ -48,14 +48,14 @@ const QuestionarioPre = () => {
           TitleThree="Sessões"
           urlThree={`/turmas/${idDisc}/${idturma}`}
           symbolThree=">"
-          TitleFour="Questionário pré-aula"
+          TitleFour="Questionário pós-aula"
         />
         <C.Content>
           <C.titlePage>{disciplinas.nome}</C.titlePage>
           <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
         </C.Content>
         <C.ContentQuest>
-          <C.titleQuest>Questionário Pré-Aula</C.titleQuest>
+          <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
           <C.line />
           <C.PerguntasQuest>
             <Pergunta num="1" pergunta="Pergunta 1" nomeLabel="pergunta-1" />
@@ -76,4 +76,4 @@ const QuestionarioPre = () => {
   );
 };
 
-export default QuestionarioPre;
+export default QuestionarioPos;

@@ -97,14 +97,16 @@ export const registerProfessor = async (req, res) => {
     );
 
     const professorID = resultProfessor.insertId;
-    const turma = 1;
+    const turmas = [1, 2, 3, 4];
     const disciplinas = [1, 2, 3, 4, 5, 6];
 
-    for (const disciplina of disciplinas) {
-      await connection.execute(
-        "INSERT INTO turma_disciplina_professor (idprofessor, idturma, iddisciplina) VALUES (?, ?, ?)",
-        [professorID, turma, disciplina]
-      );
+    for (const turma of turmas) {
+        for (const disciplina of disciplinas) {
+          await connection.execute(
+            "INSERT INTO turma_disciplina_professor (idprofessor, idturma, iddisciplina) VALUES (?, ?, ?)",
+            [professorID, turma, disciplina]
+          );
+        }
     }
 
     await connection.commit();

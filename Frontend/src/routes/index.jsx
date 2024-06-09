@@ -12,24 +12,28 @@ import SignupProfessor from "../pages/SignupProfessor";
 import TelaInicio from "../pages/TelaInicio";
 
 // Importações de Páginas do Professor
-import Sessao from "../pages/Professor/Sessao";
-import TelaMateria from "../pages/Professor/TelaMateria";
-import QuestionarioPre from "../pages/Professor/QuestionarioPre";
 import MinhaConta from "../pages/MinhaConta";
-import Turmas from "../pages/Professor/SPAmaterias";
-import EnviadoSucesso from "../pages/Professor/EnviadoSucesso";
 import DeletadoSucesso from "../pages/Professor/DeletadoSucesso";
 import EditarQuest from "../pages/Professor/EditarQuest";
+import EnviadoSucesso from "../pages/Professor/EnviadoSucesso";
 import MeuQuestionario from "../pages/Professor/MeuQuestionario";
+import QuestionarioPre from "../pages/Professor/QuestionarioPre";
+import Turmas from "../pages/Professor/SPAmaterias";
+import Sessao from "../pages/Professor/Sessao";
+import TelaMateria from "../pages/Professor/TelaMateria";
 
 // Importações de Páginas do Aluno
-import TelaMateriaAluno from "../pages/Aluno/TelaMateria";
-import QuestionarioPreAluno from "../pages/Aluno/QuestionarioPre";
-import QuestionarioPosAluno from "../pages/Aluno/QuestionarioPos";
-import SessaoAluno from "../pages/Aluno/Sessao";
-import EnviadoSucessoAluno from "../pages/Aluno/EnviadoSucesso";
-import DeletadoSucessoAluno from "../pages/Aluno/DeletadoSucesso";
 import DashBoardAluno from "../pages/Aluno/DashBoard";
+import DeletadoSucessoAluno from "../pages/Aluno/DeletadoSucesso";
+import EnviadoSucessoAluno from "../pages/Aluno/EnviadoSucesso";
+import QuestionarioPosAluno from "../pages/Aluno/QuestionarioPos";
+import QuestionarioPreAluno from "../pages/Aluno/QuestionarioPre";
+import SessaoAluno from "../pages/Aluno/Sessao";
+import TelaMateriaAluno from "../pages/Aluno/TelaMateria";
+import DashboardProfessor from "../pages/Professor/DashBoard";
+import QuestionarioPos from "../pages/Professor/QuestionarioPos";
+import EditarQuestPos from "../pages/Professor/EditarQuestPos";
+import MeuQuestionarioPos from "../pages/Professor/MeuQuestionarioPos";
 
 // Componente Private para proteger rotas que exigem autenticação
 const Private = ({ Item }) => {
@@ -58,11 +62,16 @@ const RouteApp = () => {
           <Route path="/preQuest" element={<QuestionarioPre />} />
           <Route path="/turmas/:idDisc" element={<Turmas />} />
           <Route path="/turmas/:idDisc/:idturma" element={<Sessao />} />
+          <Route path="/sessao/:idDisc/:idturma/relatorio" element={<DashboardProfessor />} />
           <Route path="/sessao/:idDisc/:idturma/preQuest" element={<QuestionarioPre />} />
+          <Route path="/sessao/:idDisc/:idturma/posQuest" element={<QuestionarioPos />} />
           <Route path="/sessao/:idDisc/:idturma/preQuest/enviado" element={<EnviadoSucesso />} />
           <Route path="/sessao/:idDisc/:idturma/preQuest/deletado" element={<DeletadoSucesso />} />
+          <Route path="/sessao/:idDisc/:idturma/posQuest/deletado" element={<DeletadoSucesso />} />
           <Route path="/sessao/:idDisc/:idturma/preQuest/editar" element={<EditarQuest />} />
+          <Route path="/sessao/:idDisc/:idturma/posQuest/editar" element={<EditarQuestPos />} />
           <Route path="/sessao/:idDisc/:idturma/preQuest/meuQuest" element={<MeuQuestionario />} />
+          <Route path="/sessao/:idDisc/:idturma/posQuest/meuQuest" element={<MeuQuestionarioPos />} />
 
           {/* Rotas do Aluno */}
           <Route path="/materiasA" element={<TelaMateriaAluno />} />
@@ -76,7 +85,7 @@ const RouteApp = () => {
           <Route path="/sessaoA/:idDisc/posQuest" element={<QuestionarioPosAluno />} />
           <Route path="/sessaoA/:idDisc/posQuest/enviado" element={<EnviadoSucessoAluno />} />
           <Route path="/sessaoA/:idDisc/posQuest/deletado" element={<DeletadoSucessoAluno />} />
-          
+
           <Route path="/sessaoA/:idDisc/relatorio" element={<DashBoardAluno />} />
           <Route exact path="/home" element={<Private Item={Home} />} />
         </Routes>
