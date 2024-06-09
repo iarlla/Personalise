@@ -39,7 +39,7 @@ const SignupProfessor = () => {
 
     try {
       const response = await Axios.post(
-        "http://localhost:3001/api/auth/cadastro-professor",
+        `${import.meta.env.VITE_API_URL}/auth/cadastro-professor`,
         {
           email: inputs.email,
           nome: inputs.nome,
@@ -56,7 +56,6 @@ const SignupProfessor = () => {
         console.log(response);
         alert("Falha ao cadastrar aluno " + response.status);
       }
-
     } catch (error) {
       alert(error.response?.data?.message || "Erro desconhecido");
       setError(error.response?.data?.message || "Erro desconhecido");

@@ -2,7 +2,7 @@ import Navbar from "../../../components/navBar";
 import { useState, useEffect } from "react";
 import Button from "../../../components/button";
 import Axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as C from "./styles";
 
 const EnviadoSucesso = () => {
@@ -16,7 +16,7 @@ const EnviadoSucesso = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -30,7 +30,7 @@ const EnviadoSucesso = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -42,7 +42,13 @@ const EnviadoSucesso = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
+    const currentPath = window.location.pathname;
+
+    if (currentPath.includes("preQuest")) {
+      navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
+    } else if (currentPath.includes("posQuest")) {
+      navigate(`/sessao/${idDisc}/${idturma}/posQuest/meuQuest`);
+    }
   };
 
   return (
@@ -56,7 +62,7 @@ const EnviadoSucesso = () => {
           <C.containerSucesso>
             <C.imagemSucesso src={`${window.location.origin}/sucesso.png`} />
             <C.containerTextoSucesso>
-              <C.parabens> Parabens! </C.parabens>
+              <C.parabens> Parabéns! </C.parabens>
               <C.textoSucesso>
                 {" "}
                 Questionário enviado com sucesso!{" "}

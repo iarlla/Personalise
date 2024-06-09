@@ -9,7 +9,7 @@ import Axios from "axios";
 
 const SessaoA = () => {
   const { idDisc } = useParams();
-  const [disciplina, setDisciplina] = useState('');
+  const [disciplina, setDisciplina] = useState("");
   const [questionario, setQuestionario] = useState([]);
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -18,10 +18,9 @@ const SessaoA = () => {
     const fetchData = async () => {
       try {
         const nomeDisciplina = await Axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplina(nomeDisciplina.data.nome);
-
       } catch (error) {
         console.log(error);
       }
@@ -29,12 +28,10 @@ const SessaoA = () => {
     fetchData();
   }, [currentUser.id, idDisc]);
 
-
-
   const handleClickRedirect = async (e) => {
     e.preventDefault();
     try {
-        navigate(`/sessaoA/${idDisc}/preQuest`);
+      navigate(`/sessaoA/${idDisc}/preQuest`);
     } catch (error) {
       console.log(error);
     }

@@ -3,21 +3,23 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const registerAluno = async (req, res) => {
-
   const { email, nome, senha, matricula, curso } = req.body;
-
   let connection;
 
   try {
-
     connection = await db.promise().getConnection();
     await connection.beginTransaction();
 
-    const [existingUser] = await connection.execute("SELECT * FROM usuarios WHERE email = ?", [email]);
+    const [existingUser] = await connection.execute(
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
+    );
 
     if (existingUser.length) {
       await connection.rollback();
-      return res.status(409).json({ message: "Usuário com esse email já cadastrado!" });
+      return res
+        .status(409)
+        .json({ message: "Usuário com esse email já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -45,40 +47,46 @@ export const registerAluno = async (req, res) => {
 
     await connection.commit();
     console.log("Aluno cadastrado com sucesso!");
-    return res.status(201).json({ message: "Aluno foi cadastrado com sucesso!" });
-
+    return res
+      .status(201)
+      .json({ message: "Aluno foi cadastrado com sucesso!" });
   } catch (err) {
-    await connection.rollback();
-    const duplicateEntryRegex = /Duplicate entry '([^']*)' for key 'alunos\.matricula_UNIQUE'/;
-
+    if (connection) {
+      await connection.rollback();
+    }
+    const duplicateEntryRegex =
+      /Duplicate entry '([^']*)' for key 'alunos\.matricula_UNIQUE'/;
     let errorMessage = err.message;
     const match = errorMessage.match(duplicateEntryRegex);
     if (match) {
       errorMessage = `Item ja existe: ${match[1]}`;
     }
-    return res.status(500).json({ message: "Erro: " + errorMessage});
-
+    return res.status(500).json({ message: "Erro: " + errorMessage });
   } finally {
-    await connection.release();
+    if (connection) {
+      await connection.release();
+    }
   }
 };
 
-
 export const registerProfessor = async (req, res) => {
   const { email, nome, senha, matricula } = req.body;
-
   let connection;
 
   try {
-
     connection = await db.promise().getConnection();
     await connection.beginTransaction();
 
-    const [existingUser] = await connection.execute("SELECT * FROM usuarios WHERE email = ?", [email]);
+    const [existingUser] = await connection.execute(
+      "SELECT * FROM usuarios WHERE email = ?",
+      [email]
+    );
 
     if (existingUser.length) {
       await connection.rollback();
-      return res.status(409).json({ message: "Usuário com esse email já cadastrado!" });
+      return res
+        .status(409)
+        .json({ message: "Usuário com esse email já cadastrado!" });
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -101,36 +109,37 @@ export const registerProfessor = async (req, res) => {
     const disciplinas = [1, 2, 3, 4, 5, 6];
 
     for (const turma of turmas) {
-        for (const disciplina of disciplinas) {
-          await connection.execute(
-            "INSERT INTO turma_disciplina_professor (idprofessor, idturma, iddisciplina) VALUES (?, ?, ?)",
-            [professorID, turma, disciplina]
-          );
-        }
+      for (const disciplina of disciplinas) {
+        await connection.execute(
+          "INSERT INTO turma_disciplina_professor (idprofessor, idturma, iddisciplina) VALUES (?, ?, ?)",
+          [professorID, turma, disciplina]
+        );
+      }
     }
 
     await connection.commit();
     console.log("Professor cadastrado com sucesso!");
-    return res.status(201).json({ message: "Professor foi cadastrado com sucesso!" });
-
+    return res
+      .status(201)
+      .json({ message: "Professor foi cadastrado com sucesso!" });
   } catch (err) {
-    await connection.rollback();
-    const duplicateEntryRegex = /Duplicate entry '([^']*)' for key 'professores\.matricula_UNIQUE'/;
-
+    if (connection) {
+      await connection.rollback();
+    }
+    const duplicateEntryRegex =
+      /Duplicate entry '([^']*)' for key 'professores\.matricula_UNIQUE'/;
     let errorMessage = err.message;
     const match = errorMessage.match(duplicateEntryRegex);
     if (match) {
       errorMessage = `Item ja existe: ${match[1]}`;
     }
-    return res.status(500).json({ message: "Erro: " + errorMessage});
-
+    return res.status(500).json({ message: "Erro: " + errorMessage });
   } finally {
-    await connection.release();
+    if (connection) {
+      await connection.release();
+    }
   }
-
 };
-
-
 
 export const login = (req, res) => {
   const { email, senha } = req.body;
@@ -165,8 +174,6 @@ export const login = (req, res) => {
       .json(others);
   });
 };
-
-
 
 export const logout = (_, res) => {
   res

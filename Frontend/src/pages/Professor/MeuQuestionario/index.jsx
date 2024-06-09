@@ -22,7 +22,7 @@ const MeuQuestionario = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -32,12 +32,13 @@ const MeuQuestionario = () => {
     fetchDataDisc();
   }, [idDisc]);
 
-
   useEffect(() => {
     const fetchDataQuestID = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/questionario/byUserTurmaDisci/pre/${currentUser.id}/${idturma}/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/questionario/byUserTurmaDisci/pre/${
+            currentUser.id
+          }/${idturma}/${idDisc}`
         );
         setQuestionario(res.data);
       } catch (error) {
@@ -47,12 +48,13 @@ const MeuQuestionario = () => {
     fetchDataQuestID();
   }, [currentUser.id]);
 
-
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.delete(
-        `http://localhost:3001/api/questionario/byUserTurmaDisci/pre/${currentUser.id}/${idturma}/${idDisc}`
+        `${import.meta.env.VITE_API_URL}/questionario/byUserTurmaDisci/pre/${
+          currentUser.id
+        }/${idturma}/${idDisc}`
       );
       console.log(res.data.message); // Imprimir mensagem de sucesso
       navigate(`/sessao/${idDisc}/${idturma}/preQuest/deletado`);

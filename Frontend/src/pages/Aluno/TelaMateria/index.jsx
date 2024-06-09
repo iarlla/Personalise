@@ -15,7 +15,9 @@ const TelaMateriaAluno = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/usuario/${currentUser.id}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/usuario/${
+            currentUser.id
+          }`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -24,8 +26,6 @@ const TelaMateriaAluno = () => {
     };
     fetchDataDisc();
   }, [currentUser.id]);
-
-
 
   return (
     <C.Container>
@@ -55,14 +55,14 @@ const TelaMateriaAluno = () => {
             </div>
             <C.line />
             <C.ContainerButtons>
-                {disciplinas.map((disciplina) => (
-                    <Link
-                        key={disciplina.id_disciplina}
-                        to={`/disciplina/${disciplina.id_disciplina}`}
-                    >
-                        <ButtonPrincipal Text={disciplina.nome} />
-                    </Link>
-                ))}
+              {disciplinas.map((disciplina) => (
+                <Link
+                  key={disciplina.id_disciplina}
+                  to={`/disciplina/${disciplina.id_disciplina}`}
+                >
+                  <ButtonPrincipal Text={disciplina.nome} />
+                </Link>
+              ))}
             </C.ContainerButtons>
           </C.MainRightContainer>
         </C.MainContainer>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import * as C from "./styles.js";
 import useAuth from "../../hooks/useAuth.jsx";
 import { useNavigate } from "react-router-dom";
@@ -9,17 +9,17 @@ const Navbar = ({ Text }) => {
 
   const handleNavigate = () => {
     if (Text === "Professor") {
-      navigate('/materiasP');
+      navigate("/materiasP");
     } else if (Text === "Aluno") {
-      navigate('/materiasA');
+      navigate("/materiasA");
     }
   };
 
   const handleNavigatePerfil = () => {
     if (Text === "Professor") {
-      navigate('/minhaContaProfessor');
+      navigate("/minhaContaProfessor");
     } else if (Text === "Aluno") {
-      navigate('/minhaContaAluno');
+      navigate("/minhaContaAluno");
     }
   };
 
@@ -30,7 +30,7 @@ const Navbar = ({ Text }) => {
           src={`${window.location.origin}/Logo.png`}
           alt="logo"
           width="150px"
-          style={{ maxHeight: "100%" }} // Ajustar a altura máxima da imagem
+          style={{ maxHeight: "100%", cursor: "pointer" }} // Ajustar a altura máxima da imagem
         />
       </a>
       <C.ContainerPerfil>
@@ -39,7 +39,7 @@ const Navbar = ({ Text }) => {
             src={`${window.location.origin}/User.png`}
             alt="user"
             width="35px"
-            style={{ maxHeight: "100%" }} // Ajustar a altura máxima da imagem
+            style={{ maxHeight: "100%", cursor: "pointer" }} // Ajustar a altura máxima da imagem
           />
         </a>
         <div

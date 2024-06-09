@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as C from "./styles";
-import Navbar from "../../components/navBar";
-import useAuth from "../../hooks/useAuth";
+import Navbar from "../../../components/navBar";
+import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -119,7 +119,7 @@ const MinhaContaAluno = () => {
 
   return (
     <>
-      <Navbar Text="Aluno" />
+      <Navbar Text="Professor" />
       <C.Container>
         <C.Content>
           <C.Title>Minha conta</C.Title>

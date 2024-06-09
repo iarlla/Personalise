@@ -15,7 +15,9 @@ const TelaMateria = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/usuario/${currentUser.id}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/usuario/${
+            currentUser.id
+          }`
         );
         setDisciplinas(res.data);
         console.log(disciplinas);

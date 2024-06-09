@@ -43,16 +43,16 @@ CREATE TABLE `alunos` (
   CONSTRAINT `id_usuario_aluno` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO `alunos` VALUES
-    (1,1,'UC240001','Analise e Desenvolvimento de sistema'),
-    (2,2,'UC240002','Analise e Desenvolvimento de sistema'),
-    (3,3,'UC240003','Analise e Desenvolvimento de sistema'),
-    (4,4,'UC240004','Analise e Desenvolvimento de sistema'),
-    (5,5,'UC240005','Analise e Desenvolvimento de sistema'),
-    (6,6,'UC240006','Analise e Desenvolvimento de sistema'),
-    (7,7,'UC240007','Analise e Desenvolvimento de sistema'),
-    (8,8,'UC240008','Analise e Desenvolvimento de sistema'),
-    (9,9,'UC240009','Analise e Desenvolvimento de sistema'),
-    (10,10,'UC2400010','Analise e Desenvolvimento de sistema');
+    (1,1,'UC240001','Engenharia de Software'),
+    (2,2,'UC240002','Engenharia de Software'),
+    (3,3,'UC240003','Engenharia de Software'),
+    (4,4,'UC240004','Engenharia de Software'),
+    (5,5,'UC240005','Engenharia de Software'),
+    (6,6,'UC240006','Engenharia de Software'),
+    (7,7,'UC240007','Engenharia de Software'),
+    (8,8,'UC240008','Engenharia de Software'),
+    (9,9,'UC240009','Engenharia de Software'),
+    (10,10,'UC2400010','Engenharia de Software');
 
 
 DROP TABLE IF EXISTS `professores`;

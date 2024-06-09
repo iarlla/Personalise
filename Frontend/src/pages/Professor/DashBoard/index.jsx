@@ -17,7 +17,7 @@ const DashboardProfessor = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -31,7 +31,7 @@ const DashboardProfessor = () => {
     const fetchDataTurma = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/respostas/relatorio/${idDisc}`,
+          `${import.meta.env.VITE_API_URL}/respostas/relatorio/${idDisc}`,
           {
             headers: {
               idusuario: currentUser.id,
@@ -69,14 +69,12 @@ const DashboardProfessor = () => {
 
         <C.MainContainer>
           <C.MainTopContainer>
-
             {questionario.length === 0 ? (
               <C.ContainerWhite>
                 <C.WhiteBox>
                   <h3>Nao existem questionario para essa disciplina.</h3>
                 </C.WhiteBox>
               </C.ContainerWhite>
-
             ) : (
               questionario
                 .reduce((acc, pergunta, index) => {

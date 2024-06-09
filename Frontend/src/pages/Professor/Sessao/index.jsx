@@ -15,12 +15,11 @@ const Sessao = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -30,12 +29,13 @@ const Sessao = () => {
     fetchDataDisc();
   }, [idturma]);
 
-
   useEffect(() => {
     const fetchDataQuestID = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/questionario/byUserTurmaDisci/PRE/${currentUser.id}/${idturma}/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/questionario/byUserTurmaDisci/PRE/${
+            currentUser.id
+          }/${idturma}/${idDisc}`
         );
         setQuestionarioPre(res.data);
       } catch (error) {
@@ -45,12 +45,13 @@ const Sessao = () => {
     fetchDataQuestID();
   }, [currentUser.id]);
 
-
   useEffect(() => {
     const fetchDataQuestID = async () => {
       try {
         const res = await Axios.get(
-          `http://localhost:3001/api/questionario/byUserTurmaDisci/POS/${currentUser.id}/${idturma}/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/questionario/byUserTurmaDisci/POS/${
+            currentUser.id
+          }/${idturma}/${idDisc}`
         );
         setQuestionarioPos(res.data);
       } catch (error) {
@@ -59,7 +60,6 @@ const Sessao = () => {
     };
     fetchDataQuestID();
   }, [currentUser.id]);
-
 
   const handleClickRedirectPrequest = async (e) => {
     e.preventDefault();
@@ -73,7 +73,6 @@ const Sessao = () => {
       console.log(error);
     }
   };
-
 
   const handleClickRedirectPosquest = async (e) => {
     e.preventDefault();
@@ -131,9 +130,9 @@ const Sessao = () => {
                   Text="Questionario pré-aula"
                   onClick={handleClickRedirectPrequest}
                 ></ButtonPrincipal>
-                  <ButtonPrincipal
+                <ButtonPrincipal
                   Text="Questionario pós-aula"
-                    onClick={handleClickRedirectPosquest}
+                  onClick={handleClickRedirectPosquest}
                 ></ButtonPrincipal>
                 <Link to={`/sessao/${idDisc}/${idturma}/relatorio`}>
                   <ButtonPrincipal Text="Relatórios da turma"></ButtonPrincipal>

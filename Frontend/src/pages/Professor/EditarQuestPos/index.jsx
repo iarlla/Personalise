@@ -30,7 +30,7 @@ const EditarQuestPos = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -44,7 +44,7 @@ const EditarQuestPos = () => {
     const fetchDataTurma = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/turmas/${idturma}`
+          `${import.meta.env.VITE_API_URL}/turmas/${idturma}`
         );
         setTurma(res.data);
       } catch (error) {
@@ -91,7 +91,7 @@ const EditarQuestPos = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/questions/posQuest/editar",
+        `${import.meta.env.VITE_API_URL}/questions/posQuest/editar`,
         {
           questions,
           professorId: currentUser.id,
@@ -101,7 +101,7 @@ const EditarQuestPos = () => {
         { withCredentials: true } // Para enviar cookies junto com a requisição
       );
       console.log("Resposta do servidor:", response.data);
-      navigate(`/sessao/${idDisc}/${idturma}/preQuest/enviado`);
+      navigate(`/sessao/${idDisc}/${idturma}/posQuest/enviado`);
     } catch (error) {
       console.error("Erro ao enviar perguntas:", error);
     }

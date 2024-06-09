@@ -12,7 +12,7 @@ const QuestionarioPreAluno = () => {
   const [disciplinas, setDisciplinas] = useState({});
   const [perguntas, setPerguntas] = useState([]);
   const [respostas, setRespostas] = useState([]);
-  const {idDisc, tipo } = useParams();
+  const { idDisc, tipo } = useParams();
   const { currentUser } = useAuth();
 
   const navigate = useNavigate();
@@ -21,10 +21,9 @@ const QuestionarioPreAluno = () => {
     const fetchData = async () => {
       try {
         const rest = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(rest.data);
-
       } catch (error) {
         console.log(error);
       }
@@ -32,18 +31,16 @@ const QuestionarioPreAluno = () => {
     fetchData();
   }, [currentUser.id, idDisc]);
 
-
-
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/questionario/aluno/${idDisc}`,
+          `${import.meta.env.VITE_API_URL}/questionario/aluno/${idDisc}`,
           {
             headers: {
-              'idUsuario': currentUser.id,
-              'tipoQuestionario': 'PRE'
-            }
+              idUsuario: currentUser.id,
+              tipoQuestionario: "PRE",
+            },
           }
         );
         setPerguntas(res.data);
@@ -54,23 +51,22 @@ const QuestionarioPreAluno = () => {
     fetchDataDisc();
   }, [currentUser.id, idDisc]);
 
-
   const handleInputChange = (index, value) => {
-      const updatedValues = [...respostas];
-      updatedValues[index] = value;
-      setRespostas(updatedValues);
+    const updatedValues = [...respostas];
+    updatedValues[index] = value;
+    setRespostas(updatedValues);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:3001/api/respostas`, {
-          disciplina: idDisc,
-          idUsuario: currentUser.id,
-          respostas: respostas
-                          .map((resposta, index) => ({ num: index + 1, resposta }))
-                          .filter(item => item.resposta !== null),
-          tipo: 'PRE'
+      await axios.post(`${import.meta.env.VITE_API_URL}/respostas`, {
+        disciplina: idDisc,
+        idUsuario: currentUser.id,
+        respostas: respostas
+          .map((resposta, index) => ({ num: index + 1, resposta }))
+          .filter((item) => item.resposta !== null),
+        tipo: "PRE",
       });
       setRespostas([]);
       navigate(`/sessaoA/${idDisc}/preQuest/enviado`);
@@ -123,7 +119,6 @@ const QuestionarioPreAluno = () => {
       </C.Container>
     </>
   );
-
 };
 
 export default QuestionarioPreAluno;

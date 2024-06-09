@@ -17,8 +17,8 @@ const Turmas = () => {
     const fetchDataTurmas = async () => {
       try {
         const res = await axios.get(
-            `http://localhost:3001/api/turmas/usuario/${currentUser.id}`
-          );
+          `${import.meta.env.VITE_API_URL}/turmas/usuario/${currentUser.id}`
+        );
         setTurmas(res.data);
       } catch (error) {
         console.log(error);
@@ -27,12 +27,11 @@ const Turmas = () => {
     fetchDataTurmas();
   }, []);
 
-
   useEffect(() => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {

@@ -17,7 +17,7 @@ const QuestionarioPre = () => {
     const fetchDataDisc = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/disciplinas/${idDisc}`
+          `${import.meta.env.VITE_API_URL}/disciplinas/${idDisc}`
         );
         setDisciplinas(res.data);
       } catch (error) {
@@ -27,12 +27,10 @@ const QuestionarioPre = () => {
     fetchDataDisc();
   }, [idDisc]);
 
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/sessao/${idDisc}/${idturma}/preQuest/editar`);
   };
-
 
   return (
     <>
