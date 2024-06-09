@@ -1,0 +1,12 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: frontend-personalise
+  labels:
+    name: frontend
+spec:
+  to:
+    kind: Service
+    name: frontend-personalise
+  port:
+    targetPort: 8080

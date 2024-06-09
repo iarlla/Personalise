@@ -1,0 +1,50 @@
+{
+  "id_questionario": 1,
+  "id_usuario": 1,
+  "respostas": [
+    {
+      "num": 1,
+      "resposta": 0
+    },
+    {
+      "num": 2,
+      "resposta": 1
+    },
+    {
+      "num": 3,
+      "resposta": 2
+    },
+    {
+      "num": 4,
+      "resposta": 0
+    },
+    {
+      "num": 5,
+      "resposta": 2
+    },
+    {
+      "num": 6,
+      "resposta": 1
+    },
+    {
+      "num": 7,
+      "resposta": 0
+    },
+    {
+      "num": 8,
+      "resposta": 1
+    },
+    {
+      "num": 9,
+      "resposta": 0
+    },
+    {
+      "num": 10,
+      "resposta": 1
+    },
+    {
+      "num": 11,
+      "resposta": 0
+    }
+  ]
+}
