@@ -1,5 +1,5 @@
 # env
-/Backend/.env
+.env
 
 # compiled output
 /dist
