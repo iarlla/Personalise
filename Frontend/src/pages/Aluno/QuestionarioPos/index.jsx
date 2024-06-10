@@ -69,7 +69,7 @@ const QuestionarioPosAluno = () => {
         tipo: "POS",
       });
       setRespostas([]);
-      navigate(`/sessaoA/${idDisc}/preQuest/enviado`);
+      navigate(`/sessaoA/${idDisc}/posQuest/enviado`);
     } catch (error) {
       console.log(error);
     }
