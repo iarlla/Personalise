@@ -72,7 +72,7 @@ const DashboardProfessor = () => {
 
           <C.ContainerBlue>
               <C.BlueBox>
-              <C.MainLeftImg src="../../../public/catolica.svg"></C.MainLeftImg>
+              <C.MainLeftImg src={`${window.location.origin}/catolica.svg`}></C.MainLeftImg>
               </C.BlueBox>
               <C.BlueBox>
                 <h1>+20.000</h1>

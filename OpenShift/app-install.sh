@@ -8,7 +8,7 @@ oc apply -n personalise -f volumes/mysql-persistent-storage.yaml
 oc apply -n personalise -f services/mysql-service.yaml
 oc apply -n personalise -f deployments/mysql.yaml
 while [ "$(oc get pods -l=app='mysql' -n personalise -o jsonpath='{.items[*].status.containerStatuses[0].ready}')" != "true" ]; do
-   sleep 5
+   sleep 15
    echo "Waiting for mysql pod to change to running status"
 done
 oc apply -n personalise -f deployments/frontend.yaml

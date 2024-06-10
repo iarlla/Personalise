@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend-personalise
-          image: docker.io/glocker1v4/frontend-personalise:v10
+          image: docker.io/glocker1v4/frontend-personalise:v11
           ports:
             - containerPort: 8080
           env:
