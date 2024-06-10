@@ -53,7 +53,7 @@ export const getRespostaByIdQuestionario = (req, res) => {
     const distinctIds = [...new Set(perguntas.map((pergunta) => pergunta.id))];
 
     const q2 = `
-            SELECT rq.num, rq.resposta
+            SELECT rq.num, rq.resposta, r.idquestionario
             FROM respostas r
             LEFT JOIN respostas_questionario rq on rq.idrespostas = r.idrespostas
             WHERE r.idquestionario in (${distinctIds.join(", ")})
@@ -63,9 +63,9 @@ export const getRespostaByIdQuestionario = (req, res) => {
     db.query(q2, [req.params.idquestionario], (err, data) => {
       if (err) return res.status(500).json(err);
 
-      const respostas = data.map((d) => ({ num: d.num, resposta: d.resposta }));
+      const respostas = data.map((d) => ({ num: d.num, resposta: d.resposta, id_questionario: d.idquestionario }));
       const result = perguntas.map((p) => {
-        const respostasDaPergunta = respostas.filter((r) => r.num === p.num);
+        const respostasDaPergunta = respostas.filter((r) => r.num === p.num && r.id_questionario === p.id);
         let obj = { pergunta: p.pergunta, tipo: p.tipo };
         if (
           p.tipo === "MULTIPLA_ESCOLHA" ||
@@ -153,7 +153,7 @@ export const postResposta = (req, res) => {
           and pt.iddisciplina = ?
           and q.tipo = ?
         `,
-        [idAluno, disciplina, tipo],
+        [idUsuario, disciplina, tipo],
         (err, data) => {
           if (err) {
             return res.status(500).json(err);
