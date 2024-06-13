@@ -21,7 +21,7 @@ spec:
             - name: PORT
               value: "3001"
             - name: APP_WEB_URL
-              value: "http://frontend-personalise-personalise.apps.cluster-pfd66.dynamic.redhatworkshops.io"
+              value: "https://frontend-personalise-personalise.apps.cluster-2q2cx.2q2cx.sandbox2016.opentlc.com"
             - name: DB_HOST
               value: "db-service.personalise.svc.cluster.local"
             - name: DB_USER

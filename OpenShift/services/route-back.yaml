@@ -10,3 +10,6 @@ spec:
     name: backend-service
   port:
     targetPort: 3001
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow

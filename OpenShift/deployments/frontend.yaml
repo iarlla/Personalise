@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: frontend-personalise
-          image: docker.io/glocker1v4/frontend-personalise:v12
+          image: docker.io/glocker1v4/frontend-personalise:v14
           ports:
             - containerPort: 8080
           env:
             - name: VITE_API_URL
-              value: "http://backend-personalise-personalise.apps.cluster-pfd66.dynamic.redhatworkshops.io/api"
+              value: "https://backend-personalise-personalise.apps.cluster-2q2cx.2q2cx.sandbox2016.opentlc.com/api"
