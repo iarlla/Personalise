@@ -30,6 +30,108 @@ export const MainContainer = styled.div`
   justify-content: space-between;
 `;
 
+export const LabelTitle = styled.label`
+  text-align: left;
+`;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+`;
+
+export const ModalContent = styled.div`
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 500px; /* Ajuste a largura conforme necessário */
+`;
+
+export const ModalHeader = styled.div`
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ModalTitle = styled.h1`
+  margin: 0;
+  font-size: 1.25rem;
+`;
+
+export const ModalCloseButton = styled.button`
+  border: none;
+  background: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+`;
+
+export const ModalBody = styled.div`
+  padding: 1rem;
+`;
+
+export const ModalFooter = styled.div`
+  padding: 1rem;
+  margin-top: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const ModalCancelButton = styled.button`
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #5a6268;
+  }
+`;
+
+export const ModalSaveButton = styled.button`
+  background-color: #13ee08;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0dad04;
+  }
+`;
+
+export const Button = styled.button`
+  background-color: #00396d;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 1;
+
+  &:hover {
+    background-color: #086dc9;
+  }
+`;
+
 export const MainLeftContainer = styled.div`
   background-color: white;
   border-radius: 30px;

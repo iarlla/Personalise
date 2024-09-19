@@ -1,7 +1,5 @@
 import { db } from "../database/db.js";
 
-
-
 export const getDisciplinas = (_, res) => {
   const q = "SELECT * FROM disciplinas";
   db.query(q, (err, data) => {
@@ -9,8 +7,6 @@ export const getDisciplinas = (_, res) => {
     return res.status(200).json(data);
   });
 };
-
-
 
 export const getDisciplina = (req, res) => {
   const q = "SELECT `nome` from disciplinas WHERE id_disciplina = ?";
@@ -20,14 +16,19 @@ export const getDisciplina = (req, res) => {
   });
 };
 
-
-
+export const createDisciplinasByIdUsuario = (req, res) => {
+  const q = "SELECT `nome` from disciplinas WHERE id_disciplina = ?";
+  db.query(q, [req.params.idDisc], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.status(200).json(data[0]);
+  });
+};
 
 /**
  * Retorna as disciplinas de um usuário, seja ele professor ou aluno.
  */
 export const getDisciplinasByIdUsuario = (req, res) => {
-    const q = `
+  const q = `
         SELECT DISTINCT d.id_disciplina, d.nome, d.descricao, d.carga_horaria
         FROM disciplinas d
         LEFT JOIN turma_disciplina_professor td on d.id_disciplina = td.iddisciplina
@@ -39,9 +40,9 @@ export const getDisciplinasByIdUsuario = (req, res) => {
         WHERE u.id = ?;
     `;
 
-    db.query(q, [req.params.idusuario], (err, data) => {
-        if (err) return res.status(500).json(err);
+  db.query(q, [req.params.idusuario], (err, data) => {
+    if (err) return res.status(500).json(err);
 
-        return res.status(200).json(data);
-    });
-}
+    return res.status(200).json(data);
+  });
+};
