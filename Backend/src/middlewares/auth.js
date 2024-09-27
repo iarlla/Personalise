@@ -104,19 +104,6 @@ export const registerProfessor = async (req, res) => {
       [usuarioID, matricula]
     );
 
-    const professorID = resultProfessor.insertId;
-    const turmas = [1, 2, 3, 4];
-    const disciplinas = [1, 2, 3, 4, 5, 6];
-
-    for (const turma of turmas) {
-      for (const disciplina of disciplinas) {
-        await connection.execute(
-          "INSERT INTO turma_disciplina_professor (idprofessor, idturma, iddisciplina) VALUES (?, ?, ?)",
-          [professorID, turma, disciplina]
-        );
-      }
-    }
-
     await connection.commit();
     console.log("Professor cadastrado com sucesso!");
     return res
