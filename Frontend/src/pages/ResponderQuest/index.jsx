@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import * as C from "./styles"; // Use updated styles with media queries
+import * as C from "./styles";
 import Pergunta from "../../components/pergunta";
 import Button from "../../components/button";
 
 const StudentForm = () => {
   const [perguntas, setPerguntas] = useState([]);
-  const [respostas, setRespostas] = useState([]); // State to hold the answers
-  const { hash } = useParams(); // Get the hash from the URL
+  const [respostas, setRespostas] = useState([]);
+  const [tipoQuestionario, setTipoQuestionario] = useState("");
+  const { hash } = useParams();
   const navigate = useNavigate();
+
+  // State para armazenar a data de fim do questionário
+  const [dataFim, setDataFim] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/questionario/${hash}`,
-          {
-            headers: {
-              tipoQuestionario: "PRE",
-            },
-          }
+          `${import.meta.env.VITE_API_URL}/questionario/${hash}`
         );
         setPerguntas(res.data);
       } catch (error) {
@@ -29,11 +28,32 @@ const StudentForm = () => {
     };
 
     fetchData();
+
+    // Cálculo da data de hoje + 1 dia
+    const dataAtual = new Date();
+    dataAtual.setDate(dataAtual.getDate() + 1); // Adiciona 1 dia à data atual
+    const dataFormatada = dataAtual.toLocaleDateString("pt-BR"); // Formato dd/mm/aaaa
+    setDataFim(dataFormatada); // Define a data de fim no estado
+  }, [hash]);
+
+  useEffect(() => {
+    const fetchDataType = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/questionario/tipo/${hash}`
+        );
+        setTipoQuestionario(res.data);
+      } catch (error) {
+        console.log("Erro ao buscar tipo:", error);
+      }
+    };
+
+    fetchDataType();
   }, [hash]);
 
   const handleInputChange = (index, value) => {
     const updatedValues = [...respostas];
-    updatedValues[index] = value; // Store the answer in the respostas array
+    updatedValues[index] = value;
     setRespostas(updatedValues);
   };
 
@@ -41,7 +61,7 @@ const StudentForm = () => {
     e.preventDefault();
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/respostas`, {
-        hash, // Include the hash in the request
+        hash,
         respostas: respostas.map((resposta, index) => ({
           num: index + 1,
           resposta,
@@ -53,15 +73,19 @@ const StudentForm = () => {
       console.log(error);
     }
   };
-
   return (
     <C.Container>
       <C.Content>
         <C.titlePage>Questionário</C.titlePage>
-        <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
+        <C.textoAbertura>
+          Questionário aberto até: {dataFim}
+        </C.textoAbertura>{" "}
+        {/* Exibe a data calculada */}
       </C.Content>
       <C.ContentQuest>
-        <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
+        <C.titleQuest>
+          Questionário {tipoQuestionario === "PRE" ? "Pré-Aula" : "Pós-Aula"}
+        </C.titleQuest>
         <C.line />
         {perguntas.length > 0 ? (
           <C.PerguntasQuest>

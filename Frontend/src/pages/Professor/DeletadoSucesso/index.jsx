@@ -42,7 +42,7 @@ const DeletadoSucesso = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
+    navigate(`/turmas/${idDisc}/${idturma}`);
   };
   return (
     <>

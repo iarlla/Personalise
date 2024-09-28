@@ -24,9 +24,9 @@ const EditarQuest = () => {
   const [editingText, setEditingText] = useState("");
   const [disciplinas, setDisciplinas] = useState({});
   const [turma, setTurma] = useState([]);
-  const [qrCodeUrl, setQrCodeUrl] = useState(""); 
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
   const { idDisc, idturma } = useParams();
-  
+
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -89,9 +89,11 @@ const EditarQuest = () => {
   };
 
   const generateRandomHash = () => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let hash = '';
-    for (let i = 0; i < 100; i++) { // Length of the hash can be adjusted
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let hash = "";
+    for (let i = 0; i < 100; i++) {
+      // Length of the hash can be adjusted
       hash += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return hash;
@@ -99,10 +101,10 @@ const EditarQuest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Generate a random hash for the form
     const randomHash = generateRandomHash();
-    console.log(randomHash)
+    console.log(randomHash);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/questions/preQuest/editar`,
@@ -111,24 +113,22 @@ const EditarQuest = () => {
           professorId: currentUser.id,
           idDisc,
           idturma,
-          hash: randomHash  // Send the random hash to the backend
+          hash: randomHash, // Send the random hash to the backend
         },
         { withCredentials: true }
       );
-      
+
       console.log("Resposta do servidor:", response.data);
-  
+
       // Set the QR code URL with the random hash
       const qrUrl = `http://localhost:5173/${randomHash}`;
       setQrCodeUrl(qrUrl);
-  
+
       setShowModal(true);
-  
     } catch (error) {
       console.error("Erro ao enviar perguntas:", error);
     }
   };
-  
 
   const handleProntoClick = () => {
     setShowModal(false);
@@ -155,7 +155,7 @@ const EditarQuest = () => {
           <C.titlePage>{disciplinas.nome}</C.titlePage>
         </C.Content>
         <C.ContentQuest>
-          <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
+          <C.titleQuest>Questionário Pre-Aula</C.titleQuest>
           <C.line />
           <img
             src={`${window.location.origin}/adicionar.png`}
@@ -243,25 +243,32 @@ const EditarQuest = () => {
           </div>
 
           {showModal && (
-            <div style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}>
-              <div style={{
-                backgroundColor: "white",
-                padding: "20px",
-                borderRadius: "10px",
-                textAlign: "center",
-                width: "700px"
-              }}>
-                <h3 style={{ fontSize:"28px" }}>Escaneie o QR Code para acessar responder ao formulario:</h3> <br></br>
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "20px",
+                  borderRadius: "10px",
+                  textAlign: "center",
+                  width: "700px",
+                }}
+              >
+                <h3 style={{ fontSize: "28px" }}>
+                  Escaneie o QR Code para acessar responder ao formulario:
+                </h3>{" "}
+                <br></br>
                 <QRCode value={qrCodeUrl} size={600} />
                 <button
                   style={{
@@ -272,7 +279,7 @@ const EditarQuest = () => {
                     border: "none",
                     borderRadius: "5px",
                     cursor: "pointer",
-                    fontSize:"25px"
+                    fontSize: "25px",
                   }}
                   onClick={handleProntoClick}
                 >
