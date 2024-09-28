@@ -7,9 +7,9 @@ import Pergunta from "../../../components/pergunta";
 import Button from "../../../components/button";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import QRCode from "react-qr-code";
 
 const EditarQuest = () => {
-  // Estado para armazenar as perguntas
   const [questions, setQuestions] = useState([
     { num: 1, pergunta: "Pergunta 1", nomeLabel: "pergunta-1" },
     { num: 2, pergunta: "Pergunta 2", nomeLabel: "pergunta-2" },
@@ -24,7 +24,12 @@ const EditarQuest = () => {
   const [editingText, setEditingText] = useState("");
   const [disciplinas, setDisciplinas] = useState({});
   const [turma, setTurma] = useState([]);
+  const [qrCodeUrl, setQrCodeUrl] = useState(""); 
   const { idDisc, idturma } = useParams();
+  
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchDataDisc = async () => {
@@ -83,12 +88,21 @@ const EditarQuest = () => {
     setQuestions(updatedQuestions);
   };
 
-  const navigate = useNavigate();
-
-  const { currentUser } = useAuth();
+  const generateRandomHash = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let hash = '';
+    for (let i = 0; i < 100; i++) { // Length of the hash can be adjusted
+      hash += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return hash;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Generate a random hash for the form
+    const randomHash = generateRandomHash();
+    console.log(randomHash)
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/questions/preQuest/editar`,
@@ -97,14 +111,28 @@ const EditarQuest = () => {
           professorId: currentUser.id,
           idDisc,
           idturma,
+          hash: randomHash  // Send the random hash to the backend
         },
-        { withCredentials: true } // Para enviar cookies junto com a requisição
+        { withCredentials: true }
       );
+      
       console.log("Resposta do servidor:", response.data);
-      navigate(`/sessao/${idDisc}/${idturma}/preQuest/enviado`);
+  
+      // Set the QR code URL with the random hash
+      const qrUrl = `http://localhost:5173/${randomHash}`;
+      setQrCodeUrl(qrUrl);
+  
+      setShowModal(true);
+  
     } catch (error) {
       console.error("Erro ao enviar perguntas:", error);
     }
+  };
+  
+
+  const handleProntoClick = () => {
+    setShowModal(false);
+    navigate(`/sessao/${idDisc}/${idturma}/preQuest/meuQuest`);
   };
 
   return (
@@ -125,10 +153,9 @@ const EditarQuest = () => {
         />
         <C.Content>
           <C.titlePage>{disciplinas.nome}</C.titlePage>
-          <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
         </C.Content>
         <C.ContentQuest>
-          <C.titleQuest>Questionário Pré-Aula</C.titleQuest>
+          <C.titleQuest>Questionário Pós-Aula</C.titleQuest>
           <C.line />
           <img
             src={`${window.location.origin}/adicionar.png`}
@@ -139,7 +166,7 @@ const EditarQuest = () => {
               cursor: "pointer",
             }}
             onClick={handleAddQuestion}
-          ></img>
+          />
           <C.PerguntasQuest>
             {questions.map((question, index) => (
               <div key={index}>
@@ -214,6 +241,46 @@ const EditarQuest = () => {
           <div style={{ margin: "30px" }}>
             <Button Text="Liberar Questionário" onClick={handleSubmit} />
           </div>
+
+          {showModal && (
+            <div style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <div style={{
+                backgroundColor: "white",
+                padding: "20px",
+                borderRadius: "10px",
+                textAlign: "center",
+                width: "700px"
+              }}>
+                <h3 style={{ fontSize:"28px" }}>Escaneie o QR Code para acessar responder ao formulario:</h3> <br></br>
+                <QRCode value={qrCodeUrl} size={600} />
+                <button
+                  style={{
+                    marginTop: "20px",
+                    padding: "20px 100px",
+                    backgroundColor: "green",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontSize:"25px"
+                  }}
+                  onClick={handleProntoClick}
+                >
+                  Pronto
+                </button>
+              </div>
+            </div>
+          )}
         </C.ContentQuest>
       </C.Container>
     </>

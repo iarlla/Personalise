@@ -5,7 +5,6 @@ import useAuth from "../hooks/useAuth";
 // Importações gerais
 import Home from "../pages/Home";
 import Signin from "../pages/Signin";
-import Signup from "../pages/SignupAluno";
 import SignupProfessor from "../pages/SignupProfessor";
 import TelaInicio from "../pages/TelaInicio";
 import RedefinirSenha from "../pages/RedefinirSenha";
@@ -25,15 +24,10 @@ import QuestionarioPos from "../pages/Professor/QuestionarioPos";
 import EditarQuestPos from "../pages/Professor/EditarQuestPos";
 import MeuQuestionarioPos from "../pages/Professor/MeuQuestionarioPos";
 
-// Importações de Páginas do Aluno
-import DashBoardAluno from "../pages/Aluno/DashBoard";
-import DeletadoSucessoAluno from "../pages/Aluno/DeletadoSucesso";
-import EnviadoSucessoAluno from "../pages/Aluno/EnviadoSucesso";
-import QuestionarioPosAluno from "../pages/Aluno/QuestionarioPos";
-import QuestionarioPreAluno from "../pages/Aluno/QuestionarioPre";
-import SessaoAluno from "../pages/Aluno/Sessao";
-import TelaMateriaAluno from "../pages/Aluno/TelaMateria";
-import MinhaContaAluno from "../pages/Aluno/MinhaContaAluno";
+import EnviadoSucessoAluno from "../pages/EnviadoSucesso";
+
+// HASH 
+import StudentForm from "../pages/ResponderQuest"
 
 // Componente Private para proteger rotas que exigem autenticação
 const Private = ({ Item, allowedRoles }) => {
@@ -57,7 +51,6 @@ const RouteApp = () => {
         <Routes>
           {/* Rotas de Autenticação */}
           <Route path="/signin" element={<Signin />} />
-          <Route path="/cadastroAluno" element={<Signup />} />
           <Route path="/cadastroProfessor" element={<SignupProfessor />} />
 
           {/* Rotas Comuns */}
@@ -161,69 +154,15 @@ const RouteApp = () => {
               <Private Item={MeuQuestionarioPos} allowedRoles={["professor"]} />
             }
           />
-
-          {/* Rotas do Aluno */}
           <Route
-            path="/materiasA"
+            path="/enviado"
             element={
-              <Private Item={TelaMateriaAluno} allowedRoles={["aluno"]} />
+              <EnviadoSucessoAluno/>
             }
           />
           <Route
-            path="/preQuestAluno"
-            element={
-              <Private Item={QuestionarioPreAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/disciplina/:idDisc/"
-            element={<Private Item={SessaoAluno} allowedRoles={["aluno"]} />}
-          />
-          <Route
-            path="/minhaContaAluno"
-            element={
-              <Private Item={MinhaContaAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/preQuest"
-            element={
-              <Private Item={QuestionarioPreAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/preQuest/enviado"
-            element={
-              <Private Item={EnviadoSucessoAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/preQuest/deletado"
-            element={
-              <Private Item={DeletadoSucessoAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/posQuest"
-            element={
-              <Private Item={QuestionarioPosAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/posQuest/enviado"
-            element={
-              <Private Item={EnviadoSucessoAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/posQuest/deletado"
-            element={
-              <Private Item={DeletadoSucessoAluno} allowedRoles={["aluno"]} />
-            }
-          />
-          <Route
-            path="/sessaoA/:idDisc/relatorio"
-            element={<Private Item={DashBoardAluno} allowedRoles={["aluno"]} />}
+            path="/:hash"
+            element={<StudentForm />}
           />
         </Routes>
       </Fragment>

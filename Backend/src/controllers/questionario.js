@@ -1,7 +1,5 @@
 import { db } from "../database/db.js";
 
-
-
 export const getQuestionarios = (_, res) => {
   const q = "SELECT * FROM questionario";
   db.query(q, (err, data) => {
@@ -11,11 +9,11 @@ export const getQuestionarios = (_, res) => {
 };
 
 
-
 export const getQuestionario = (req, res) => {
-  const q = "SELECT perguntas FROM questionario where id_questionario = ?";
+  const q = "SELECT perguntas FROM questionario where codigo = ?";
 
-  db.query(q, [req.params.idquestionario], (err, data) => {
+  db.query(q, [req.params.hash], (err, data) => {
+    console.log(req.params.hash)
     if (err) return res.status(500).json(err);
 
     if (!data || data.length === 0)

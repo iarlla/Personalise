@@ -1,0 +1,14 @@
+{
+  "name": "personalisev2",
+  "version": "1.0.0",
+  "description": "Nosso software se baseia na coleta de dados de alunos de diversas turmas e em diversos semestres e tem como principal objetivo ajudar professores a evoluírem suas metodologias e conhecerem melhor os seus alunos.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

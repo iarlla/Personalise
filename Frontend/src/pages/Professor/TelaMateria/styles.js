@@ -51,7 +51,10 @@ export const ModalContent = styled.div`
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  width: 500px; /* Ajuste a largura conforme necessário */
+  width: 500px;
+  max-height: 80vh; /* Limita a altura máxima do modal */
+  display: flex;
+  flex-direction: column; /* Para o footer ficar no fim */
 `;
 
 export const ModalHeader = styled.div`
@@ -76,6 +79,8 @@ export const ModalCloseButton = styled.button`
 
 export const ModalBody = styled.div`
   padding: 1rem;
+  overflow-y: auto; /* Ativa a rolagem vertical */
+  max-height: 60vh; /* Define uma altura máxima para o conteúdo */
 `;
 
 export const ModalFooter = styled.div`

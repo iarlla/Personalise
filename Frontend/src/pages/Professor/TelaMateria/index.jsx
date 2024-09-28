@@ -12,8 +12,13 @@ const TelaMateria = () => {
   const [disciplinas, setDisciplinas] = useState([]);
   const { currentUser } = useAuth();
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setInputs({ materia: "", hora: "", descricao: "" });
+    setTurmas([{ nome: "" }]);
+  };
   const handleShow = () => setShow(true);
+  const [turmas, setTurmas] = useState([{ nome: "" }]);
 
   const [inputs, setInputs] = useState({
     materia: "",
@@ -21,10 +26,22 @@ const TelaMateria = () => {
     descricao: "",
   });
 
-  console.log(inputs);
-
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleAddTurma = () => {
+    setTurmas([...turmas, { nome: "" }]);
+  };
+
+  const handleChangeTurma = (index, event) => {
+    const newTurmas = turmas.map((turma, i) => {
+      if (i === index) {
+        return { ...turma, [event.target.name]: event.target.value };
+      }
+      return turma;
+    });
+    setTurmas(newTurmas);
   };
 
   const handleSave = async (e) => {
@@ -37,9 +54,12 @@ const TelaMateria = () => {
           hora: inputs.hora,
           descricao: inputs.descricao,
           professorId: currentUser.id,
+          turmas: turmas,
         },
         { withCredentials: true } // Para enviar cookies junto com a requisição
       );
+      handleClose(true);
+      window.location.reload();
       console.log("Resposta do servidor:", response.data);
     } catch (error) {
       console.error("Erro ao enviar perguntas:", error);
@@ -55,7 +75,6 @@ const TelaMateria = () => {
           }`
         );
         setDisciplinas(res.data);
-        console.log(disciplinas);
       } catch (error) {
         console.log(error);
       }
@@ -164,6 +183,24 @@ const TelaMateria = () => {
                 name="descricao"
                 onChange={handleChange}
               />
+              {turmas.map((turma, index) => (
+                <div key={index}>
+                  <C.LabelTitle style={{ display: "flex", marginTop: "15px" }}>
+                    Turma {index + 1}
+                  </C.LabelTitle>
+                  <Input
+                    type="text"
+                    placeholder={`Digite o nome da turma ${index + 1}`}
+                    name="nome"
+                    value={turma.nome}
+                    onChange={(e) => handleChangeTurma(index, e)}
+                  />
+                </div>
+              ))}
+
+              <C.Button onClick={handleAddTurma} style={{ marginTop: "10px" }}>
+                +
+              </C.Button>
             </C.ModalBody>
             <C.ModalFooter>
               <C.ModalCancelButton
