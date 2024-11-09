@@ -19,23 +19,23 @@ export const getTurma = (req, res) => {
   });
 };
 
-
-
 export const getTurmasByIdUsuario = (req, res) => {
-    const q = `
+  const { iddisc, idprofessor } = req.params;
+
+  const q = `
     SELECT DISTINCT t.idturma, t.nome
     FROM turma t
-    LEFT JOIN turma_disciplina_professor pt ON t.idturma = pt.idturma
-    LEFT JOIN professores p ON p.idprofessores = pt.idprofessor
-    LEFT JOIN aluno_turma at ON at.idturma = t.idturma
-    LEFT JOIN alunos a ON a.idaluno = at.idaluno
-    LEFT JOIN usuarios u ON (u.id = p.id_usuario OR u.id = a.id_usuario)
-    WHERE u.id = ?;
-    `;
+    LEFT JOIN turma_disciplina_professor tdp ON t.idturma = tdp.idturma
+    LEFT JOIN professores p ON p.idprofessores = tdp.idprofessor
+    WHERE p.idprofessores = ? AND tdp.iddisciplina = ?;
+  `;
 
-    db.query(q, [req.params.idusuario], (err, data) => {
-        if (err) return res.status(500).json(err);
+  db.query(q, [idprofessor, iddisc], (err, data) => {
+    if (err)
+      return res
+        .status(500)
+        .json({ error: "Erro ao buscar turmas", details: err });
 
-        return res.status(200).json(data);
-    });
-}
+    return res.status(200).json(data);
+  });
+};

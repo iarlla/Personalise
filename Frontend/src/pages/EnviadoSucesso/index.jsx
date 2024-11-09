@@ -1,11 +1,9 @@
-import Navbar from "../../../components/navBar";
 import { useState, useEffect } from "react";
-import Button from "../../../components/button";
 import Axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as C from "./styles";
 
-const DeletadoSucesso = () => {
+const EnviadoSucesso = () => {
   const navigate = useNavigate();
 
   const [turma, setTurma] = useState({});
@@ -40,27 +38,22 @@ const DeletadoSucesso = () => {
     fetchDataDisc();
   }, [idturma]);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    navigate(`/sessao/${idDisc}/${idturma}/preQuest`);
-  };
   return (
     <>
       <C.Container>
-        <Navbar Text="Aluno" />
         <C.Content>
-          <C.titlePage>Questionário Deletado</C.titlePage>
+          <C.titlePage>Questionário Enviado</C.titlePage>
         </C.Content>
         <C.ContentQuest>
           <C.containerSucesso>
-            <C.imagemSucesso src={`${window.location.origin}/deletado.png`} />
+            <C.imagemSucesso src={`${window.location.origin}/sucesso.png`} />
             <C.containerTextoSucesso>
+              <C.parabens> Parabens! </C.parabens>
               <C.textoSucesso>
                 {" "}
-                Questionário Deletado Com Sucesso!
+                Questionário enviado com sucesso!{" "}
               </C.textoSucesso>
             </C.containerTextoSucesso>
-            <Button Text="Voltar" onClick={handleClick}></Button>
           </C.containerSucesso>
         </C.ContentQuest>
       </C.Container>
@@ -68,4 +61,4 @@ const DeletadoSucesso = () => {
   );
 };
 
-export default DeletadoSucesso;
+export default EnviadoSucesso;

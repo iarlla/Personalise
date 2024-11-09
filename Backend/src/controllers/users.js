@@ -8,13 +8,8 @@ export const getUsers = (_, res) => {
       u.nome,
       u.email,
       u.senha,
-      CASE
-          WHEN a.idaluno IS NOT NULL THEN 'aluno'
-          WHEN p.idprofessores IS NOT NULL THEN 'professor'
-          ELSE 'None'
-      END AS role
-      FROM usuarios u
-    LEFT JOIN alunos a ON a.id_usuario = u.id
+      'professor' AS role
+    FROM usuarios u
     LEFT JOIN professores p ON p.id_usuario = u.id;
   `;
 
@@ -29,18 +24,9 @@ export const getInfoOfUser = (req, res) => {
       SELECT
         u.nome,
         u.email,
-        CASE
-            WHEN a.idaluno IS NOT NULL THEN a.matricula
-            WHEN p.idprofessores IS NOT NULL THEN p.matricula
-            ELSE 'None'
-        END AS matricula,
-        CASE
-            WHEN a.idaluno IS NOT NULL THEN 'aluno'
-            WHEN p.idprofessores IS NOT NULL THEN 'professor'
-            ELSE 'None'
-        END AS role
-        FROM usuarios u
-      LEFT JOIN alunos a ON a.id_usuario = u.id
+        p.matricula,
+        'professor' AS role
+      FROM usuarios u
       LEFT JOIN professores p ON p.id_usuario = u.id
       WHERE u.id = ?;
     `;

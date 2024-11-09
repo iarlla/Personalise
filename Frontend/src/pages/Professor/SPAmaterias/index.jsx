@@ -12,20 +12,37 @@ const Turmas = () => {
   const [turmas, setTurmas] = useState([]);
   const { idDisc } = useParams();
   const { currentUser } = useAuth();
+  const [idprofessor, setIdprofessor] = useState({});
+
+  useEffect(() => {
+    const fetchIdProfessor = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/professor/${currentUser.id}`
+        );
+        setIdprofessor(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchIdProfessor();
+  }, []);
 
   useEffect(() => {
     const fetchDataTurmas = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/turmas/usuario/${currentUser.id}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/turmas/disciplina/${idDisc}/professor/${idprofessor}`
         );
-        setTurmas(res.data);
+        setTurmas(res.data); // Turmas da disciplina
       } catch (error) {
         console.log(error);
       }
     };
     fetchDataTurmas();
-  }, []);
+  }, [idprofessor]);
 
   useEffect(() => {
     const fetchDataDisc = async () => {
@@ -75,14 +92,18 @@ const Turmas = () => {
             </div>
             <C.line />
             <C.ContainerButtons>
-              {turmas.map((turma) => (
-                <Link
-                  key={turma.idturma}
-                  to={`/turmas/${idDisc}/${turma.idturma}`}
-                >
-                  <ButtonPrincipal key={turma.idturma} Text={turma.nome} />
-                </Link>
-              ))}
+              {turmas.length > 0 ? (
+                turmas.map((turma) => (
+                  <Link
+                    key={turma.idturma}
+                    to={`/turmas/${idDisc}/${turma.idturma}`}
+                  >
+                    <ButtonPrincipal key={turma.idturma} Text={turma.nome} />
+                  </Link>
+                ))
+              ) : (
+                <p>Nenhuma turma encontrada.</p>
+              )}
             </C.ContainerButtons>
           </C.MainRightContainer>
         </C.MainContainer>

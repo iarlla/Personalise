@@ -10,6 +10,7 @@ import Button from "../../../components/button";
 const QuestionarioPre = () => {
   const [disciplinas, setDisciplinas] = useState({});
   const { idDisc, idturma } = useParams();
+  const [dataFim, setDataFim] = useState("");
 
   const navigate = useNavigate();
 
@@ -25,6 +26,11 @@ const QuestionarioPre = () => {
       }
     };
     fetchDataDisc();
+    // Cálculo da data de hoje + 1 dia
+    const dataAtual = new Date();
+    dataAtual.setDate(dataAtual.getDate() + 1); // Adiciona 1 dia à data atual
+    const dataFormatada = dataAtual.toLocaleDateString("pt-BR"); // Formato dd/mm/aaaa
+    setDataFim(dataFormatada); // Define a data de fim no estado
   }, [idDisc]);
 
   const handleClick = (e) => {
@@ -50,7 +56,7 @@ const QuestionarioPre = () => {
         />
         <C.Content>
           <C.titlePage>{disciplinas.nome}</C.titlePage>
-          <C.textoAbertura>Questionário aberto até: 18/08/2024</C.textoAbertura>
+          <C.textoAbertura>Questionário aberto até: {dataFim}</C.textoAbertura>
         </C.Content>
         <C.ContentQuest>
           <C.titleQuest>Questionário Pré-Aula</C.titleQuest>

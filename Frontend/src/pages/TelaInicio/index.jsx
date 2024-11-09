@@ -38,8 +38,7 @@ const TelaInicio = () => {
           <div
             style={{ display: "flex", gap: "15px", padding: "30px 0px 30px" }}
           >
-            <Button Text="Sou aluno" onClick={handleClickAluno} />
-            <Button Text="Sou professor" onClick={handleClickProf} />
+            <Button Text="Começar" onClick={handleClickProf} />
           </div>
         </C.Content>
         <C.Image src="image.png" alt="Descrição da imagem" />

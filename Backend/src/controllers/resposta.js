@@ -17,28 +17,29 @@ export const getRespostaByIdQuestionario = (req, res) => {
     idturma = null;
   }
 
+  // Query to retrieve the questions (perguntas) for the given professor (based on idusuario) and discipline (idDisciplina)
   const q = `
     SELECT DISTINCT q.id_questionario, perguntas
-        from questionario q
-        left join turma_disciplina_professor td on td.id = q.id_turma_disciplina_professor
-        left join turma t on t.idturma = td.idturma
-        left join aluno_turma at2 on at2.idturma = t.idturma
-        left join alunos a on a.idaluno = at2.idaluno
-        left join professores p on p.idprofessores = td.idprofessor
-        left join usuarios u on (a.id_usuario = u.id or p.id_usuario = u.id)
-        where u.id = ?
-        and td.iddisciplina = ?
-        and (? is null or t.idturma = ?)
-    `;
+    FROM questionario q
+    LEFT JOIN turma_disciplina_professor td ON td.id = q.id_turma_disciplina_professor
+    LEFT JOIN turma t ON t.idturma = td.idturma
+    LEFT JOIN professores p ON p.idprofessores = td.idprofessor
+    LEFT JOIN usuarios u ON p.id_usuario = u.id
+    WHERE u.id = ?
+    AND td.iddisciplina = ?
+    AND (? IS NULL OR t.idturma = ?);
+  `;
 
+  // Execute the query to fetch questions based on the provided parameters
   db.query(q, [idusuario, idDisciplina, idturma, idturma], (err, data) => {
     if (err) return res.status(500).json(err);
 
     if (data.length === 0) {
       return res.status(404).json("Questionário não encontrado");
     }
-    const perguntas = [];
 
+    // Extract the questions (perguntas) from the results
+    const perguntas = [];
     data.forEach((d) => {
       const perguntasArray = d.perguntas;
       perguntasArray.forEach((pergunta) => {
@@ -50,22 +51,34 @@ export const getRespostaByIdQuestionario = (req, res) => {
       });
     });
 
+    // Get distinct question IDs
     const distinctIds = [...new Set(perguntas.map((pergunta) => pergunta.id))];
 
+    // Query to fetch the answers (respostas) based on the question IDs
     const q2 = `
-            SELECT rq.num, rq.resposta, r.idquestionario
-            FROM respostas r
-            LEFT JOIN respostas_questionario rq on rq.idrespostas = r.idrespostas
-            WHERE r.idquestionario in (${distinctIds.join(", ")})
-            ORDER BY rq.num, rq.resposta
-        `;
+      SELECT rq.num, rq.resposta, r.idquestionario
+      FROM respostas r
+      LEFT JOIN respostas_questionario rq ON rq.idrespostas = r.idrespostas
+      WHERE r.idquestionario IN (${distinctIds.join(", ")})
+      ORDER BY rq.num, rq.resposta;
+    `;
 
     db.query(q2, [req.params.idquestionario], (err, data) => {
       if (err) return res.status(500).json(err);
 
-      const respostas = data.map((d) => ({ num: d.num, resposta: d.resposta, id_questionario: d.idquestionario }));
+      // Map answers to the corresponding question numbers
+      const respostas = data.map((d) => ({
+        num: d.num,
+        resposta: d.resposta,
+        id_questionario: d.idquestionario,
+      }));
+
+      // Construct the final result mapping questions to their answers
       const result = perguntas.map((p) => {
-        const respostasDaPergunta = respostas.filter((r) => r.num === p.num && r.id_questionario === p.id);
+        const respostasDaPergunta = respostas.filter(
+          (r) => r.num === p.num && r.id_questionario === p.id
+        );
+
         let obj = { pergunta: p.pergunta, tipo: p.tipo };
         if (
           p.tipo === "MULTIPLA_ESCOLHA" ||
@@ -85,19 +98,19 @@ export const getRespostaByIdQuestionario = (req, res) => {
           obj.resposta = [
             {
               id: 0,
-              resposta: `${count0} alunos concordagem totalmente (${
+              resposta: `${count0} respostas concordam totalmente (${
                 sum > 0 ? (((1.0 * count0) / sum) * 100).toFixed(2) : "0.00"
               }%)`,
             },
             {
               id: 1,
-              resposta: `${count1} alunos concordagem parcialmente (${
+              resposta: `${count1} respostas concordam parcialmente (${
                 sum > 0 ? (((1.0 * count1) / sum) * 100).toFixed(2) : "0.00"
               }%)`,
             },
             {
               id: 2,
-              resposta: `${count2} alunos discordam totalmente (${
+              resposta: `${count2} respostas discordam totalmente (${
                 sum > 0 ? (((1.0 * count2) / sum) * 100).toFixed(2) : "0.00"
               }%)`,
             },
@@ -113,98 +126,79 @@ export const getRespostaByIdQuestionario = (req, res) => {
         return obj;
       });
 
+      // Return the final result
       return res.status(200).json(result);
     });
   });
 };
 
 export const postResposta = (req, res) => {
-  const { disciplina, idUsuario, respostas, tipo } = req.body;
+  const { hash, respostas } = req.body;
 
-  db.query(
-    `
-        SELECT idaluno
-        FROM alunos
-        LEFT JOIN usuarios ON usuarios.id = alunos.id_usuario
-        WHERE usuarios.id = ?
-    `,
-    [idUsuario],
-    (err, data) => {
+  // Step 1: Get the questionario ID based on the hash
+  const getQuestionarioIdQuery = `
+    SELECT id_questionario
+    FROM questionario
+    WHERE codigo = ?;
+  `;
+
+  db.query(getQuestionarioIdQuery, [hash], (err, data) => {
+    if (err) {
+      console.log("AQUI 1");
+      return res.status(500).json(err);
+    }
+
+    if (data.length === 0) {
+      return res.status(404).json("Questionário não encontrado");
+    }
+
+    const idQuestionario = data[0].id_questionario;
+
+    // Step 2: Insert the response into the respostas table
+    const insertRespostaQuery = `
+      INSERT INTO respostas (idquestionario) VALUES (?);
+    `;
+
+    db.query(insertRespostaQuery, [idQuestionario], (err, data) => {
       if (err) {
+        console.log("AQUI 2");
         return res.status(500).json(err);
       }
 
-      if (data === null || data.length === 0) {
-        return res.status(404).json("Aluno não encontrado");
-      }
+      const idResposta = data.insertId; // This is the idresposta we just created
 
-      const idAluno = data[0].idaluno;
-
-      db.query(
-        `
-            SELECT q.id_questionario
-          from questionario q
-          left join turma_disciplina_professor pt on pt.id = q.id_turma_disciplina_professor
-          left join turma t on t.idturma = pt.idturma
-          left join aluno_turma at2 on at2.idturma = at2.idturma
-          left join alunos a on a.idaluno = at2.idaluno
-          left join usuarios u on u.id = a.id_usuario
-          WHERE u.id = ?
-          and pt.iddisciplina = ?
-          and q.tipo = ?
-        `,
-        [idUsuario, disciplina, tipo],
-        (err, data) => {
-          if (err) {
-            return res.status(500).json(err);
-          }
-
-          if (
-            data === null ||
-            data.length === 0 ||
-            data[0].id_questionario === undefined
-          ) {
-            return res.status(404).json("Questionário não encontrado");
-          }
-
-          const idQuestionario = data[0].id_questionario;
-
-          const queryInsertResposta =
-            "INSERT INTO respostas (idaluno, idquestionario) VALUES (?, ?)";
+      // Step 3: Insert each response into respostas_questionario
+      const insertRespostaQuestionarioQueries = respostas.map((r) => {
+        return new Promise((resolve, reject) => {
+          const insertRespostaQuestionarioQuery = `
+            INSERT INTO respostas_questionario (idrespostas, num, resposta) VALUES (?, ?, ?);
+          `;
           db.query(
-            queryInsertResposta,
-            [idAluno, idQuestionario],
-            (err, data) => {
+            insertRespostaQuestionarioQuery,
+            [idResposta, r.num, r.resposta],
+            (err) => {
               if (err) {
-                return res.status(500).json(err);
+                console.log("AQUI 3");
+                return reject(err);
               }
-
-              const idResposta = data.insertId;
-
-              respostas.forEach((r) => {
-                const queryInsertRespostaQuestionario =
-                  "INSERT INTO respostas_questionario (idrespostas, num, resposta) VALUES (?, ?, ?)";
-                db.query(
-                  queryInsertRespostaQuestionario,
-                  [idResposta, r.num, r.resposta],
-                  (err) => {
-                    if (err) {
-                      return res.status(500).json(err);
-                    }
-                  }
-                );
-              });
-
-              return res
-                .status(201)
-                .json({ message: "Respostas inseridas com sucesso", data });
+              resolve();
             }
           );
-        }
-      );
-    }
-  );
+        });
+      });
 
+      // Wait for all insert operations to complete
+      Promise.all(insertRespostaQuestionarioQueries)
+        .then(() => {
+          return res.status(201).json({ message: "Respostas inseridas com sucesso" });
+        })
+        .catch((error) => {
+          console.error("Error inserting respostas_questionario:", error);
+          return res.status(500).json(error);
+        });
+    });
+  });
+};
   // const q2 = "INSERT INTO respostas (idaluno, idquestionario) VALUES (?, ?)";
   // db.query(q2, [idAluno, id_questionario], (err, data) => {
   //     if (err) {
@@ -231,4 +225,3 @@ export const postResposta = (req, res) => {
   // });
 
   // });
-};

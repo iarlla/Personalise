@@ -1,16 +1,16 @@
 import * as C from "./styles";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Pergunta = ({ nomeLabel, pergunta, num, onChange }) => {
-    const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
 
-    const handleOptionChange = (event) => {
-        const value = event.target.value;
-        setSelectedOption(value);
-        if (onChange) {
-            onChange(value);
-        }
-    };
+  const handleOptionChange = (event) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
 
   return (
     <C.ContainerPergunta>
@@ -18,29 +18,35 @@ const Pergunta = ({ nomeLabel, pergunta, num, onChange }) => {
         {num}. {pergunta}
       </C.Pergunta>
       <C.ContainerResposta>
-        <C.Resposta
+        <C.RespostaWrapper>
+          <C.Resposta
             name={nomeLabel}
             value="0"
-            checked={selectedOption === '0'}
+            checked={selectedOption === "0"}
             onChange={handleOptionChange}
-        />
-        <C.LabelResposta> Concordo</C.LabelResposta>
+          />
+          <C.LabelResposta>Concordo</C.LabelResposta>
+        </C.RespostaWrapper>
 
-        <C.Resposta
+        <C.RespostaWrapper>
+          <C.Resposta
             name={nomeLabel}
             value="1"
-            checked={selectedOption === '1'}
+            checked={selectedOption === "1"}
             onChange={handleOptionChange}
-        />
-        <C.LabelResposta> Concordo Parcialmente</C.LabelResposta>
+          />
+          <C.LabelResposta>Concordo Parcialmente</C.LabelResposta>
+        </C.RespostaWrapper>
 
-        <C.Resposta
+        <C.RespostaWrapper>
+          <C.Resposta
             name={nomeLabel}
             value="2"
-            checked={selectedOption === '2'}
+            checked={selectedOption === "2"}
             onChange={handleOptionChange}
-        />
-        <C.LabelResposta> Não Concordo</C.LabelResposta>
+          />
+          <C.LabelResposta>Não Concordo</C.LabelResposta>
+        </C.RespostaWrapper>
       </C.ContainerResposta>
     </C.ContainerPergunta>
   );
